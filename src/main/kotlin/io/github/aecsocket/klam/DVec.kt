@@ -4,25 +4,17 @@ package io.github.aecsocket.klam
 
 private const val DEFAULT: Double = 0.0
 
-data class DVec2(@JvmField var x: Double, @JvmField var y: Double) {
+data class DVec2(@JvmField val x: Double, @JvmField val y: Double) {
     constructor(v: DVec2) : this(v.x, v.y)
     constructor(s: Double) : this(s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Double) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = DVec2( -x,  -y)
-    inline operator fun inc()        = DVec2(++x, ++y)
-    inline operator fun dec()        = DVec2(--x, --y)
 
     inline operator fun plus(s: Double)  = DVec2(x + s, y + s)
     inline operator fun minus(s: Double) = DVec2(x - s, y - s)
@@ -44,28 +36,19 @@ data class DVec2(@JvmField var x: Double, @JvmField var y: Double) {
     override fun toString() = asString("%.3f")
 }
 
-data class DVec3(@JvmField var x: Double, @JvmField var y: Double, @JvmField var z: Double) {
+data class DVec3(@JvmField val x: Double, @JvmField val y: Double, @JvmField val z: Double) {
     constructor(v: DVec3) : this(v.x, v.y, v.z)
     constructor(v: DVec2, z: Double = DEFAULT) : this(v.x, v.y, z)
     constructor(s: Double) : this(s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Double) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = DVec3( -x,  -y,  -z)
-    inline operator fun inc()        = DVec3(++x, ++y, ++z)
-    inline operator fun dec()        = DVec3(--x, --y, --z)
 
     inline operator fun plus(s: Double)  = DVec3(x + s, y + s, z + s)
     inline operator fun minus(s: Double) = DVec3(x - s, y - s, z - s)
@@ -87,13 +70,13 @@ data class DVec3(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
     override fun toString() = asString("%.3f")
 }
 
-data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var z: Double, @JvmField var w: Double) {
+data class DVec4(@JvmField val x: Double, @JvmField val y: Double, @JvmField val z: Double, @JvmField val w: Double) {
     constructor(v: DVec4) : this(v.x, v.y, v.z, v.w)
     constructor(v: DVec3, w: Double = DEFAULT) : this(v.x, v.y, v.z, w)
     constructor(v: DVec2, z: Double = DEFAULT, w: Double = DEFAULT) : this(v.x, v.y, z, w)
     constructor(s: Double) : this(s, s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
@@ -101,17 +84,8 @@ data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Double) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        3 -> w = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
 
     inline operator fun unaryMinus() = DVec4( -x,  -y,  -z,  -w)
-    inline operator fun inc()        = DVec4(++x, ++y, ++z, ++w)
-    inline operator fun dec()        = DVec4(--x, --y, --z, --w)
 
     inline operator fun plus(s: Double)  = DVec4(x + s, y + s, z + s, w + s)
     inline operator fun minus(s: Double) = DVec4(x - s, y - s, z - s, w - s)
@@ -134,65 +108,26 @@ data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
 }
 
 //region Alternate accessors
-inline var DVec2.r: Double
-    get() = x
-    set(value) { x = value }
-inline var DVec2.g: Double
-    get() = y
-    set(value) { y = value }
+inline val DVec2.r get() = x
+inline val DVec2.g get() = y
+inline val DVec2.s get() = x
+inline val DVec2.t get() = y
 
-inline var DVec3.r: Double
-    get() = x
-    set(value) { x = value }
-inline var DVec3.g: Double
-    get() = y
-    set(value) { y = value }
-inline var DVec3.b: Double
-    get() = z
-    set(value) { z = value }
+inline val DVec3.r get() = x
+inline val DVec3.g get() = y
+inline val DVec3.b get() = z
+inline val DVec3.s get() = x
+inline val DVec3.t get() = y
+inline val DVec3.p get() = z
 
-inline var DVec4.r: Double
-    get() = x
-    set(value) { x = value }
-inline var DVec4.g: Double
-    get() = y
-    set(value) { y = value }
-inline var DVec4.b: Double
-    get() = z
-    set(value) { z = value }
-inline var DVec4.a: Double
-    get() = w
-    set(value) { w = value }
-
-inline var DVec2.s: Double
-    get() = x
-    set(value) { x = value }
-inline var DVec2.t: Double
-    get() = y
-    set(value) { y = value }
-
-inline var DVec3.s: Double
-    get() = x
-    set(value) { x = value }
-inline var DVec3.t: Double
-    get() = y
-    set(value) { y = value }
-inline var DVec3.p: Double
-    get() = z
-    set(value) { z = value }
-
-inline var DVec4.s: Double
-    get() = x
-    set(value) { x = value }
-inline var DVec4.t: Double
-    get() = y
-    set(value) { y = value }
-inline var DVec4.p: Double
-    get() = z
-    set(value) { z = value }
-inline var DVec4.q: Double
-    get() = w
-    set(value) { w = value }
+inline val DVec4.r get() = x
+inline val DVec4.g get() = y
+inline val DVec4.b get() = z
+inline val DVec4.a get() = w
+inline val DVec4.s get() = x
+inline val DVec4.t get() = y
+inline val DVec4.p get() = z
+inline val DVec4.q get() = w
 //endregion
 
 //region Swizzling Vec2

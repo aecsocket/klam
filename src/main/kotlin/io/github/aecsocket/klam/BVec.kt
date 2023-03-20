@@ -4,19 +4,13 @@ package io.github.aecsocket.klam
 
 private const val DEFAULT: Boolean = false
 
-data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
+data class BVec2(@JvmField val x: Boolean, @JvmField val y: Boolean) {
     constructor(v: BVec2) : this(v.x, v.y)
     constructor(s: Boolean) : this(s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
-    operator fun set(index: USize, s: Boolean) = when (index) {
-        0 -> x = s
-        1 -> y = s
         else -> throw IndexOutOfBoundsException(index)
     }
 
@@ -29,22 +23,15 @@ data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
     override fun toString() = asString()
 }
 
-data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean) {
+data class BVec3(@JvmField val x: Boolean, @JvmField val y: Boolean, @JvmField val z: Boolean) {
     constructor(v: BVec3) : this(v.x, v.y, v.z)
     constructor(v: BVec2, z: Boolean = DEFAULT) : this(v.x, v.y, z)
     constructor(s: Boolean) : this(s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
-    operator fun set(index: USize, s: Boolean) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
         else -> throw IndexOutOfBoundsException(index)
     }
 
@@ -57,25 +44,17 @@ data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
     override fun toString() = asString()
 }
 
-data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean, @JvmField var w: Boolean) {
+data class BVec4(@JvmField val x: Boolean, @JvmField val y: Boolean, @JvmField val z: Boolean, @JvmField val w: Boolean) {
     constructor(v: BVec4) : this(v.x, v.y, v.z, v.w)
     constructor(v: BVec3, w: Boolean = DEFAULT) : this(v.x, v.y, v.z, w)
     constructor(v: BVec2, z: Boolean = DEFAULT, w: Boolean = DEFAULT) : this(v.x, v.y, z, w)
     constructor(s: Boolean) : this(s, s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
         3 -> w
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
-    operator fun set(index: USize, s: Boolean) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        3 -> w = s
         else -> throw IndexOutOfBoundsException(index)
     }
 
@@ -89,65 +68,26 @@ data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
 }
 
 //region Alternate accessors
-inline var BVec2.r: Boolean
-    get() = x
-    set(value) { x = value }
-inline var BVec2.g: Boolean
-    get() = y
-    set(value) { y = value }
+inline val BVec2.r get() = x
+inline val BVec2.g get() = y
+inline val BVec2.s get() = x
+inline val BVec2.t get() = y
 
-inline var BVec3.r: Boolean
-    get() = x
-    set(value) { x = value }
-inline var BVec3.g: Boolean
-    get() = y
-    set(value) { y = value }
-inline var BVec3.b: Boolean
-    get() = z
-    set(value) { z = value }
+inline val BVec3.r get() = x
+inline val BVec3.g get() = y
+inline val BVec3.b get() = z
+inline val BVec3.s get() = x
+inline val BVec3.t get() = y
+inline val BVec3.p get() = z
 
-inline var BVec4.r: Boolean
-    get() = x
-    set(value) { x = value }
-inline var BVec4.g: Boolean
-    get() = y
-    set(value) { y = value }
-inline var BVec4.b: Boolean
-    get() = z
-    set(value) { z = value }
-inline var BVec4.a: Boolean
-    get() = w
-    set(value) { w = value }
-
-inline var BVec2.s: Boolean
-    get() = x
-    set(value) { x = value }
-inline var BVec2.t: Boolean
-    get() = y
-    set(value) { y = value }
-
-inline var BVec3.s: Boolean
-    get() = x
-    set(value) { x = value }
-inline var BVec3.t: Boolean
-    get() = y
-    set(value) { y = value }
-inline var BVec3.p: Boolean
-    get() = z
-    set(value) { z = value }
-
-inline var BVec4.s: Boolean
-    get() = x
-    set(value) { x = value }
-inline var BVec4.t: Boolean
-    get() = y
-    set(value) { y = value }
-inline var BVec4.p: Boolean
-    get() = z
-    set(value) { z = value }
-inline var BVec4.q: Boolean
-    get() = w
-    set(value) { w = value }
+inline val BVec4.r get() = x
+inline val BVec4.g get() = y
+inline val BVec4.b get() = z
+inline val BVec4.a get() = w
+inline val BVec4.s get() = x
+inline val BVec4.t get() = y
+inline val BVec4.p get() = z
+inline val BVec4.q get() = w
 //endregion
 
 //region Swizzling Vec2

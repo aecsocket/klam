@@ -4,25 +4,17 @@ package io.github.aecsocket.klam
 
 private const val DEFAULT: Int = 0
 
-data class IVec2(@JvmField var x: Int, @JvmField var y: Int) {
+data class IVec2(@JvmField val x: Int, @JvmField val y: Int) {
     constructor(v: IVec2) : this(v.x, v.y)
     constructor(s: Int) : this(s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Int) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = IVec2( -x,  -y)
-    inline operator fun inc()        = IVec2(++x, ++y)
-    inline operator fun dec()        = IVec2(--x, --y)
 
     inline operator fun plus(s: Int)  = IVec2(x + s, y + s)
     inline operator fun minus(s: Int) = IVec2(x - s, y - s)
@@ -44,28 +36,19 @@ data class IVec2(@JvmField var x: Int, @JvmField var y: Int) {
     override fun toString() = asString()
 }
 
-data class IVec3(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: Int) {
+data class IVec3(@JvmField val x: Int, @JvmField val y: Int, @JvmField val z: Int) {
     constructor(v: IVec3) : this(v.x, v.y, v.z)
     constructor(v: IVec2, z: Int = DEFAULT) : this(v.x, v.y, z)
     constructor(s: Int) : this(s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Int) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = IVec3( -x,  -y,  -z)
-    inline operator fun inc()        = IVec3(++x, ++y, ++z)
-    inline operator fun dec()        = IVec3(--x, --y, --z)
 
     inline operator fun plus(s: Int)  = IVec3(x + s, y + s, z + s)
     inline operator fun minus(s: Int) = IVec3(x - s, y - s, z - s)
@@ -87,13 +70,13 @@ data class IVec3(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
     override fun toString() = asString()
 }
 
-data class IVec4(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: Int, @JvmField var w: Int) {
+data class IVec4(@JvmField val x: Int, @JvmField val y: Int, @JvmField val z: Int, @JvmField val w: Int) {
     constructor(v: IVec4) : this(v.x, v.y, v.z, v.w)
     constructor(v: IVec3, w: Int = DEFAULT) : this(v.x, v.y, v.z, w)
     constructor(v: IVec2, z: Int = DEFAULT, w: Int = DEFAULT) : this(v.x, v.y, z, w)
     constructor(s: Int) : this(s, s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
@@ -101,17 +84,7 @@ data class IVec4(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Int) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        3 -> w = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = IVec4( -x,  -y,  -z,  -w)
-    inline operator fun inc()        = IVec4(++x, ++y, ++z, ++w)
-    inline operator fun dec()        = IVec4(--x, --y, --z, --w)
 
     inline operator fun plus(s: Int)  = IVec4(x + s, y + s, z + s, w + s)
     inline operator fun minus(s: Int) = IVec4(x - s, y - s, z - s, w - s)
@@ -134,65 +107,26 @@ data class IVec4(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
 }
 
 //region Alternate accessors
-inline var IVec2.r: Int
-    get() = x
-    set(value) { x = value }
-inline var IVec2.g: Int
-    get() = y
-    set(value) { y = value }
+inline val IVec2.r get() = x
+inline val IVec2.g get() = y
+inline val IVec2.s get() = x
+inline val IVec2.t get() = y
 
-inline var IVec3.r: Int
-    get() = x
-    set(value) { x = value }
-inline var IVec3.g: Int
-    get() = y
-    set(value) { y = value }
-inline var IVec3.b: Int
-    get() = z
-    set(value) { z = value }
+inline val IVec3.r get() = x
+inline val IVec3.g get() = y
+inline val IVec3.b get() = z
+inline val IVec3.s get() = x
+inline val IVec3.t get() = y
+inline val IVec3.p get() = z
 
-inline var IVec4.r: Int
-    get() = x
-    set(value) { x = value }
-inline var IVec4.g: Int
-    get() = y
-    set(value) { y = value }
-inline var IVec4.b: Int
-    get() = z
-    set(value) { z = value }
-inline var IVec4.a: Int
-    get() = w
-    set(value) { w = value }
-
-inline var IVec2.s: Int
-    get() = x
-    set(value) { x = value }
-inline var IVec2.t: Int
-    get() = y
-    set(value) { y = value }
-
-inline var IVec3.s: Int
-    get() = x
-    set(value) { x = value }
-inline var IVec3.t: Int
-    get() = y
-    set(value) { y = value }
-inline var IVec3.p: Int
-    get() = z
-    set(value) { z = value }
-
-inline var IVec4.s: Int
-    get() = x
-    set(value) { x = value }
-inline var IVec4.t: Int
-    get() = y
-    set(value) { y = value }
-inline var IVec4.p: Int
-    get() = z
-    set(value) { z = value }
-inline var IVec4.q: Int
-    get() = w
-    set(value) { w = value }
+inline val IVec4.r get() = x
+inline val IVec4.g get() = y
+inline val IVec4.b get() = z
+inline val IVec4.a get() = w
+inline val IVec4.s get() = x
+inline val IVec4.t get() = y
+inline val IVec4.p get() = z
+inline val IVec4.q get() = w
 //endregion
 
 //region Swizzling Vec2

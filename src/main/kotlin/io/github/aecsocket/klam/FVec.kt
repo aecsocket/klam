@@ -4,25 +4,17 @@ package io.github.aecsocket.klam
 
 private const val DEFAULT: Float = 0.0f
 
-data class FVec2(@JvmField var x: Float, @JvmField var y: Float) {
+data class FVec2(@JvmField val x: Float, @JvmField val y: Float) {
     constructor(v: FVec2) : this(v.x, v.y)
     constructor(s: Float) : this(s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Float) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = FVec2( -x,  -y)
-    inline operator fun inc()        = FVec2(++x, ++y)
-    inline operator fun dec()        = FVec2(--x, --y)
 
     inline operator fun plus(s: Float)  = FVec2(x + s, y + s)
     inline operator fun minus(s: Float) = FVec2(x - s, y - s)
@@ -44,28 +36,19 @@ data class FVec2(@JvmField var x: Float, @JvmField var y: Float) {
     override fun toString() = asString(DECIMAL_FORMAT)
 }
 
-data class FVec3(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z: Float) {
+data class FVec3(@JvmField val x: Float, @JvmField val y: Float, @JvmField val z: Float) {
     constructor(v: FVec3) : this(v.x, v.y, v.z)
     constructor(v: FVec2, z: Float = DEFAULT) : this(v.x, v.y, z)
     constructor(s: Float) : this(s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Float) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = FVec3( -x,  -y,  -z)
-    inline operator fun inc()        = FVec3(++x, ++y, ++z)
-    inline operator fun dec()        = FVec3(--x, --y, --z)
 
     inline operator fun plus(s: Float)  = FVec3(x + s, y + s, z + s)
     inline operator fun minus(s: Float) = FVec3(x - s, y - s, z - s)
@@ -87,13 +70,13 @@ data class FVec3(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
     override fun toString() = asString(DECIMAL_FORMAT)
 }
 
-data class FVec4(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z: Float, @JvmField var w: Float) {
+data class FVec4(@JvmField val x: Float, @JvmField val y: Float, @JvmField val z: Float, @JvmField val w: Float) {
     constructor(v: FVec4) : this(v.x, v.y, v.z, v.w)
     constructor(v: FVec3, w: Float = DEFAULT) : this(v.x, v.y, v.z, w)
     constructor(v: FVec2, z: Float = DEFAULT, w: Float = DEFAULT) : this(v.x, v.y, z, w)
     constructor(s: Float) : this(s, s, s, s)
 
-    operator fun get(index: USize) = when (index) {
+    operator fun get(index: Index) = when (index) {
         0 -> x
         1 -> y
         2 -> z
@@ -101,17 +84,7 @@ data class FVec4(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
         else -> throw IndexOutOfBoundsException(index)
     }
 
-    operator fun set(index: USize, s: Float) = when (index) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        3 -> w = s
-        else -> throw IndexOutOfBoundsException(index)
-    }
-
     inline operator fun unaryMinus() = FVec4( -x,  -y,  -z,  -w)
-    inline operator fun inc()        = FVec4(++x, ++y, ++z, ++w)
-    inline operator fun dec()        = FVec4(--x, --y, --z, --w)
 
     inline operator fun plus(s: Float)  = FVec4(x + s, y + s, z + s, w + s)
     inline operator fun minus(s: Float) = FVec4(x - s, y - s, z - s, w - s)
@@ -134,65 +107,26 @@ data class FVec4(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
 }
 
 //region Alternate accessors
-inline var FVec2.r: Float
-    get() = x
-    set(value) { x = value }
-inline var FVec2.g: Float
-    get() = y
-    set(value) { y = value }
+inline val FVec2.r get() = x
+inline val FVec2.g get() = y
+inline val FVec2.s get() = x
+inline val FVec2.t get() = y
 
-inline var FVec3.r: Float
-    get() = x
-    set(value) { x = value }
-inline var FVec3.g: Float
-    get() = y
-    set(value) { y = value }
-inline var FVec3.b: Float
-    get() = z
-    set(value) { z = value }
+inline val FVec3.r get() = x
+inline val FVec3.g get() = y
+inline val FVec3.b get() = z
+inline val FVec3.s get() = x
+inline val FVec3.t get() = y
+inline val FVec3.p get() = z
 
-inline var FVec4.r: Float
-    get() = x
-    set(value) { x = value }
-inline var FVec4.g: Float
-    get() = y
-    set(value) { y = value }
-inline var FVec4.b: Float
-    get() = z
-    set(value) { z = value }
-inline var FVec4.a: Float
-    get() = w
-    set(value) { w = value }
-
-inline var FVec2.s: Float
-    get() = x
-    set(value) { x = value }
-inline var FVec2.t: Float
-    get() = y
-    set(value) { y = value }
-
-inline var FVec3.s: Float
-    get() = x
-    set(value) { x = value }
-inline var FVec3.t: Float
-    get() = y
-    set(value) { y = value }
-inline var FVec3.p: Float
-    get() = z
-    set(value) { z = value }
-
-inline var FVec4.s: Float
-    get() = x
-    set(value) { x = value }
-inline var FVec4.t: Float
-    get() = y
-    set(value) { y = value }
-inline var FVec4.p: Float
-    get() = z
-    set(value) { z = value }
-inline var FVec4.q: Float
-    get() = w
-    set(value) { w = value }
+inline val FVec4.r get() = x
+inline val FVec4.g get() = y
+inline val FVec4.b get() = z
+inline val FVec4.a get() = w
+inline val FVec4.s get() = x
+inline val FVec4.t get() = y
+inline val FVec4.p get() = z
+inline val FVec4.q get() = w
 //endregion
 
 //region Swizzling Vec2

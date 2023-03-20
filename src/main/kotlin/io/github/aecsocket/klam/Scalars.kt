@@ -2,7 +2,7 @@
 
 package io.github.aecsocket.klam
 
-internal typealias USize = Int
+internal typealias Index = Int
 internal const val DECIMAL_FORMAT = "%.3f"
 
 const val DPI = kotlin.math.PI
