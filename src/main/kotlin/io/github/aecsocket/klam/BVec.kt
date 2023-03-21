@@ -2,92 +2,136 @@
 
 package io.github.aecsocket.klam
 
-private const val DEFAULT: Boolean = false
+private const val AS_STRING_FORMAT = "%s"
+private const val TO_STRING_FORMAT = "%s"
+private inline fun typeArrayOf(vararg elements: Boolean) = booleanArrayOf(*elements)
 
-data class BVec2(@JvmField val x: Boolean, @JvmField val y: Boolean) {
+data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
     constructor(v: BVec2) : this(v.x, v.y)
     constructor(s: Boolean) : this(s, s)
 
-    operator fun get(index: Index) = when (index) {
+    fun from(x: Boolean, y: Boolean) { this.x = x; this.y = y }
+    fun from(v: BVec2) = from(v.x, v.y)
+
+    operator fun get(idx: Index) = when (idx) {
         0 -> x
         1 -> y
-        else -> throw IndexOutOfBoundsException(index)
+        else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline fun equalTo(v: BVec2)   = x == v.x && y == v.y
+    operator fun set(idx: Index, s: Boolean) = when (idx) {
+        0 -> x = s
+        1 -> y = s
+        else -> throw IndexOutOfBoundsException(idx)
+    }
+
+    inline operator fun not() = BVec2(!x, !y)
+
+    inline fun compareTo(v: BVec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
+    inline fun equalTo(v: BVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
 
     inline fun map(block: (Boolean) -> Boolean) = BVec2(block(x), block(y))
-    inline fun toArray() = booleanArrayOf(x, y)
+    fun toArray() = typeArrayOf(x, y)
 
-    inline fun asString(fmt: String = "%s") = "($fmt, $fmt)".format(x, y)
-    override fun toString() = asString()
+    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt)".format(x, y)
+    override fun toString() = asString(TO_STRING_FORMAT)
 }
 
-data class BVec3(@JvmField val x: Boolean, @JvmField val y: Boolean, @JvmField val z: Boolean) {
+data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean) {
     constructor(v: BVec3) : this(v.x, v.y, v.z)
-    constructor(v: BVec2, z: Boolean = DEFAULT) : this(v.x, v.y, z)
+    constructor(v: BVec2, z: Boolean) : this(v.x, v.y, z)
     constructor(s: Boolean) : this(s, s, s)
 
-    operator fun get(index: Index) = when (index) {
+    fun from(x: Boolean, y: Boolean, z: Boolean) { this.x = x; this.y = y; this.z = z }
+    fun from(v: BVec3) = from(v.x, v.y, v.z)
+
+    operator fun get(idx: Index) = when (idx) {
         0 -> x
         1 -> y
         2 -> z
-        else -> throw IndexOutOfBoundsException(index)
+        else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline fun equalTo(v: BVec3)   = x == v.x && y == v.y && z == v.z
+    operator fun set(idx: Index, s: Boolean) = when (idx) {
+        0 -> x = s
+        1 -> y = s
+        2 -> z = s
+        else -> throw IndexOutOfBoundsException(idx)
+    }
+
+    inline operator fun not() = BVec3(!x, !y, !z)
+
+    inline fun compareTo(v: BVec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
+    inline fun equalTo(v: BVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
 
     inline fun map(block: (Boolean) -> Boolean) = BVec3(block(x), block(y), block(z))
-    inline fun toArray() = booleanArrayOf(x, y, z)
+    fun toArray() = typeArrayOf(x, y, z)
 
-    inline fun asString(fmt: String = "%s") = "($fmt, $fmt, $fmt)".format(x, y, z)
-    override fun toString() = asString()
+    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt)".format(x, y, z)
+    override fun toString() = asString(TO_STRING_FORMAT)
 }
 
-data class BVec4(@JvmField val x: Boolean, @JvmField val y: Boolean, @JvmField val z: Boolean, @JvmField val w: Boolean) {
+data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean, @JvmField var w: Boolean) {
     constructor(v: BVec4) : this(v.x, v.y, v.z, v.w)
-    constructor(v: BVec3, w: Boolean = DEFAULT) : this(v.x, v.y, v.z, w)
-    constructor(v: BVec2, z: Boolean = DEFAULT, w: Boolean = DEFAULT) : this(v.x, v.y, z, w)
+    constructor(v: BVec3, w: Boolean) : this(v.x, v.y, v.z, w)
+    constructor(v: BVec2, z: Boolean, w: Boolean) : this(v.x, v.y, z, w)
     constructor(s: Boolean) : this(s, s, s, s)
 
-    operator fun get(index: Index) = when (index) {
+    fun from(x: Boolean, y: Boolean, z: Boolean, w: Boolean) { this.x = x; this.y = y; this.z = z; this.w = w }
+    fun from(v: BVec4) = from(v.x, v.y, v.z, v.w)
+
+    operator fun get(idx: Index) = when (idx) {
         0 -> x
         1 -> y
         2 -> z
         3 -> w
-        else -> throw IndexOutOfBoundsException(index)
+        else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline fun equalTo(v: BVec4)   = x == v.x && y == v.y && z == v.z && w == v.w
+    operator fun set(idx: Index, s: Boolean) = when (idx) {
+        0 -> x = s
+        1 -> y = s
+        2 -> z = s
+        3 -> w = s
+        else -> throw IndexOutOfBoundsException(idx)
+    }
+
+    inline operator fun not() = BVec4(!x, !y, !z, !w)
+
+    inline fun compareTo(v: BVec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
+    inline fun equalTo(v: BVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
 
     inline fun map(block: (Boolean) -> Boolean) = BVec4(block(x), block(y), block(z), block(w))
-    inline fun toArray() = booleanArrayOf(x, y, z, w)
+    fun toArray() = typeArrayOf(x, y, z, w)
 
-    inline fun asString(fmt: String = "%s") = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
-    override fun toString() = asString()
+    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
+    override fun toString() = asString(TO_STRING_FORMAT)
 }
 
 //region Alternate accessors
-inline val BVec2.r get() = x
-inline val BVec2.g get() = y
-inline val BVec2.s get() = x
-inline val BVec2.t get() = y
+inline var BVec2.r get() = x; set(value) { x = value }
+inline var BVec2.g get() = y; set(value) { y = value }
 
-inline val BVec3.r get() = x
-inline val BVec3.g get() = y
-inline val BVec3.b get() = z
-inline val BVec3.s get() = x
-inline val BVec3.t get() = y
-inline val BVec3.p get() = z
+inline var BVec2.s get() = x; set(value) { x = value }
+inline var BVec2.t get() = y; set(value) { y = value}
 
-inline val BVec4.r get() = x
-inline val BVec4.g get() = y
-inline val BVec4.b get() = z
-inline val BVec4.a get() = w
-inline val BVec4.s get() = x
-inline val BVec4.t get() = y
-inline val BVec4.p get() = z
-inline val BVec4.q get() = w
+inline var BVec3.r get() = x; set(value) { x = value }
+inline var BVec3.g get() = y; set(value) { y = value }
+inline var BVec3.b get() = z; set(value) { z = value }
+
+inline var BVec3.s get() = x; set(value) { x = value}
+inline var BVec3.t get() = y; set(value) { y = value }
+inline var BVec3.p get() = z; set(value) { z = value }
+
+inline var BVec4.r get() = x; set(value) { x = value }
+inline var BVec4.g get() = y; set(value) { y = value }
+inline var BVec4.b get() = z; set(value) { z = value }
+inline var BVec4.a get() = w; set(value) { w = value }
+
+inline var BVec4.s get() = x; set(value) { x = value }
+inline var BVec4.t get() = y; set(value) { y = value }
+inline var BVec4.p get() = z; set(value) { z = value }
+inline var BVec4.q get() = w; set(value) { w = value }
 //endregion
 
 //region Swizzling Vec2

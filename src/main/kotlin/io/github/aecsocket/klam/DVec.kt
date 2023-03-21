@@ -2,132 +2,214 @@
 
 package io.github.aecsocket.klam
 
-private const val DEFAULT: Double = 0.0
+private const val AS_STRING_FORMAT = "%f"
+private const val TO_STRING_FORMAT = DECIMAL_FORMAT
+private inline fun typeArrayOf(vararg elements: Double) = doubleArrayOf(*elements)
 
-data class DVec2(@JvmField val x: Double, @JvmField val y: Double) {
+data class DVec2(@JvmField var x: Double, @JvmField var y: Double) {
     constructor(v: DVec2) : this(v.x, v.y)
     constructor(s: Double) : this(s, s)
 
-    operator fun get(index: Index) = when (index) {
+    fun from(x: Double, y: Double) { this.x = x; this.y = y }
+    fun from(v: DVec2) = from(v.x, v.y)
+
+    operator fun get(idx: Index) = when (idx) {
         0 -> x
         1 -> y
-        else -> throw IndexOutOfBoundsException(index)
+        else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun unaryMinus() = DVec2( -x,  -y)
+    operator fun set(idx: Index, s: Double) = when (idx) {
+        0 -> x = s
+        1 -> y = s
+        else -> throw IndexOutOfBoundsException(idx)
+    }
+
+    inline operator fun unaryMinus() = DVec2(-x, -y)
+    inline operator fun inc()        = DVec2(x + 1, y + 1)
+    inline operator fun dec()        = DVec2(x - 1, y - 1)
 
     inline operator fun plus(s: Double)  = DVec2(x + s, y + s)
     inline operator fun minus(s: Double) = DVec2(x - s, y - s)
     inline operator fun times(s: Double) = DVec2(x * s, y * s)
     inline operator fun div(s: Double)   = DVec2(x / s, y / s)
+    inline operator fun rem(s: Double)   = DVec2(x % s, y % s)
 
     inline operator fun plus(v: DVec2)  = DVec2(x + v.x, y + v.y)
     inline operator fun minus(v: DVec2) = DVec2(x - v.x, y - v.y)
     inline operator fun times(v: DVec2) = DVec2(x * v.x, y * v.y)
     inline operator fun div(v: DVec2)   = DVec2(x / v.x, y / v.y)
+    inline operator fun rem(v: DVec2)   = DVec2(x % v.x, y % v.y)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s }
+    inline operator fun divAssign(s: Double)   { x /= s; y /= s }
+    inline operator fun remAssign(s: Double)   { x %= s; y %= s }
+
+    inline operator fun plusAssign(s: DVec2)  { x += s.x; y += s.y }
+    inline operator fun minusAssign(s: DVec2) { x -= s.x; y -= s.y }
+    inline operator fun timesAssign(s: DVec2) { x *= s.x; y *= s.y }
+    inline operator fun divAssign(s: DVec2)   { x /= s.x; y /= s.y }
+    inline operator fun remAssign(s: DVec2)   { x %= s.x; y %= s.y }
 
     inline fun compareTo(v: DVec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
-    inline fun equalTo(v: DVec2)   = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
+    inline fun equalTo(v: DVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
 
     inline fun map(block: (Double) -> Double) = DVec2(block(x), block(y))
-    inline fun toArray() = doubleArrayOf(x, y)
+    fun toArray() = typeArrayOf(x, y)
 
-    inline fun asString(fmt: String = "%f") = "($fmt, $fmt)".format(x, y)
-    override fun toString() = asString("%.3f")
+    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt)".format(x, y)
+    override fun toString() = asString(TO_STRING_FORMAT)
 }
 
-data class DVec3(@JvmField val x: Double, @JvmField val y: Double, @JvmField val z: Double) {
+data class DVec3(@JvmField var x: Double, @JvmField var y: Double, @JvmField var z: Double) {
     constructor(v: DVec3) : this(v.x, v.y, v.z)
-    constructor(v: DVec2, z: Double = DEFAULT) : this(v.x, v.y, z)
+    constructor(v: DVec2, z: Double) : this(v.x, v.y, z)
     constructor(s: Double) : this(s, s, s)
 
-    operator fun get(index: Index) = when (index) {
+    fun from(x: Double, y: Double, z: Double) { this.x = x; this.y = y; this.z = z }
+    fun from(v: DVec3) = from(v.x, v.y, v.z)
+
+    operator fun get(idx: Index) = when (idx) {
         0 -> x
         1 -> y
         2 -> z
-        else -> throw IndexOutOfBoundsException(index)
+        else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun unaryMinus() = DVec3( -x,  -y,  -z)
+    operator fun set(idx: Index, s: Double) = when (idx) {
+        0 -> x = s
+        1 -> y = s
+        2 -> z = s
+        else -> throw IndexOutOfBoundsException(idx)
+    }
+
+    inline operator fun unaryMinus() = DVec3(-x, -y, -z)
+    inline operator fun inc()        = DVec3(x + 1, y + 1, z + 1)
+    inline operator fun dec()        = DVec3(x - 1, y - 1, z - 1)
 
     inline operator fun plus(s: Double)  = DVec3(x + s, y + s, z + s)
     inline operator fun minus(s: Double) = DVec3(x - s, y - s, z - s)
     inline operator fun times(s: Double) = DVec3(x * s, y * s, z * s)
     inline operator fun div(s: Double)   = DVec3(x / s, y / s, z / s)
+    inline operator fun rem(s: Double)   = DVec3(x % s, y % s, z % s)
 
     inline operator fun plus(v: DVec3)  = DVec3(x + v.x, y + v.y, z + v.z)
     inline operator fun minus(v: DVec3) = DVec3(x - v.x, y - v.y, z - v.z)
     inline operator fun times(v: DVec3) = DVec3(x * v.x, y * v.y, z * v.z)
     inline operator fun div(v: DVec3)   = DVec3(x / v.x, y / v.y, z / v.z)
+    inline operator fun rem(v: DVec3)   = DVec3(x % v.x, y % v.y, z % v.z)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s }
+    inline operator fun divAssign(s: Double)   { x /= s; y /= s; z /= s }
+    inline operator fun remAssign(s: Double)   { x %= s; y %= s; z %= s }
+
+    inline operator fun plusAssign(s: DVec3)  { x += s.x; y += s.y; z += s.z }
+    inline operator fun minusAssign(s: DVec3) { x -= s.x; y -= s.y; z -= s.z }
+    inline operator fun timesAssign(s: DVec3) { x *= s.x; y *= s.y; z *= s.z }
+    inline operator fun divAssign(s: DVec3)   { x /= s.x; y /= s.y; z /= s.z }
+    inline operator fun remAssign(s: DVec3)   { x %= s.x; y %= s.y; z %= s.z }
 
     inline fun compareTo(v: DVec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
-    inline fun equalTo(v: DVec3)   = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
+    inline fun equalTo(v: DVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
 
     inline fun map(block: (Double) -> Double) = DVec3(block(x), block(y), block(z))
-    inline fun toArray() = doubleArrayOf(x, y, z)
+    fun toArray() = typeArrayOf(x, y, z)
 
-    inline fun asString(fmt: String = "%f") = "($fmt, $fmt, $fmt)".format(x, y, z)
-    override fun toString() = asString("%.3f")
+    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt)".format(x, y, z)
+    override fun toString() = asString(TO_STRING_FORMAT)
 }
 
-data class DVec4(@JvmField val x: Double, @JvmField val y: Double, @JvmField val z: Double, @JvmField val w: Double) {
+data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var z: Double, @JvmField var w: Double) {
     constructor(v: DVec4) : this(v.x, v.y, v.z, v.w)
-    constructor(v: DVec3, w: Double = DEFAULT) : this(v.x, v.y, v.z, w)
-    constructor(v: DVec2, z: Double = DEFAULT, w: Double = DEFAULT) : this(v.x, v.y, z, w)
+    constructor(v: DVec3, w: Double) : this(v.x, v.y, v.z, w)
+    constructor(v: DVec2, z: Double, w: Double) : this(v.x, v.y, z, w)
     constructor(s: Double) : this(s, s, s, s)
 
-    operator fun get(index: Index) = when (index) {
+    fun from(x: Double, y: Double, z: Double, w: Double) { this.x = x; this.y = y; this.z = z; this.w = w }
+    fun from(v: DVec4) = from(v.x, v.y, v.z, v.w)
+
+    operator fun get(idx: Index) = when (idx) {
         0 -> x
         1 -> y
         2 -> z
         3 -> w
-        else -> throw IndexOutOfBoundsException(index)
+        else -> throw IndexOutOfBoundsException(idx)
     }
 
+    operator fun set(idx: Index, s: Double) = when (idx) {
+        0 -> x = s
+        1 -> y = s
+        2 -> z = s
+        3 -> w = s
+        else -> throw IndexOutOfBoundsException(idx)
+    }
 
-    inline operator fun unaryMinus() = DVec4( -x,  -y,  -z,  -w)
+    inline operator fun unaryMinus() = DVec4(-x, -y, -z, -w)
+    inline operator fun inc()        = DVec4(x + 1, y + 1, z + 1, w + 1)
+    inline operator fun dec()        = DVec4(x - 1, y - 1, z - 1, w - 1)
 
     inline operator fun plus(s: Double)  = DVec4(x + s, y + s, z + s, w + s)
     inline operator fun minus(s: Double) = DVec4(x - s, y - s, z - s, w - s)
     inline operator fun times(s: Double) = DVec4(x * s, y * s, z * s, w * s)
     inline operator fun div(s: Double)   = DVec4(x / s, y / s, z / s, w / s)
+    inline operator fun rem(s: Double)   = DVec4(x % s, y % s, z % s, w % s)
 
     inline operator fun plus(v: DVec4)  = DVec4(x + v.x, y + v.y, z + v.z, w + v.w)
     inline operator fun minus(v: DVec4) = DVec4(x - v.x, y - v.y, z - v.z, w - v.w)
     inline operator fun times(v: DVec4) = DVec4(x * v.x, y * v.y, z * v.z, w * v.w)
     inline operator fun div(v: DVec4)   = DVec4(x / v.x, y / v.y, z / v.z, w / v.w)
+    inline operator fun rem(v: DVec4)   = DVec4(x % v.x, y % v.y, z % v.z, w % v.w)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s; w += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
+    inline operator fun divAssign(s: Double)   { x /= s; y /= s; z /= s; w /= s }
+    inline operator fun remAssign(s: Double)   { x %= s; y %= s; z %= s; w %= s }
+
+    inline operator fun plusAssign(s: DVec4)  { x += s.x; y += s.y; z += s.z; w += s.w }
+    inline operator fun minusAssign(s: DVec4) { x -= s.x; y -= s.y; z -= s.z; w -= s.w }
+    inline operator fun timesAssign(s: DVec4) { x *= s.x; y *= s.y; z *= s.z; w *= s.w }
+    inline operator fun divAssign(s: DVec4)   { x /= s.x; y /= s.y; z /= s.z; w /= s.w }
+    inline operator fun remAssign(s: DVec4)   { x %= s.x; y %= s.y; z %= s.z; w %= s.w }
 
     inline fun compareTo(v: DVec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
-    inline fun equalTo(v: DVec4)   = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
+    inline fun equalTo(v: DVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
 
     inline fun map(block: (Double) -> Double) = DVec4(block(x), block(y), block(z), block(w))
-    inline fun toArray() = doubleArrayOf(x, y, z, w)
+    fun toArray() = typeArrayOf(x, y, z, w)
 
-    inline fun asString(fmt: String = "%f") = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
-    override fun toString() = asString("%.3f")
+    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
+    override fun toString() = asString(TO_STRING_FORMAT)
 }
 
 //region Alternate accessors
-inline val DVec2.r get() = x
-inline val DVec2.g get() = y
-inline val DVec2.s get() = x
-inline val DVec2.t get() = y
+inline var DVec2.r get() = x; set(value) { x = value }
+inline var DVec2.g get() = y; set(value) { y = value }
 
-inline val DVec3.r get() = x
-inline val DVec3.g get() = y
-inline val DVec3.b get() = z
-inline val DVec3.s get() = x
-inline val DVec3.t get() = y
-inline val DVec3.p get() = z
+inline var DVec2.s get() = x; set(value) { x = value }
+inline var DVec2.t get() = y; set(value) { y = value}
 
-inline val DVec4.r get() = x
-inline val DVec4.g get() = y
-inline val DVec4.b get() = z
-inline val DVec4.a get() = w
-inline val DVec4.s get() = x
-inline val DVec4.t get() = y
-inline val DVec4.p get() = z
-inline val DVec4.q get() = w
+inline var DVec3.r get() = x; set(value) { x = value }
+inline var DVec3.g get() = y; set(value) { y = value }
+inline var DVec3.b get() = z; set(value) { z = value }
+
+inline var DVec3.s get() = x; set(value) { x = value}
+inline var DVec3.t get() = y; set(value) { y = value }
+inline var DVec3.p get() = z; set(value) { z = value }
+
+inline var DVec4.r get() = x; set(value) { x = value }
+inline var DVec4.g get() = y; set(value) { y = value }
+inline var DVec4.b get() = z; set(value) { z = value }
+inline var DVec4.a get() = w; set(value) { w = value }
+
+inline var DVec4.s get() = x; set(value) { x = value }
+inline var DVec4.t get() = y; set(value) { y = value }
+inline var DVec4.p get() = z; set(value) { z = value }
+inline var DVec4.q get() = w; set(value) { w = value }
 //endregion
 
 //region Swizzling Vec2

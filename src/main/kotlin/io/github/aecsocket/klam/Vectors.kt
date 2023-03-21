@@ -15,12 +15,26 @@ inline fun all(v: BVec2) = v.x && v.y
 inline fun all(v: BVec3) = v.x && v.y && v.z
 inline fun all(v: BVec4) = v.x && v.y && v.z && v.w
 
+inline fun DVec2(v: IVec2) = DVec2(v.x.toDouble(), v.y.toDouble())
 inline fun DVec2(v: FVec2) = DVec2(v.x.toDouble(), v.y.toDouble())
+inline fun DVec3(v: IVec3) = DVec3(v.x.toDouble(), v.y.toDouble(), v.z.toDouble())
 inline fun DVec3(v: FVec3) = DVec3(v.x.toDouble(), v.y.toDouble(), v.z.toDouble())
+inline fun DVec4(v: IVec4) = DVec4(v.x.toDouble(), v.y.toDouble(), v.z.toDouble(), v.w.toDouble())
 inline fun DVec4(v: FVec4) = DVec4(v.x.toDouble(), v.y.toDouble(), v.z.toDouble(), v.w.toDouble())
+
+inline fun FVec2(v: IVec2) = FVec2(v.x.toFloat(), v.y.toFloat())
 inline fun FVec2(v: DVec2) = FVec2(v.x.toFloat(), v.y.toFloat())
+inline fun FVec3(v: IVec3) = FVec3(v.x.toFloat(), v.y.toFloat(), v.z.toFloat())
 inline fun FVec3(v: DVec3) = FVec3(v.x.toFloat(), v.y.toFloat(), v.z.toFloat())
+inline fun FVec4(v: IVec4) = FVec4(v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), v.w.toFloat())
 inline fun FVec4(v: DVec4) = FVec4(v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), v.w.toFloat())
+
+inline fun IVec2(v: FVec2) = IVec2(v.x.toInt(), v.y.toInt())
+inline fun IVec2(v: DVec2) = IVec2(v.x.toInt(), v.y.toInt())
+inline fun IVec3(v: FVec3) = IVec3(v.x.toInt(), v.y.toInt(), v.z.toInt())
+inline fun IVec3(v: DVec3) = IVec3(v.x.toInt(), v.y.toInt(), v.z.toInt())
+inline fun IVec4(v: FVec4) = IVec4(v.x.toInt(), v.y.toInt(), v.z.toInt(), v.w.toInt())
+inline fun IVec4(v: DVec4) = IVec4(v.x.toInt(), v.y.toInt(), v.z.toInt(), v.w.toInt())
 
 inline fun abs(v: IVec2) = IVec2(abs(v.x), abs(v.y))
 inline fun abs(v: IVec3) = IVec3(abs(v.x), abs(v.y), abs(v.z))

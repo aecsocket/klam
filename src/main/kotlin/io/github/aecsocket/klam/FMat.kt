@@ -30,9 +30,6 @@ data class FMat2(@JvmField var x: FVec2, @JvmField var y: FVec2) {
     }
     operator fun get(col: Index, row: Index) = get(col)[row]
 
-    operator fun set(col: Index, v: FVec2) { get(col).set(v) }
-    operator fun set(col: Index, row: Index, s: Float) { get(col)[row] = s }
-
     inline operator fun unaryMinus() = FMat2( -x,  -y)
     inline operator fun inc()        = FMat2(++x, ++y)
     inline operator fun dec()        = FMat2(--x, --y)
