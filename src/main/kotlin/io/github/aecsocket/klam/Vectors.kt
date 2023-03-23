@@ -123,6 +123,17 @@ inline fun dot(a: DVec2, b: DVec2) = a.x*b.x + a.y*b.y
 inline fun dot(a: DVec3, b: DVec3) = a.x*b.x + a.y*b.y + a.z*b.z
 inline fun dot(a: DVec4, b: DVec4) = a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w
 
+inline fun cross(a: FVec3, b: FVec3) = FVec3(
+    a.y*b.z - a.z*b.y,
+    a.z*b.x - a.x*b.z,
+    a.x*b.y - a.y*b.x,
+)
+inline fun cross(a: DVec3, b: DVec3) = DVec3(
+    a.y*b.z - a.z*b.y,
+    a.z*b.x - a.x*b.z,
+    a.x*b.y - a.y*b.x,
+)
+
 inline infix fun IVec2.eq(v: IVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
 inline infix fun IVec3.eq(v: IVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
 inline infix fun IVec4.eq(v: IVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)

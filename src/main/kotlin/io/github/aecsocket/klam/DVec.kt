@@ -33,25 +33,21 @@ data class DVec2(@JvmField var x: Double, @JvmField var y: Double) {
     inline operator fun minus(s: Double) = DVec2(x - s, y - s)
     inline operator fun times(s: Double) = DVec2(x * s, y * s)
     inline operator fun div(s: Double)   = DVec2(x / s, y / s)
-    inline operator fun rem(s: Double)   = DVec2(x % s, y % s)
 
     inline operator fun plus(v: DVec2)  = DVec2(x + v.x, y + v.y)
     inline operator fun minus(v: DVec2) = DVec2(x - v.x, y - v.y)
     inline operator fun times(v: DVec2) = DVec2(x * v.x, y * v.y)
     inline operator fun div(v: DVec2)   = DVec2(x / v.x, y / v.y)
-    inline operator fun rem(v: DVec2)   = DVec2(x % v.x, y % v.y)
 
     inline operator fun plusAssign(s: Double)  { x += s; y += s }
     inline operator fun minusAssign(s: Double) { x -= s; y -= s }
     inline operator fun timesAssign(s: Double) { x *= s; y *= s }
     inline operator fun divAssign(s: Double)   { x /= s; y /= s }
-    inline operator fun remAssign(s: Double)   { x %= s; y %= s }
 
     inline operator fun plusAssign(s: DVec2)  { x += s.x; y += s.y }
     inline operator fun minusAssign(s: DVec2) { x -= s.x; y -= s.y }
     inline operator fun timesAssign(s: DVec2) { x *= s.x; y *= s.y }
     inline operator fun divAssign(s: DVec2)   { x /= s.x; y /= s.y }
-    inline operator fun remAssign(s: DVec2)   { x %= s.x; y %= s.y }
 
     inline fun compareTo(v: DVec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
     inline fun equalTo(v: DVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
@@ -93,25 +89,21 @@ data class DVec3(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
     inline operator fun minus(s: Double) = DVec3(x - s, y - s, z - s)
     inline operator fun times(s: Double) = DVec3(x * s, y * s, z * s)
     inline operator fun div(s: Double)   = DVec3(x / s, y / s, z / s)
-    inline operator fun rem(s: Double)   = DVec3(x % s, y % s, z % s)
 
     inline operator fun plus(v: DVec3)  = DVec3(x + v.x, y + v.y, z + v.z)
     inline operator fun minus(v: DVec3) = DVec3(x - v.x, y - v.y, z - v.z)
     inline operator fun times(v: DVec3) = DVec3(x * v.x, y * v.y, z * v.z)
     inline operator fun div(v: DVec3)   = DVec3(x / v.x, y / v.y, z / v.z)
-    inline operator fun rem(v: DVec3)   = DVec3(x % v.x, y % v.y, z % v.z)
 
     inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s }
     inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s }
     inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s }
     inline operator fun divAssign(s: Double)   { x /= s; y /= s; z /= s }
-    inline operator fun remAssign(s: Double)   { x %= s; y %= s; z %= s }
 
     inline operator fun plusAssign(s: DVec3)  { x += s.x; y += s.y; z += s.z }
     inline operator fun minusAssign(s: DVec3) { x -= s.x; y -= s.y; z -= s.z }
     inline operator fun timesAssign(s: DVec3) { x *= s.x; y *= s.y; z *= s.z }
     inline operator fun divAssign(s: DVec3)   { x /= s.x; y /= s.y; z /= s.z }
-    inline operator fun remAssign(s: DVec3)   { x %= s.x; y %= s.y; z %= s.z }
 
     inline fun compareTo(v: DVec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
     inline fun equalTo(v: DVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
@@ -156,25 +148,21 @@ data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
     inline operator fun minus(s: Double) = DVec4(x - s, y - s, z - s, w - s)
     inline operator fun times(s: Double) = DVec4(x * s, y * s, z * s, w * s)
     inline operator fun div(s: Double)   = DVec4(x / s, y / s, z / s, w / s)
-    inline operator fun rem(s: Double)   = DVec4(x % s, y % s, z % s, w % s)
 
     inline operator fun plus(v: DVec4)  = DVec4(x + v.x, y + v.y, z + v.z, w + v.w)
     inline operator fun minus(v: DVec4) = DVec4(x - v.x, y - v.y, z - v.z, w - v.w)
     inline operator fun times(v: DVec4) = DVec4(x * v.x, y * v.y, z * v.z, w * v.w)
     inline operator fun div(v: DVec4)   = DVec4(x / v.x, y / v.y, z / v.z, w / v.w)
-    inline operator fun rem(v: DVec4)   = DVec4(x % v.x, y % v.y, z % v.z, w % v.w)
 
     inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s; w += s }
     inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= s }
     inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
     inline operator fun divAssign(s: Double)   { x /= s; y /= s; z /= s; w /= s }
-    inline operator fun remAssign(s: Double)   { x %= s; y %= s; z %= s; w %= s }
 
     inline operator fun plusAssign(s: DVec4)  { x += s.x; y += s.y; z += s.z; w += s.w }
     inline operator fun minusAssign(s: DVec4) { x -= s.x; y -= s.y; z -= s.z; w -= s.w }
     inline operator fun timesAssign(s: DVec4) { x *= s.x; y *= s.y; z *= s.z; w *= s.w }
     inline operator fun divAssign(s: DVec4)   { x /= s.x; y /= s.y; z /= s.z; w /= s.w }
-    inline operator fun remAssign(s: DVec4)   { x %= s.x; y %= s.y; z %= s.z; w %= s.w }
 
     inline fun compareTo(v: DVec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
     inline fun equalTo(v: DVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
