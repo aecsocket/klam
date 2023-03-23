@@ -25,43 +25,42 @@ data class IVec2(@JvmField var x: Int, @JvmField var y: Int) {
         else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun unaryMinus() = IVec2(-x, -y)
-    inline operator fun inc()        = IVec2(x + 1, y + 1)
-    inline operator fun dec()        = IVec2(x - 1, y - 1)
-
-    inline operator fun plus(s: Int)  = IVec2(x + s, y + s)
-    inline operator fun minus(s: Int) = IVec2(x - s, y - s)
-    inline operator fun times(s: Int) = IVec2(x * s, y * s)
-    inline operator fun div(s: Int)   = IVec2(x / s, y / s)
-    inline operator fun rem(s: Int)   = IVec2(x % s, y % s)
-
-    inline operator fun plus(v: IVec2)  = IVec2(x + v.x, y + v.y)
-    inline operator fun minus(v: IVec2) = IVec2(x - v.x, y - v.y)
-    inline operator fun times(v: IVec2) = IVec2(x * v.x, y * v.y)
-    inline operator fun div(v: IVec2)   = IVec2(x / v.x, y / v.y)
-    inline operator fun rem(v: IVec2)   = IVec2(x % v.x, y % v.y)
-
-    inline operator fun plusAssign(s: Int)  { x += s; y += s }
-    inline operator fun minusAssign(s: Int) { x -= s; y -= s }
-    inline operator fun timesAssign(s: Int) { x *= s; y *= s }
-    inline operator fun divAssign(s: Int)   { x /= s; y /= s }
-    inline operator fun remAssign(s: Int)   { x %= s; y %= s }
-
-    inline operator fun plusAssign(s: IVec2)  { x += s.x; y += s.y }
-    inline operator fun minusAssign(s: IVec2) { x -= s.x; y -= s.y }
-    inline operator fun timesAssign(s: IVec2) { x *= s.x; y *= s.y }
-    inline operator fun divAssign(s: IVec2)   { x /= s.x; y /= s.y }
-    inline operator fun remAssign(s: IVec2)   { x %= s.x; y %= s.y }
-
-    inline fun compareTo(v: IVec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
-    inline fun equalTo(v: IVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
-
-    inline fun map(block: (Int) -> Int) = IVec2(block(x), block(y))
+    fun compareTo(v: IVec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
+    fun equalTo(v: IVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
     fun toArray() = typeArrayOf(x, y)
 
     fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt)".format(x, y)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
+
+inline fun IVec2.map(block: (Int) -> Int) = IVec2(block(x), block(y))
+
+inline operator fun IVec2.unaryMinus() = IVec2(-x, -y)
+
+inline operator fun IVec2.plusAssign(s: Int)  { x += s; y += s }
+inline operator fun IVec2.minusAssign(s: Int) { x -= s; y -= s }
+inline operator fun IVec2.timesAssign(s: Int) { x *= s; y *= s }
+inline operator fun IVec2.divAssign(s: Int)   { x /= s; y /= s }
+
+inline operator fun IVec2.plus(s: Int)  = IVec2(x + s, y + s)
+inline operator fun IVec2.minus(s: Int) = IVec2(x - s, y - s)
+inline operator fun IVec2.times(s: Int) = IVec2(x * s, y * s)
+inline operator fun IVec2.div(s: Int)   = IVec2(x / s, y / s)
+
+inline operator fun Int.plus(v: IVec2)  = IVec2(this + v.x, this + v.y)
+inline operator fun Int.minus(v: IVec2) = IVec2(this - v.x, this - v.y)
+inline operator fun Int.times(v: IVec2) = IVec2(this * v.x, this * v.y)
+inline operator fun Int.div(v: IVec2)   = IVec2(this / v.x, this / v.y)
+
+inline operator fun IVec2.plusAssign(s: Int)  { x += s; y += s }
+inline operator fun IVec2.minusAssign(s: Int) { x -= s; y -= s }
+inline operator fun IVec2.timesAssign(s: Int) { x *= s; y *= s }
+inline operator fun IVec2.divAssign(s: Int)   { x /= s; y /= s }
+
+inline operator fun IVec2.plusAssign(v: IVec2)  { x += v.x; y += v.y }
+inline operator fun IVec2.minusAssign(v: IVec2) { x -= v.x; y -= v.y }
+inline operator fun IVec2.timesAssign(v: IVec2) { x *= v.x; y *= v.y }
+inline operator fun IVec2.divAssign(v: IVec2)   { x /= v.x; y /= v.y }
 
 data class IVec3(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: Int) {
     constructor(v: IVec3) : this(v.x, v.y, v.z)
@@ -85,39 +84,42 @@ data class IVec3(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
         else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun unaryMinus() = IVec3(-x, -y, -z)
-    inline operator fun inc()        = IVec3(x + 1, y + 1, z + 1)
-    inline operator fun dec()        = IVec3(x - 1, y - 1, z - 1)
-
-    inline operator fun plus(s: Int)  = IVec3(x + s, y + s, z + s)
-    inline operator fun minus(s: Int) = IVec3(x - s, y - s, z - s)
-    inline operator fun times(s: Int) = IVec3(x * s, y * s, z * s)
-    inline operator fun div(s: Int)   = IVec3(x / s, y / s, z / s)
-
-    inline operator fun plus(v: IVec3)  = IVec3(x + v.x, y + v.y, z + v.z)
-    inline operator fun minus(v: IVec3) = IVec3(x - v.x, y - v.y, z - v.z)
-    inline operator fun times(v: IVec3) = IVec3(x * v.x, y * v.y, z * v.z)
-    inline operator fun div(v: IVec3)   = IVec3(x / v.x, y / v.y, z / v.z)
-
-    inline operator fun plusAssign(s: Int)  { x += s; y += s; z += s }
-    inline operator fun minusAssign(s: Int) { x -= s; y -= s; z -= s }
-    inline operator fun timesAssign(s: Int) { x *= s; y *= s; z *= s }
-    inline operator fun divAssign(s: Int)   { x /= s; y /= s; z /= s }
-
-    inline operator fun plusAssign(s: IVec3)  { x += s.x; y += s.y; z += s.z }
-    inline operator fun minusAssign(s: IVec3) { x -= s.x; y -= s.y; z -= s.z }
-    inline operator fun timesAssign(s: IVec3) { x *= s.x; y *= s.y; z *= s.z }
-    inline operator fun divAssign(s: IVec3)   { x /= s.x; y /= s.y; z /= s.z }
-
-    inline fun compareTo(v: IVec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
-    inline fun equalTo(v: IVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
-
-    inline fun map(block: (Int) -> Int) = IVec3(block(x), block(y), block(z))
+    fun compareTo(v: IVec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
+    fun equalTo(v: IVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
     fun toArray() = typeArrayOf(x, y, z)
 
     fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt)".format(x, y, z)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
+
+inline fun IVec3.map(block: (Int) -> Int) = IVec3(block(x), block(y), block(z))
+
+inline operator fun IVec3.unaryMinus() = IVec3(-x, -y, -z)
+
+inline operator fun IVec3.plusAssign(s: Int)  { x += s; y += s; z += s }
+inline operator fun IVec3.minusAssign(s: Int) { x -= s; y -= s; z -= s }
+inline operator fun IVec3.timesAssign(s: Int) { x *= s; y *= s; z *= s }
+inline operator fun IVec3.divAssign(s: Int)   { x /= s; y /= s; z /= s }
+
+inline operator fun IVec3.plus(s: Int)  = IVec3(x + s, y + s, z + s)
+inline operator fun IVec3.minus(s: Int) = IVec3(x - s, y - s, z - s)
+inline operator fun IVec3.times(s: Int) = IVec3(x * s, y * s, z * s)
+inline operator fun IVec3.div(s: Int)   = IVec3(x / s, y / s, z / s)
+
+inline operator fun Int.plus(v: IVec3)  = IVec3(this + v.x, this + v.y, this + v.z)
+inline operator fun Int.minus(v: IVec3) = IVec3(this - v.x, this - v.y, this - v.z)
+inline operator fun Int.times(v: IVec3) = IVec3(this * v.x, this * v.y, this * v.z)
+inline operator fun Int.div(v: IVec3)   = IVec3(this / v.x, this / v.y, this / v.z)
+
+inline operator fun IVec3.plusAssign(s: Int)  { x += s; y += s; z += s }
+inline operator fun IVec3.minusAssign(s: Int) { x -= s; y -= s; z -= s }
+inline operator fun IVec3.timesAssign(s: Int) { x *= s; y *= s; z *= s }
+inline operator fun IVec3.divAssign(s: Int)   { x /= s; y /= s; z /= s }
+
+inline operator fun IVec3.plusAssign(v: IVec3)  { x += v.x; y += v.y; z += v.z }
+inline operator fun IVec3.minusAssign(v: IVec3) { x -= v.x; y -= v.y; z -= v.z }
+inline operator fun IVec3.timesAssign(v: IVec3) { x *= v.x; y *= v.y; z *= v.z }
+inline operator fun IVec3.divAssign(v: IVec3)   { x /= v.x; y /= v.y; z /= v.z }
 
 data class IVec4(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: Int, @JvmField var w: Int) {
     constructor(v: IVec4) : this(v.x, v.y, v.z, v.w)
@@ -125,7 +127,10 @@ data class IVec4(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
     constructor(v: IVec2, z: Int, w: Int) : this(v.x, v.y, z, w)
     constructor(s: Int) : this(s, s, s, s)
 
-    fun from(x: Int, y: Int, z: Int, w: Int) { this.x = x; this.y = y; this.z = z; this.w = w }
+    fun from(x: Int, y: Int, z: Int, w: Int) {
+        this.x = x; this.y = y; this.z = z; this.w = w
+    }
+
     fun from(v: IVec4) = from(v.x, v.y, v.z, v.w)
 
     operator fun get(idx: Index) = when (idx) {
@@ -144,39 +149,44 @@ data class IVec4(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
         else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun unaryMinus() = IVec4(-x, -y, -z, -w)
-    inline operator fun inc()        = IVec4(x + 1, y + 1, z + 1, w + 1)
-    inline operator fun dec()        = IVec4(x - 1, y - 1, z - 1, w - 1)
+    fun compareTo(v: IVec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
+    fun equalTo(v: IVec4) =
+        x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
 
-    inline operator fun plus(s: Int)  = IVec4(x + s, y + s, z + s, w + s)
-    inline operator fun minus(s: Int) = IVec4(x - s, y - s, z - s, w - s)
-    inline operator fun times(s: Int) = IVec4(x * s, y * s, z * s, w * s)
-    inline operator fun div(s: Int)   = IVec4(x / s, y / s, z / s, w / s)
-
-    inline operator fun plus(v: IVec4)  = IVec4(x + v.x, y + v.y, z + v.z, w + v.w)
-    inline operator fun minus(v: IVec4) = IVec4(x - v.x, y - v.y, z - v.z, w - v.w)
-    inline operator fun times(v: IVec4) = IVec4(x * v.x, y * v.y, z * v.z, w * v.w)
-    inline operator fun div(v: IVec4)   = IVec4(x / v.x, y / v.y, z / v.z, w / v.w)
-
-    inline operator fun plusAssign(s: Int)  { x += s; y += s; z += s; w += s }
-    inline operator fun minusAssign(s: Int) { x -= s; y -= s; z -= s; w -= s }
-    inline operator fun timesAssign(s: Int) { x *= s; y *= s; z *= s; w *= s }
-    inline operator fun divAssign(s: Int)   { x /= s; y /= s; z /= s; w /= s }
-
-    inline operator fun plusAssign(s: IVec4)  { x += s.x; y += s.y; z += s.z; w += s.w }
-    inline operator fun minusAssign(s: IVec4) { x -= s.x; y -= s.y; z -= s.z; w -= s.w }
-    inline operator fun timesAssign(s: IVec4) { x *= s.x; y *= s.y; z *= s.z; w *= s.w }
-    inline operator fun divAssign(s: IVec4)   { x /= s.x; y /= s.y; z /= s.z; w /= s.w }
-
-    inline fun compareTo(v: IVec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
-    inline fun equalTo(v: IVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
-
-    inline fun map(block: (Int) -> Int) = IVec4(block(x), block(y), block(z), block(w))
     fun toArray() = typeArrayOf(x, y, z, w)
 
     fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
+
+inline fun IVec4.map(block: (Int) -> Int) = IVec4(block(x), block(y), block(z), block(w))
+
+inline operator fun IVec4.unaryMinus() = IVec4(-x, -y, -z, -w)
+
+inline operator fun IVec4.plusAssign(s: Int)  { x += s; y += s; z += s; w += s }
+inline operator fun IVec4.minusAssign(s: Int) { x -= s; y -= s; z -= s; w -= s }
+inline operator fun IVec4.timesAssign(s: Int) { x *= s; y *= s; z *= s; w *= s }
+inline operator fun IVec4.divAssign(s: Int)   { x /= s; y /= s; z /= s; w /= s }
+
+inline operator fun IVec4.plus(s: Int)  = IVec4(x + s, y + s, z + s, w + s)
+inline operator fun IVec4.minus(s: Int) = IVec4(x - s, y - s, z - s, w - s)
+inline operator fun IVec4.times(s: Int) = IVec4(x * s, y * s, z * s, w * s)
+inline operator fun IVec4.div(s: Int)   = IVec4(x / s, y / s, z / s, w / s)
+
+inline operator fun Int.plus(v: IVec4)  = IVec4(this + v.x, this + v.y, this + v.z, this + v.w)
+inline operator fun Int.minus(v: IVec4) = IVec4(this - v.x, this - v.y, this - v.z, this - v.w)
+inline operator fun Int.times(v: IVec4) = IVec4(this * v.x, this * v.y, this * v.z, this * v.w)
+inline operator fun Int.div(v: IVec4)   = IVec4(this / v.x, this / v.y, this / v.z, this / v.w)
+
+inline operator fun IVec4.plusAssign(s: Int)  { x += s; y += s; z += s; w += s }
+inline operator fun IVec4.minusAssign(s: Int) { x -= s; y -= s; z -= s; w -= s }
+inline operator fun IVec4.timesAssign(s: Int) { x *= s; y *= s; z *= s; w *= s }
+inline operator fun IVec4.divAssign(s: Int)   { x /= s; y /= s; z /= s; w /= s }
+
+inline operator fun IVec4.plusAssign(v: IVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }
+inline operator fun IVec4.minusAssign(v: IVec4) { x -= v.x; y -= v.y; z -= v.z; w -= v.w }
+inline operator fun IVec4.timesAssign(v: IVec4) { x *= v.x; y *= v.y; z *= v.z; w *= v.w }
+inline operator fun IVec4.divAssign(v: IVec4)   { x /= v.x; y /= v.y; z /= v.z; w /= v.w }
 
 //region Alternate accessors
 inline var IVec2.r get() = x; set(value) { x = value }

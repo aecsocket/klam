@@ -25,17 +25,16 @@ data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
         else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun not() = BVec2(!x, !y)
-
-    inline fun compareTo(v: BVec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
-    inline fun equalTo(v: BVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
-
-    inline fun map(block: (Boolean) -> Boolean) = BVec2(block(x), block(y))
+    fun compareTo(v: BVec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
+    fun equalTo(v: BVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
     fun toArray() = typeArrayOf(x, y)
 
     fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt)".format(x, y)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
+
+inline fun BVec2.map(block: (Boolean) -> Boolean) = BVec2(block(x), block(y))
+inline operator fun BVec2.not() = BVec2(!x, !y)
 
 data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean) {
     constructor(v: BVec3) : this(v.x, v.y, v.z)
@@ -59,17 +58,16 @@ data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
         else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun not() = BVec3(!x, !y, !z)
-
-    inline fun compareTo(v: BVec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
-    inline fun equalTo(v: BVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
-
-    inline fun map(block: (Boolean) -> Boolean) = BVec3(block(x), block(y), block(z))
+    fun compareTo(v: BVec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
+    fun equalTo(v: BVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
     fun toArray() = typeArrayOf(x, y, z)
 
     fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt)".format(x, y, z)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
+
+inline fun BVec3.map(block: (Boolean) -> Boolean) = BVec3(block(x), block(y), block(z))
+inline operator fun BVec3.not() = BVec3(!x, !y, !z)
 
 data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean, @JvmField var w: Boolean) {
     constructor(v: BVec4) : this(v.x, v.y, v.z, v.w)
@@ -96,17 +94,16 @@ data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
         else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun not() = BVec4(!x, !y, !z, !w)
-
-    inline fun compareTo(v: BVec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
-    inline fun equalTo(v: BVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
-
-    inline fun map(block: (Boolean) -> Boolean) = BVec4(block(x), block(y), block(z), block(w))
+    fun compareTo(v: BVec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
+    fun equalTo(v: BVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
     fun toArray() = typeArrayOf(x, y, z, w)
 
     fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
+
+inline fun BVec4.map(block: (Boolean) -> Boolean) = BVec4(block(x), block(y), block(z), block(w))
+inline operator fun BVec4.not() = BVec4(!x, !y, !z, !w)
 
 //region Alternate accessors
 inline var BVec2.r get() = x; set(value) { x = value }
