@@ -7,129 +7,7 @@ import kotlin.math.min
 import kotlin.math.max
 import kotlin.math.sqrt
 
-// operators
-inline operator fun BVec2.not() = BVec2(!x, !y)
-inline operator fun BVec3.not() = BVec3(!x, !y, !z)
-inline operator fun BVec4.not() = BVec4(!x, !y, !z, !w)
-
-inline operator fun IVec2.plusAssign(v: IVec2)  { x += v.x; y += v.y }
-inline operator fun IVec2.minusAssign(v: IVec2) { x -= v.x; y -= v.y }
-inline operator fun IVec2.timesAssign(v: IVec2) { x *= v.x; y *= v.y }
-inline operator fun IVec2.divAssign(v: IVec2)   { x /= v.x; y /= v.y }
-
-inline operator fun IVec2.plus(v: IVec2)  = IVec2(x + v.x, y + v.y)
-inline operator fun IVec2.minus(v: IVec2) = IVec2(x - v.x, y - v.y)
-inline operator fun IVec2.times(v: IVec2) = IVec2(x * v.x, y * v.y)
-inline operator fun IVec2.div(v: IVec2)   = IVec2(x / v.x, y / v.y)
-
-inline operator fun IVec3.plusAssign(v: IVec3)  { x += v.x; y += v.y; z += v.z }
-inline operator fun IVec3.minusAssign(v: IVec3) { x -= v.x; y -= v.y; z += v.z }
-inline operator fun IVec3.timesAssign(v: IVec3) { x *= v.x; y *= v.y; z *= v.z }
-inline operator fun IVec3.divAssign(v: IVec3)   { x /= v.x; y /= v.y; z /= v.z }
-
-inline operator fun IVec3.plus(v: IVec3)  = IVec3(x + v.x, y + v.y, z + v.z)
-inline operator fun IVec3.minus(v: IVec3) = IVec3(x - v.x, y - v.y, z - v.z)
-inline operator fun IVec3.times(v: IVec3) = IVec3(x * v.x, y * v.y, z * v.z)
-inline operator fun IVec3.div(v: IVec3)   = IVec3(x / v.x, y / v.y, z / v.z)
-
-// comparators
-inline infix fun IVec2.eq(v: IVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
-inline infix fun IVec3.eq(v: IVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
-inline infix fun IVec4.eq(v: IVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
-inline infix fun FVec2.eq(v: FVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
-inline infix fun FVec3.eq(v: FVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
-inline infix fun FVec4.eq(v: FVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
-inline infix fun DVec2.eq(v: DVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
-inline infix fun DVec3.eq(v: DVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
-inline infix fun DVec4.eq(v: DVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
-
-inline infix fun IVec2.ne(v: IVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
-inline infix fun IVec3.ne(v: IVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
-inline infix fun IVec4.ne(v: IVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
-inline infix fun FVec2.ne(v: FVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
-inline infix fun FVec3.ne(v: FVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
-inline infix fun FVec4.ne(v: FVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
-inline infix fun DVec2.ne(v: DVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
-inline infix fun DVec3.ne(v: DVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
-inline infix fun DVec4.ne(v: DVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
-
-inline infix fun IVec2.lt(v: IVec2) = BVec2(x < v.x, y < v.y)
-inline infix fun IVec3.lt(v: IVec3) = BVec3(x < v.x, y < v.y, z < v.z)
-inline infix fun IVec4.lt(v: IVec4) = BVec4(x < v.x, y < v.y, z < v.z, w < v.w)
-inline infix fun FVec2.lt(v: FVec2) = BVec2(x < v.x, y < v.y)
-inline infix fun FVec3.lt(v: FVec3) = BVec3(x < v.x, y < v.y, z < v.z)
-inline infix fun FVec4.lt(v: FVec4) = BVec4(x < v.x, y < v.y, z < v.z, w < v.w)
-inline infix fun DVec2.lt(v: DVec2) = BVec2(x < v.x, y < v.y)
-inline infix fun DVec3.lt(v: DVec3) = BVec3(x < v.x, y < v.y, z < v.z)
-inline infix fun DVec4.lt(v: DVec4) = BVec4(x < v.x, y < v.y, z < v.z, w < v.w)
-
-inline infix fun IVec2.lt(s: Int)    = BVec2(x < s, y < s)
-inline infix fun IVec3.lt(s: Int)    = BVec3(x < s, y < s, z < s)
-inline infix fun IVec4.lt(s: Int)    = BVec4(x < s, y < s, z < s, w < s)
-inline infix fun FVec2.lt(s: Float)  = BVec2(x < s, y < s)
-inline infix fun FVec3.lt(s: Float)  = BVec3(x < s, y < s, z < s)
-inline infix fun FVec4.lt(s: Float)  = BVec4(x < s, y < s, z < s, w < s)
-inline infix fun DVec2.lt(s: Double) = BVec2(x < s, y < s)
-inline infix fun DVec3.lt(s: Double) = BVec3(x < s, y < s, z < s)
-inline infix fun DVec4.lt(s: Double) = BVec4(x < s, y < s, z < s, w < s)
-
-inline infix fun IVec2.le(v: IVec2) = BVec2(x <= v.x, y <= v.y)
-inline infix fun IVec3.le(v: IVec3) = BVec3(x <= v.x, y <= v.y, z <= v.z)
-inline infix fun IVec4.le(v: IVec4) = BVec4(x <= v.x, y <= v.y, z <= v.z, w <= v.w)
-inline infix fun FVec2.le(v: FVec2) = BVec2(x <= v.x, y <= v.y)
-inline infix fun FVec3.le(v: FVec3) = BVec3(x <= v.x, y <= v.y, z <= v.z)
-inline infix fun FVec4.le(v: FVec4) = BVec4(x <= v.x, y <= v.y, z <= v.z, w <= v.w)
-inline infix fun DVec2.le(v: DVec2) = BVec2(x <= v.x, y <= v.y)
-inline infix fun DVec3.le(v: DVec3) = BVec3(x <= v.x, y <= v.y, z <= v.z)
-inline infix fun DVec4.le(v: DVec4) = BVec4(x <= v.x, y <= v.y, z <= v.z, w <= v.w)
-
-inline infix fun IVec2.le(s: Int)    = BVec2(x <= s, y <= s)
-inline infix fun IVec3.le(s: Int)    = BVec3(x <= s, y <= s, z <= s)
-inline infix fun IVec4.le(s: Int)    = BVec4(x <= s, y <= s, z <= s, w <= s)
-inline infix fun FVec2.le(s: Float)  = BVec2(x <= s, y <= s)
-inline infix fun FVec3.le(s: Float)  = BVec3(x <= s, y <= s, z <= s)
-inline infix fun FVec4.le(s: Float)  = BVec4(x <= s, y <= s, z <= s, w <= s)
-inline infix fun DVec2.le(s: Double) = BVec2(x <= s, y <= s)
-inline infix fun DVec3.le(s: Double) = BVec3(x <= s, y <= s, z <= s)
-inline infix fun DVec4.le(s: Double) = BVec4(x <= s, y <= s, z <= s, w <= s)
-
-inline infix fun IVec2.gt(v: IVec2) = BVec2(x > v.x, y > v.y)
-inline infix fun IVec3.gt(v: IVec3) = BVec3(x > v.x, y > v.y, z > v.z)
-inline infix fun IVec4.gt(v: IVec4) = BVec4(x > v.x, y > v.y, z > v.z, w > v.w)
-inline infix fun FVec2.gt(v: FVec2) = BVec2(x > v.x, y > v.y)
-inline infix fun FVec3.gt(v: FVec3) = BVec3(x > v.x, y > v.y, z > v.z)
-inline infix fun FVec4.gt(v: FVec4) = BVec4(x > v.x, y > v.y, z > v.z, w > v.w)
-inline infix fun DVec2.gt(v: DVec2) = BVec2(x > v.x, y > v.y)
-inline infix fun DVec3.gt(v: DVec3) = BVec3(x > v.x, y > v.y, z > v.z)
-inline infix fun DVec4.gt(v: DVec4) = BVec4(x > v.x, y > v.y, z > v.z, w > v.w)
-
-inline infix fun IVec2.ge(v: IVec2) = BVec2(x >= v.x, y >= v.y)
-inline infix fun IVec3.ge(v: IVec3) = BVec3(x >= v.x, y >= v.y, z >= v.z)
-inline infix fun IVec4.ge(v: IVec4) = BVec4(x >= v.x, y >= v.y, z >= v.z, w >= v.w)
-inline infix fun FVec2.ge(v: FVec2) = BVec2(x >= v.x, y >= v.y)
-inline infix fun FVec3.ge(v: FVec3) = BVec3(x >= v.x, y >= v.y, z >= v.z)
-inline infix fun FVec4.ge(v: FVec4) = BVec4(x >= v.x, y >= v.y, z >= v.z, w >= v.w)
-inline infix fun DVec2.ge(v: DVec2) = BVec2(x >= v.x, y >= v.y)
-inline infix fun DVec3.ge(v: DVec3) = BVec3(x >= v.x, y >= v.y, z >= v.z)
-inline infix fun DVec4.ge(v: DVec4) = BVec4(x >= v.x, y >= v.y, z >= v.z, w >= v.w)
-
 // common
-inline fun BVec2.map(block: (Boolean) -> Boolean) = BVec2(block(x), block(y))
-inline fun BVec3.map(block: (Boolean) -> Boolean) = BVec3(block(x), block(y), block(z))
-inline fun BVec4.map(block: (Boolean) -> Boolean) = BVec4(block(x), block(y), block(z), block(w))
-
-inline fun IVec2.map(block: (Int) -> Int) = IVec2(block(x), block(y))
-inline fun IVec3.map(block: (Int) -> Int) = IVec3(block(x), block(y), block(z))
-inline fun IVec4.map(block: (Int) -> Int) = IVec4(block(x), block(y), block(z), block(w))
-
-inline fun FVec2.map(block: (Float) -> Float) = FVec2(block(x), block(y))
-inline fun FVec3.map(block: (Float) -> Float) = FVec3(block(x), block(y), block(z))
-inline fun FVec4.map(block: (Float) -> Float) = FVec4(block(x), block(y), block(z), block(w))
-
-inline fun DVec2.map(block: (Double) -> Double) = DVec2(block(x), block(y))
-inline fun DVec3.map(block: (Double) -> Double) = DVec3(block(x), block(y), block(z))
-inline fun DVec4.map(block: (Double) -> Double) = DVec4(block(x), block(y), block(z), block(w))
-
 inline fun min(a: IVec2, b: IVec2) = IVec2(min(a.x, b.x), min(a.y, b.y))
 inline fun min(a: IVec3, b: IVec3) = IVec3(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z))
 inline fun min(a: IVec4, b: IVec4) = IVec4(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z), min(a.w, b.w))
@@ -190,7 +68,7 @@ inline fun FVec3(v: DVec3) = FVec3(v.x.toFloat(), v.y.toFloat(), v.z.toFloat())
 inline fun FVec4(v: IVec4) = FVec4(v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), v.w.toFloat())
 inline fun FVec4(v: DVec4) = FVec4(v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), v.w.toFloat())
 
-// floats
+// decimals
 inline fun abs(v: IVec2) = IVec2(abs(v.x), abs(v.y))
 inline fun abs(v: IVec3) = IVec3(abs(v.x), abs(v.y), abs(v.z))
 inline fun abs(v: IVec4) = IVec4(abs(v.x), abs(v.y), abs(v.z), abs(v.w))

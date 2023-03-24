@@ -34,7 +34,11 @@ data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
 }
 
 inline fun BVec2.map(block: (Boolean) -> Boolean) = BVec2(block(x), block(y))
+
 inline operator fun BVec2.not() = BVec2(!x, !y)
+
+inline infix fun BVec2.eq(v: BVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
+inline infix fun BVec2.ne(v: BVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
 
 data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean) {
     constructor(v: BVec3) : this(v.x, v.y, v.z)
@@ -67,7 +71,11 @@ data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
 }
 
 inline fun BVec3.map(block: (Boolean) -> Boolean) = BVec3(block(x), block(y), block(z))
+
 inline operator fun BVec3.not() = BVec3(!x, !y, !z)
+
+inline infix fun BVec3.eq(v: BVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
+inline infix fun BVec3.ne(v: BVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
 
 data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean, @JvmField var w: Boolean) {
     constructor(v: BVec4) : this(v.x, v.y, v.z, v.w)
@@ -103,7 +111,11 @@ data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
 }
 
 inline fun BVec4.map(block: (Boolean) -> Boolean) = BVec4(block(x), block(y), block(z), block(w))
+
 inline operator fun BVec4.not() = BVec4(!x, !y, !z, !w)
+
+inline infix fun BVec4.eq(v: BVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
+inline infix fun BVec4.ne(v: BVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
 
 //region Alternate accessors
 inline var BVec2.r get() = x; set(value) { x = value }

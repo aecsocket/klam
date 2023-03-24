@@ -12,6 +12,6 @@ class TestKlam {
             vec += FVec3(add)
         }
 
-        println(vec)
+        println(dot(vec, vec))
     }
 }
