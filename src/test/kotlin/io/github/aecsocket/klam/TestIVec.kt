@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class TestIVec {
-
     @Test
     fun testIVec2Map() {
         val vec = IVec2(1, 2)
@@ -45,7 +44,7 @@ class TestIVec {
 
     @Test
     fun testIVec2Minus() {
-        val vec = IVec2(4, 6);
+        val vec = IVec2(4, 6)
         assertEquals(IVec2(3, 4), vec - IVec2(1, 2))
         assertEquals(IVec2(2, 4), vec - 2)
         assertEquals(IVec2(-2, -4), 2 - vec)
@@ -64,7 +63,7 @@ class TestIVec {
         assertEquals(IVec2(4, 0), IVec2(1, 0) * IVec2(4, 2))
         assertEquals(IVec2(4, 2), IVec2(1, 1) * IVec2(4, 2))
 
-        val vec = IVec2(4, 6);
+        val vec = IVec2(4, 6)
         vec *= 1
         assertEquals(IVec2(4, 6), vec)
         vec *= 2
@@ -79,7 +78,7 @@ class TestIVec {
         assertEquals(IVec2(4, 2), IVec2(4, 2) / IVec2(1, 1))
         assertEquals(IVec2(2, 1), IVec2(4, 2) / IVec2(2, 2))
 
-        val vec = IVec2(4, 6);
+        val vec = IVec2(4, 6)
         vec /= 1
         assertEquals(IVec2(4, 6), vec)
         vec /= 2
@@ -101,9 +100,9 @@ class TestIVec {
 
     @Test
     fun testIVec2Negate() {
-        var vec = IVec2(4, 6)
+        val vec = IVec2(4, 6)
         assertEquals(IVec2(-4, -6), -vec)
-        var vec2 = IVec2(-4, 6)
+        val vec2 = IVec2(-4, 6)
         assertEquals(IVec2(4, -6), -vec2)
         assertEquals(vec, -(-vec))
         assertEquals(vec2, -(-vec2))
@@ -111,7 +110,8 @@ class TestIVec {
 
     @Test
     fun testIVec2Equals() {
-        var vec = IVec2(4, 6)
+        val vec = IVec2(4, 6)
+        @Suppress("KotlinConstantConditions")
         assertEquals(true, vec == vec)
         assertEquals(true, IVec2(0, 0) == IVec2(0,0))
         assertEquals(true, IVec2(4, 6) == IVec2(4, 6))
@@ -121,7 +121,8 @@ class TestIVec {
 
     @Test
     fun testIVec2Diff() {
-        var vec = IVec2(4, 6)
+        val vec = IVec2(4, 6)
+        @Suppress("KotlinConstantConditions")
         assertEquals(false, vec != vec)
         assertEquals(false, IVec2(0, 0) != IVec2(0,0))
         assertEquals(false, IVec2(4, 6) != IVec2(4, 6))
@@ -130,8 +131,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec2LowerThan() {
-        var vec = IVec2(4, 6)
+    fun testIVec2LessThan() {
+        val vec = IVec2(4, 6)
         assertEquals(BVec2(false, false), vec lt vec)
         assertEquals(BVec2(false, false), IVec2(0, 0) lt IVec2(0, 0))
         assertEquals(BVec2(true, false), IVec2(0, 0) lt IVec2(1,0))
@@ -141,8 +142,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec2LowerEquals() {
-        var vec = IVec2(4, 6)
+    fun testIVec2LessThanEquals() {
+        val vec = IVec2(4, 6)
         assertEquals(BVec2(true, true), vec le vec)
         assertEquals(BVec2(true, true), IVec2(0, 0) le IVec2(0, 0))
         assertEquals(BVec2(true, true), IVec2(0, 0) le IVec2(1,0))
@@ -154,7 +155,7 @@ class TestIVec {
 
     @Test
     fun testIVec2GreaterThan() {
-        var vec = IVec2(4, 6)
+        val vec = IVec2(4, 6)
         assertEquals(BVec2(false, false), vec gt vec)
         assertEquals(BVec2(false, false), IVec2(0, 0) gt IVec2(0, 0))
         assertEquals(BVec2(true, false),  IVec2(1,0) gt IVec2(0, 0))
@@ -164,8 +165,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec2GreaterEquals() {
-        var vec = IVec2(4, 6)
+    fun testIVec2GreaterThanEquals() {
+        val vec = IVec2(4, 6)
         assertEquals(BVec2(true, true), vec ge vec)
         assertEquals(BVec2(true, true), IVec2(0, 0) ge IVec2(0, 0))
         assertEquals(BVec2(true, true),  IVec2(1,0) ge IVec2(0, 0))
@@ -175,10 +176,7 @@ class TestIVec {
         assertEquals(BVec2(true, true), IVec2(4, 6) ge IVec2(1, 3))
     }
 
-
-    // ========================
-    //      IVec3 Tests
-    // ========================
+    // IVec3
 
     @Test
     fun testIVec3Map() {
@@ -223,7 +221,7 @@ class TestIVec {
 
     @Test
     fun testIVec3Minus() {
-        val vec = IVec3(4, 6, 9);
+        val vec = IVec3(4, 6, 9)
         assertEquals(IVec3(3, 4, 6), vec - IVec3(1, 2, 3))
         assertEquals(IVec3(2, 4, 7), vec - 2)
         assertEquals(IVec3(-2, -4, -7), 2 - vec)
@@ -242,7 +240,7 @@ class TestIVec {
         assertEquals(IVec3(4, 0, 6), IVec3(1, 0, 2) * IVec3(4, 2, 3))
         assertEquals(IVec3(4, 2, 5), IVec3(1, 1, 1) * IVec3(4, 2, 5))
 
-        val vec = IVec3(4, 6, 9);
+        val vec = IVec3(4, 6, 9)
         vec *= 1
         assertEquals(IVec3(4, 6, 9), vec)
         vec *= 2
@@ -257,7 +255,7 @@ class TestIVec {
         assertEquals(IVec3(4, 2, 6), IVec3(4, 2, 6) / IVec3(1, 1, 1))
         assertEquals(IVec3(2, 1, 3), IVec3(4, 2, 6) / IVec3(2, 2, 2))
 
-        val vec = IVec3(4, 6, 9);
+        val vec = IVec3(4, 6, 9)
         vec /= 1
         assertEquals(IVec3(4, 6, 9), vec)
         vec /= 2
@@ -279,9 +277,9 @@ class TestIVec {
 
     @Test
     fun testIVec3Negate() {
-        var vec = IVec3(4, 6, 8)
+        val vec = IVec3(4, 6, 8)
         assertEquals(IVec3(-4, -6, -8), -vec)
-        var vec2 = IVec3(-4, 6, 8)
+        val vec2 = IVec3(-4, 6, 8)
         assertEquals(IVec3(4, -6, -8), -vec2)
         assertEquals(vec, -(-vec))
         assertEquals(vec2, -(-vec2))
@@ -289,7 +287,8 @@ class TestIVec {
 
     @Test
     fun testIVec3Equals() {
-        var vec = IVec3(4, 6, 8)
+        val vec = IVec3(4, 6, 8)
+        @Suppress("KotlinConstantConditions")
         assertEquals(true, vec == vec)
         assertEquals(true, IVec3(0, 0, 0) == IVec3(0,0, 0))
         assertEquals(true, IVec3(4, 6, 8) == IVec3(4, 6, 8))
@@ -299,7 +298,8 @@ class TestIVec {
 
     @Test
     fun testIVec3Diff() {
-        var vec = IVec3(4, 6, 8)
+        val vec = IVec3(4, 6, 8)
+        @Suppress("KotlinConstantConditions")
         assertEquals(false, vec != vec)
         assertEquals(false, IVec3(0, 0, 0) != IVec3(0,0, 0))
         assertEquals(false, IVec3(4, 6, 8) != IVec3(4, 6, 8))
@@ -308,8 +308,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec3LowerThan() {
-        var vec = IVec3(4, 6, 8)
+    fun testIVec3LessThan() {
+        val vec = IVec3(4, 6, 8)
         assertEquals(BVec3(false, false, false), vec lt vec)
         assertEquals(BVec3(false, false, false), IVec3(0, 0, 0) lt IVec3(0, 0, 0))
         assertEquals(BVec3(true, false, false), IVec3(0, 0, 0) lt IVec3(1,0, 0))
@@ -319,8 +319,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec3LowerEquals() {
-        var vec = IVec3(4, 6, 8)
+    fun testIVec3LessThanEquals() {
+        val vec = IVec3(4, 6, 8)
         assertEquals(BVec3(true, true, true), vec le vec)
         assertEquals(BVec3(true, true, true), IVec3(0, 0, 0) le IVec3(0, 0, 0))
         assertEquals(BVec3(true, true, true), IVec3(0, 0, 0) le IVec3(1,0, 0))
@@ -332,7 +332,7 @@ class TestIVec {
 
     @Test
     fun testIVec3GreaterThan() {
-        var vec = IVec3(4, 6, 8)
+        val vec = IVec3(4, 6, 8)
         assertEquals(BVec3(false, false, false), vec gt vec)
         assertEquals(BVec3(false, false, false), IVec3(0, 0, 0) gt IVec3(0, 0, 0))
         assertEquals(BVec3(true, false, false),  IVec3(1,0, 0) gt IVec3(0, 0, 0))
@@ -342,8 +342,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec3GreaterEquals() {
-        var vec = IVec3(4, 6, 8)
+    fun testIVec3GreaterThanEquals() {
+        val vec = IVec3(4, 6, 8)
         assertEquals(BVec3(true, true, true), vec ge vec)
         assertEquals(BVec3(true, true, true), IVec3(0, 0, 0) ge IVec3(0, 0, 0))
         assertEquals(BVec3(true, true, true),  IVec3(1,0, 0) ge IVec3(0, 0, 0))
@@ -353,10 +353,7 @@ class TestIVec {
         assertEquals(BVec3(true, true, true), IVec3(4, 6, 5) ge IVec3(1, 3, 5))
     }
 
-
-    // ========================
-    //      IVec4 Tests
-    // ========================
+    // IVec4
 
     @Test
     fun testIVec4Map() {
@@ -404,7 +401,7 @@ class TestIVec {
 
     @Test
     fun testIVec4Minus() {
-        val vec = IVec4(4, 6, 9, 12);
+        val vec = IVec4(4, 6, 9, 12)
         assertEquals(IVec4(3, 4, 6, 8), vec - IVec4(1, 2, 3, 4))
         assertEquals(IVec4(2, 4, 7, 10), vec - 2)
         assertEquals(IVec4(-2, -4, -7, -10), 2 - vec)
@@ -423,7 +420,7 @@ class TestIVec {
         assertEquals(IVec4(4, 0, 6, 2), IVec4(1, 0, 2, 1) * IVec4(4, 2, 3, 2))
         assertEquals(IVec4(4, 2, 5, 6), IVec4(1, 1, 1, 1) * IVec4(4, 2, 5, 6))
 
-        val vec = IVec4(4, 6, 9, 12);
+        val vec = IVec4(4, 6, 9, 12)
         vec *= 1
         assertEquals(IVec4(4, 6, 9, 12), vec)
         vec *= 2
@@ -438,7 +435,7 @@ class TestIVec {
         assertEquals(IVec4(4, 2, 6, 9), IVec4(4, 2, 6, 9) / IVec4(1, 1, 1, 1))
         assertEquals(IVec4(2, 1, 3, 4), IVec4(4, 2, 6, 8) / IVec4(2, 2, 2, 2))
 
-        val vec = IVec4(4, 6, 9, 12);
+        val vec = IVec4(4, 6, 9, 12)
         vec /= 1
         assertEquals(IVec4(4, 6, 9, 12), vec)
         vec /= 2
@@ -460,9 +457,9 @@ class TestIVec {
 
     @Test
     fun testIVec4Negate() {
-        var vec = IVec4(4, 6, 8, 10)
+        val vec = IVec4(4, 6, 8, 10)
         assertEquals(IVec4(-4, -6, -8, -10), -vec)
-        var vec2 = IVec4(-4, 6, 8, -10)
+        val vec2 = IVec4(-4, 6, 8, -10)
         assertEquals(IVec4(4, -6, -8, 10), -vec2)
         assertEquals(vec, -(-vec))
         assertEquals(vec2, -(-vec2))
@@ -470,7 +467,8 @@ class TestIVec {
 
     @Test
     fun testIVec4Equals() {
-        var vec = IVec4(4, 6, 8, 10)
+        val vec = IVec4(4, 6, 8, 10)
+        @Suppress("KotlinConstantConditions")
         assertEquals(true, vec == vec)
         assertEquals(true, IVec4(0, 0, 0, 0) == IVec4(0,0, 0, 0))
         assertEquals(true, IVec4(4, 6, 8, 10) == IVec4(4, 6, 8, 10))
@@ -480,7 +478,8 @@ class TestIVec {
 
     @Test
     fun testIVec4Diff() {
-        var vec = IVec4(4, 6, 8, 10)
+        val vec = IVec4(4, 6, 8, 10)
+        @Suppress("KotlinConstantConditions")
         assertEquals(false, vec != vec)
         assertEquals(false, IVec4(0, 0, 0, 0) != IVec4(0,0, 0, 0))
         assertEquals(false, IVec4(4, 6, 8, 10) != IVec4(4, 6, 8, 10))
@@ -489,8 +488,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec4LowerThan() {
-        var vec = IVec4(4, 6, 8, 10)
+    fun testIVec4LessThan() {
+        val vec = IVec4(4, 6, 8, 10)
         assertEquals(BVec4(false, false, false, false), vec lt vec)
         assertEquals(BVec4(false, false, false, false), IVec4(0, 0, 0, 0) lt IVec4(0, 0, 0, 0))
         assertEquals(BVec4(true, false, false, false), IVec4(0, 0, 0, 0) lt IVec4(1,0, 0, 0))
@@ -500,8 +499,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec4LowerEquals() {
-        var vec = IVec4(4, 6, 8, 10)
+    fun testIVec4LessThanEquals() {
+        val vec = IVec4(4, 6, 8, 10)
         assertEquals(BVec4(true, true, true, true), vec le vec)
         assertEquals(BVec4(true, true, true, true), IVec4(0, 0, 0, 0) le IVec4(0, 0, 0, 0))
         assertEquals(BVec4(true, true, true, true), IVec4(0, 0, 0, 0) le IVec4(1,0, 0, 0))
@@ -513,7 +512,7 @@ class TestIVec {
 
     @Test
     fun testIVec4GreaterThan() {
-        var vec = IVec4(4, 6, 8, 10)
+        val vec = IVec4(4, 6, 8, 10)
         assertEquals(BVec4(false, false, false, false), vec gt vec)
         assertEquals(BVec4(false, false, false, false), IVec4(0, 0, 0, 0) gt IVec4(0, 0, 0, 0))
         assertEquals(BVec4(true, false, false, false),  IVec4(1,0, 0, 0) gt IVec4(0, 0, 0, 0))
@@ -523,8 +522,8 @@ class TestIVec {
     }
 
     @Test
-    fun testIVec4GreaterEquals() {
-        var vec = IVec4(4, 6, 8, 10)
+    fun testIVec4GreaterThanEquals() {
+        val vec = IVec4(4, 6, 8, 10)
         assertEquals(BVec4(true, true, true, true), vec ge vec)
         assertEquals(BVec4(true, true, true, true), IVec4(0, 0, 0, 0) ge IVec4(0, 0, 0, 0))
         assertEquals(BVec4(true, true, true, true),  IVec4(1,0, 0, 0) ge IVec4(0, 0, 0, 0))
@@ -533,6 +532,4 @@ class TestIVec {
         assertEquals(BVec4(false, true, false, true), IVec4(4, 6, 2, 4) ge IVec4(5, 6, 3, 4))
         assertEquals(BVec4(true, true, true, true), IVec4(4, 6, 5, 7) ge IVec4(1, 3, 5, 7))
     }
-
-
 }
