@@ -122,9 +122,9 @@ inline operator fun FVec3.minusAssign(s: Float) { x -= s; y -= s; z -= s }
 inline operator fun FVec3.timesAssign(s: Float) { x *= s; y *= s; z *= s }
 inline operator fun FVec3.divAssign(s: Float)   { x /= s; y /= s; z /= s }
 
-inline operator fun FVec3.plus(v: FVec3)  = FVec3(x + v.x, y + v.y, z / v.z)
-inline operator fun FVec3.minus(v: FVec3) = FVec3(x - v.x, y - v.y, z / v.z)
-inline operator fun FVec3.times(v: FVec3) = FVec3(x * v.x, y * v.y, z / v.z)
+inline operator fun FVec3.plus(v: FVec3)  = FVec3(x + v.x, y + v.y, z + v.z)
+inline operator fun FVec3.minus(v: FVec3) = FVec3(x - v.x, y - v.y, z - v.z)
+inline operator fun FVec3.times(v: FVec3) = FVec3(x * v.x, y * v.y, z * v.z)
 inline operator fun FVec3.div(v: FVec3)   = FVec3(x / v.x, y / v.y, z / v.z)
 
 inline operator fun FVec3.plusAssign(v: FVec3)  { x += v.x; y += v.y; z += v.z }
@@ -193,9 +193,9 @@ inline operator fun FVec4.minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s
 inline operator fun FVec4.timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
 inline operator fun FVec4.divAssign(s: Float)   { x /= s; y /= s; z /= s; w /= s }
 
-inline operator fun FVec4.plus(v: FVec4)  = FVec4(x + v.x, y + v.y, z / v.z, w / v.w)
-inline operator fun FVec4.minus(v: FVec4) = FVec4(x - v.x, y - v.y, z / v.z, w / v.w)
-inline operator fun FVec4.times(v: FVec4) = FVec4(x * v.x, y * v.y, z / v.z, w / v.w)
+inline operator fun FVec4.plus(v: FVec4)  = FVec4(x + v.x, y + v.y, z + v.z, w + v.w)
+inline operator fun FVec4.minus(v: FVec4) = FVec4(x - v.x, y - v.y, z - v.z, w - v.w)
+inline operator fun FVec4.times(v: FVec4) = FVec4(x * v.x, y * v.y, z * v.z, w * v.w)
 inline operator fun FVec4.div(v: FVec4)   = FVec4(x / v.x, y / v.y, z / v.z, w / v.w)
 
 inline operator fun FVec4.plusAssign(v: FVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }
