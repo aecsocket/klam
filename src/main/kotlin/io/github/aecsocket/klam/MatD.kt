@@ -79,8 +79,12 @@ inline operator fun DMat2.plusAssign(s: Double)  { x += s; y += s }
 inline operator fun DMat2.minusAssign(s: Double) { x -= s; y -= s }
 inline operator fun DMat2.timesAssign(s: Double) { x *= s; y *= s }
 
+inline operator fun DMat2.plus(m: DMat2)  = DMat2(x + m.x, y + m.y)
+inline operator fun DMat2.minus(m: DMat2) = DMat2(x - m.x, y - m.y)
 inline operator fun DMat2.times(m: DMat2) = DMat2(this).apply { this *= m }
 
+inline operator fun DMat2.plusAssign(m: DMat2)  { x += m.x; y += m.y }
+inline operator fun DMat2.minusAssign(m: DMat2) { x -= m.x; y -= m.y }
 inline operator fun DMat2.timesAssign(m: DMat2) {
     from(
         x.x*m.x.x + y.x*m.x.y,  x.y*m.x.x + y.y*m.x.y,
@@ -175,8 +179,12 @@ inline operator fun DMat3.plusAssign(s: Double)  { x += s; y += s; z += s }
 inline operator fun DMat3.minusAssign(s: Double) { x -= s; y -= s; z -= s }
 inline operator fun DMat3.timesAssign(s: Double) { x *= s; y *= s; z *= s }
 
+inline operator fun DMat3.plus(m: DMat3)  = DMat3(x + m.x, y + m.y, z + m.z)
+inline operator fun DMat3.minus(m: DMat3) = DMat3(x - m.x, y - m.y, z - m.z)
 inline operator fun DMat3.times(m: DMat3) = DMat3(this).apply { this *= m }
 
+inline operator fun DMat3.plusAssign(m: DMat3)  { x += m.x; y += m.y; z += m.z }
+inline operator fun DMat3.minusAssign(m: DMat3) { x -= m.x; y -= m.y; z -= m.z }
 inline operator fun DMat3.timesAssign(m: DMat3) {
     from(
         x.x*m.x.x + y.x*m.x.y + z.x*m.x.z,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z,
@@ -282,8 +290,12 @@ inline operator fun DMat4.plusAssign(s: Double)  { x += s; y += s; z += s; w += 
 inline operator fun DMat4.minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= s }
 inline operator fun DMat4.timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
 
+inline operator fun DMat4.plus(m: DMat4)  = DMat4(x + m.x, y + m.y, z + m.z, w + m.w)
+inline operator fun DMat4.minus(m: DMat4) = DMat4(x - m.x, y - m.y, z - m.z, w + m.w)
 inline operator fun DMat4.times(m: DMat4) = DMat4(this).apply { this *= m }
 
+inline operator fun DMat4.plusAssign(m: DMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
+inline operator fun DMat4.minusAssign(m: DMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
 inline operator fun DMat4.timesAssign(m: DMat4) {
     from(
         x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,

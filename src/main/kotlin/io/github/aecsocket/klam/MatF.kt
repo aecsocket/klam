@@ -79,8 +79,12 @@ inline operator fun FMat2.plusAssign(s: Float)  { x += s; y += s }
 inline operator fun FMat2.minusAssign(s: Float) { x -= s; y -= s }
 inline operator fun FMat2.timesAssign(s: Float) { x *= s; y *= s }
 
+inline operator fun FMat2.plus(m: FMat2)  = FMat2(x + m.x, y + m.y)
+inline operator fun FMat2.minus(m: FMat2) = FMat2(x - m.x, y - m.y)
 inline operator fun FMat2.times(m: FMat2) = FMat2(this).apply { this *= m }
 
+inline operator fun FMat2.plusAssign(m: FMat2)  { x += m.x; y += m.y }
+inline operator fun FMat2.minusAssign(m: FMat2) { x -= m.x; y -= m.y }
 inline operator fun FMat2.timesAssign(m: FMat2) {
     from(
         x.x*m.x.x + y.x*m.x.y,  x.y*m.x.x + y.y*m.x.y,
@@ -175,8 +179,12 @@ inline operator fun FMat3.plusAssign(s: Float)  { x += s; y += s; z += s }
 inline operator fun FMat3.minusAssign(s: Float) { x -= s; y -= s; z -= s }
 inline operator fun FMat3.timesAssign(s: Float) { x *= s; y *= s; z *= s }
 
+inline operator fun FMat3.plus(m: FMat3)  = FMat3(x + m.x, y + m.y, z + m.z)
+inline operator fun FMat3.minus(m: FMat3) = FMat3(x - m.x, y - m.y, z - m.z)
 inline operator fun FMat3.times(m: FMat3) = FMat3(this).apply { this *= m }
 
+inline operator fun FMat3.plusAssign(m: FMat3)  { x += m.x; y += m.y; z += m.z }
+inline operator fun FMat3.minusAssign(m: FMat3) { x -= m.x; y -= m.y; z -= m.z }
 inline operator fun FMat3.timesAssign(m: FMat3) {
     from(
         x.x*m.x.x + y.x*m.x.y + z.x*m.x.z,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z,
@@ -282,8 +290,12 @@ inline operator fun FMat4.plusAssign(s: Float)  { x += s; y += s; z += s; w += s
 inline operator fun FMat4.minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s }
 inline operator fun FMat4.timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
 
+inline operator fun FMat4.plus(m: FMat4)  = FMat4(x + m.x, y + m.y, z + m.z, w + m.w)
+inline operator fun FMat4.minus(m: FMat4) = FMat4(x - m.x, y - m.y, z - m.z, w + m.w)
 inline operator fun FMat4.times(m: FMat4) = FMat4(this).apply { this *= m }
 
+inline operator fun FMat4.plusAssign(m: FMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
+inline operator fun FMat4.minusAssign(m: FMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
 inline operator fun FMat4.timesAssign(m: FMat4) {
     from(
         x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,

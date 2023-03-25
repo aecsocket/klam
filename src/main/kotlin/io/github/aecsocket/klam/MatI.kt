@@ -79,8 +79,12 @@ inline operator fun IMat2.plusAssign(s: Int)  { x += s; y += s }
 inline operator fun IMat2.minusAssign(s: Int) { x -= s; y -= s }
 inline operator fun IMat2.timesAssign(s: Int) { x *= s; y *= s }
 
+inline operator fun IMat2.plus(m: IMat2)  = IMat2(x + m.x, y + m.y)
+inline operator fun IMat2.minus(m: IMat2) = IMat2(x - m.x, y - m.y)
 inline operator fun IMat2.times(m: IMat2) = IMat2(this).apply { this *= m }
 
+inline operator fun IMat2.plusAssign(m: IMat2)  { x += m.x; y += m.y }
+inline operator fun IMat2.minusAssign(m: IMat2) { x -= m.x; y -= m.y }
 inline operator fun IMat2.timesAssign(m: IMat2) {
     from(
         x.x*m.x.x + y.x*m.x.y,  x.y*m.x.x + y.y*m.x.y,
@@ -175,8 +179,12 @@ inline operator fun IMat3.plusAssign(s: Int)  { x += s; y += s; z += s }
 inline operator fun IMat3.minusAssign(s: Int) { x -= s; y -= s; z -= s }
 inline operator fun IMat3.timesAssign(s: Int) { x *= s; y *= s; z *= s }
 
+inline operator fun IMat3.plus(m: IMat3)  = IMat3(x + m.x, y + m.y, z + m.z)
+inline operator fun IMat3.minus(m: IMat3) = IMat3(x - m.x, y - m.y, z - m.z)
 inline operator fun IMat3.times(m: IMat3) = IMat3(this).apply { this *= m }
 
+inline operator fun IMat3.plusAssign(m: IMat3)  { x += m.x; y += m.y; z += m.z }
+inline operator fun IMat3.minusAssign(m: IMat3) { x -= m.x; y -= m.y; z -= m.z }
 inline operator fun IMat3.timesAssign(m: IMat3) {
     from(
         x.x*m.x.x + y.x*m.x.y + z.x*m.x.z,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z,
@@ -282,8 +290,12 @@ inline operator fun IMat4.plusAssign(s: Int)  { x += s; y += s; z += s; w += s }
 inline operator fun IMat4.minusAssign(s: Int) { x -= s; y -= s; z -= s; w -= s }
 inline operator fun IMat4.timesAssign(s: Int) { x *= s; y *= s; z *= s; w *= s }
 
+inline operator fun IMat4.plus(m: IMat4)  = IMat4(x + m.x, y + m.y, z + m.z, w + m.w)
+inline operator fun IMat4.minus(m: IMat4) = IMat4(x - m.x, y - m.y, z - m.z, w + m.w)
 inline operator fun IMat4.times(m: IMat4) = IMat4(this).apply { this *= m }
 
+inline operator fun IMat4.plusAssign(m: IMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
+inline operator fun IMat4.minusAssign(m: IMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
 inline operator fun IMat4.timesAssign(m: IMat4) {
     from(
         x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,
