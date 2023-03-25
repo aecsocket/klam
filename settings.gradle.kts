@@ -13,3 +13,5 @@ plugins {
 }
 
 rootProject.name = "klam"
+
+include("klam-configurate")
