@@ -37,15 +37,8 @@ data class Quat(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z:
         else -> throw IndexOutOfBoundsException(idx)
     }
 
-    inline operator fun times(v: FVec3): FVec3 {
-        val u = xyz
-        return (u * 2f * dot(u, v)) +
-                (v * (w*w - dot(u, u))) +
-                (cross(u, v) * 2f * w)
-    }
-
-    inline fun compareTo(q: Quat) = IVec4(x.compareTo(q.x), y.compareTo(q.y), z.compareTo(q.z), w.compareTo(q.w))
-    inline fun equalTo(q: Quat) = x.compareTo(q.x) == 0 && y.compareTo(q.y) == 0 && z.compareTo(q.z) == 0 && w.compareTo(q.w) == 0
+    fun compareTo(q: Quat) = IVec4(x.compareTo(q.x), y.compareTo(q.y), z.compareTo(q.z), w.compareTo(q.w))
+    fun equalTo(q: Quat) = x.compareTo(q.x) == 0 && y.compareTo(q.y) == 0 && z.compareTo(q.z) == 0 && w.compareTo(q.w) == 0
     fun toArray() = floatArrayOf(x, y, z, w)
 
     fun asString(fmt: String = "%f") = "(${fmt} + ${fmt}i + ${fmt}j + ${fmt}k)".format(w, x, y, z)
@@ -73,6 +66,14 @@ inline operator fun Quat.timesAssign(q: Quat) {
         w*q.z + x*q.y - y*q.x + z*q.w,
         w*q.w - x*q.x - y*q.y - z*q.z,
     )
+}
+
+inline operator fun Quat.times(v: FVec3): FVec3 {
+    val u = xyz
+    val s = w
+    return (u * 2.0f * dot(u, v)) +
+            (v * (s*s - dot(u, u))) +
+            (cross(u, v) * 2.0f * s)
 }
 
 //region Alternate accessors

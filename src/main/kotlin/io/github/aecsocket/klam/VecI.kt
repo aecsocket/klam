@@ -120,9 +120,9 @@ inline operator fun IVec3.minusAssign(s: Int) { x -= s; y -= s; z -= s }
 inline operator fun IVec3.timesAssign(s: Int) { x *= s; y *= s; z *= s }
 inline operator fun IVec3.divAssign(s: Int)   { x /= s; y /= s; z /= s }
 
-inline operator fun IVec3.plus(v: IVec3)  = IVec3(x + v.x, y + v.y, z / v.z)
-inline operator fun IVec3.minus(v: IVec3) = IVec3(x - v.x, y - v.y, z / v.z)
-inline operator fun IVec3.times(v: IVec3) = IVec3(x * v.x, y * v.y, z / v.z)
+inline operator fun IVec3.plus(v: IVec3)  = IVec3(x + v.x, y + v.y, z + v.z)
+inline operator fun IVec3.minus(v: IVec3) = IVec3(x - v.x, y - v.y, z - v.z)
+inline operator fun IVec3.times(v: IVec3) = IVec3(x * v.x, y * v.y, z * v.z)
 inline operator fun IVec3.div(v: IVec3)   = IVec3(x / v.x, y / v.y, z / v.z)
 
 inline operator fun IVec3.plusAssign(v: IVec3)  { x += v.x; y += v.y; z += v.z }
@@ -194,9 +194,9 @@ inline operator fun IVec4.minusAssign(s: Int) { x -= s; y -= s; z -= s; w -= s }
 inline operator fun IVec4.timesAssign(s: Int) { x *= s; y *= s; z *= s; w *= s }
 inline operator fun IVec4.divAssign(s: Int)   { x /= s; y /= s; z /= s; w /= s }
 
-inline operator fun IVec4.plus(v: IVec4)  = IVec4(x + v.x, y + v.y, z / v.z, w / v.w)
-inline operator fun IVec4.minus(v: IVec4) = IVec4(x - v.x, y - v.y, z / v.z, w / v.w)
-inline operator fun IVec4.times(v: IVec4) = IVec4(x * v.x, y * v.y, z / v.z, w / v.w)
+inline operator fun IVec4.plus(v: IVec4)  = IVec4(x + v.x, y + v.y, z + v.z, w + v.w)
+inline operator fun IVec4.minus(v: IVec4) = IVec4(x - v.x, y - v.y, z - v.z, w - v.w)
+inline operator fun IVec4.times(v: IVec4) = IVec4(x * v.x, y * v.y, z * v.z, w * v.w)
 inline operator fun IVec4.div(v: IVec4)   = IVec4(x / v.x, y / v.y, z / v.z, w / v.w)
 
 inline operator fun IVec4.plusAssign(v: IVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }

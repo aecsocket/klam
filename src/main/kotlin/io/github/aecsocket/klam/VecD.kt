@@ -122,9 +122,9 @@ inline operator fun DVec3.minusAssign(s: Double) { x -= s; y -= s; z -= s }
 inline operator fun DVec3.timesAssign(s: Double) { x *= s; y *= s; z *= s }
 inline operator fun DVec3.divAssign(s: Double)   { x /= s; y /= s; z /= s }
 
-inline operator fun DVec3.plus(v: DVec3)  = DVec3(x + v.x, y + v.y, z / v.z)
-inline operator fun DVec3.minus(v: DVec3) = DVec3(x - v.x, y - v.y, z / v.z)
-inline operator fun DVec3.times(v: DVec3) = DVec3(x * v.x, y * v.y, z / v.z)
+inline operator fun DVec3.plus(v: DVec3)  = DVec3(x + v.x, y + v.y, z + v.z)
+inline operator fun DVec3.minus(v: DVec3) = DVec3(x - v.x, y - v.y, z - v.z)
+inline operator fun DVec3.times(v: DVec3) = DVec3(x * v.x, y * v.y, z * v.z)
 inline operator fun DVec3.div(v: DVec3)   = DVec3(x / v.x, y / v.y, z / v.z)
 
 inline operator fun DVec3.plusAssign(v: DVec3)  { x += v.x; y += v.y; z += v.z }
@@ -193,9 +193,9 @@ inline operator fun DVec4.minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= 
 inline operator fun DVec4.timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
 inline operator fun DVec4.divAssign(s: Double)   { x /= s; y /= s; z /= s; w /= s }
 
-inline operator fun DVec4.plus(v: DVec4)  = DVec4(x + v.x, y + v.y, z / v.z, w / v.w)
-inline operator fun DVec4.minus(v: DVec4) = DVec4(x - v.x, y - v.y, z / v.z, w / v.w)
-inline operator fun DVec4.times(v: DVec4) = DVec4(x * v.x, y * v.y, z / v.z, w / v.w)
+inline operator fun DVec4.plus(v: DVec4)  = DVec4(x + v.x, y + v.y, z + v.z, w + v.w)
+inline operator fun DVec4.minus(v: DVec4) = DVec4(x - v.x, y - v.y, z - v.z, w - v.w)
+inline operator fun DVec4.times(v: DVec4) = DVec4(x * v.x, y * v.y, z * v.z, w * v.w)
 inline operator fun DVec4.div(v: DVec4)   = DVec4(x / v.x, y / v.y, z / v.z, w / v.w)
 
 inline operator fun DVec4.plusAssign(v: DVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }
