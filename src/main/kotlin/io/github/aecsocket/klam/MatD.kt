@@ -2,8 +2,7 @@
 
 package io.github.aecsocket.klam
 
-private const val AS_STRING_FORMAT = "%f"
-private const val TO_STRING_FORMAT = "%.3f"
+private const val TO_STRING_FORMAT = "%f"
 private inline fun typeArrayOf(vararg elements: Double) = doubleArrayOf(*elements)
 
 data class DMat2(@JvmField val x: DVec2, @JvmField val y: DVec2) {
@@ -48,7 +47,7 @@ data class DMat2(@JvmField val x: DVec2, @JvmField val y: DVec2) {
         y.x, y.y,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt
           $fmt $fmt
@@ -146,7 +145,7 @@ data class DMat3(@JvmField val x: DVec3, @JvmField val y: DVec3, @JvmField val z
         z.x, z.y, z.z,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt $fmt
           $fmt $fmt $fmt
@@ -255,7 +254,7 @@ data class DMat4(@JvmField val x: DVec4, @JvmField val y: DVec4, @JvmField val z
         w.x, w.y, w.z, w.w,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt $fmt $fmt
           $fmt $fmt $fmt $fmt

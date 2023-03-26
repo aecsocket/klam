@@ -22,5 +22,6 @@ val klamSerializers = TypeSerializerCollection.builder()
     .registerExact(FVec4::class.java, FVec4Serializer)
     .registerExact(DVec4::class.java, DVec4Serializer)
 
-    .registerExact(Quat::class.java, QuatSerializer)
+    .registerExact(FQuat::class.java, FQuatSerializer)
+    .registerExact(DQuat::class.java, DQuatSerializer)
     .build()

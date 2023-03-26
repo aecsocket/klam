@@ -94,16 +94,28 @@ inline fun length(v: DVec3) = sqrt(lengthSq(v))
 inline fun length(v: DVec4) = sqrt(lengthSq(v))
 
 inline fun normalize(v: FVec2): FVec2 {
-    val l = length(v)
-    return FVec2(v.x / l, v.y / l)
+    val l = 1.0f / length(v)
+    return FVec2(v.x * l, v.y * l)
 }
 inline fun normalize(v: FVec3): FVec3 {
-    val l = length(v)
-    return FVec3(v.x / l, v.y / l, v.z / l)
+    val l = 1.0f / length(v)
+    return FVec3(v.x * l, v.y * l, v.z * l)
 }
 inline fun normalize(v: FVec4): FVec4 {
-    val l = length(v)
-    return FVec4(v.x / l, v.y / l, v.z / l, v.w / l)
+    val l = 1.0f / length(v)
+    return FVec4(v.x * l, v.y * l, v.z * l, v.w * l)
+}
+inline fun normalize(v: DVec2): DVec2 {
+    val l = 1.0 / length(v)
+    return DVec2(v.x * l, v.y * l)
+}
+inline fun normalize(v: DVec3): DVec3 {
+    val l = 1.0 / length(v)
+    return DVec3(v.x * l, v.y * l, v.z * l)
+}
+inline fun normalize(v: DVec4): DVec4 {
+    val l = 1.0 / length(v)
+    return DVec4(v.x * l, v.y * l, v.z * l, v.w * l)
 }
 
 inline fun distance(a: FVec2, b: FVec2) = length(b - a)

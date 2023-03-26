@@ -2,8 +2,7 @@
 
 package io.github.aecsocket.klam
 
-private const val AS_STRING_FORMAT = "%f"
-private const val TO_STRING_FORMAT = DECIMAL_FORMAT
+private const val TO_STRING_FORMAT = "%f"
 private inline fun typeArrayOf(vararg elements: Float) = floatArrayOf(*elements)
 
 data class FVec2(@JvmField var x: Float, @JvmField var y: Float) {
@@ -29,7 +28,7 @@ data class FVec2(@JvmField var x: Float, @JvmField var y: Float) {
     fun equalTo(v: FVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
     fun toArray() = typeArrayOf(x, y)
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt)".format(x, y)
+    fun asString(fmt: String) = "($fmt, $fmt)".format(x, y)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
 
@@ -97,7 +96,7 @@ data class FVec3(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
     fun equalTo(v: FVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
     fun toArray() = typeArrayOf(x, y, z)
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt)".format(x, y, z)
+    fun asString(fmt: String) = "($fmt, $fmt, $fmt)".format(x, y, z)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
 
@@ -168,7 +167,7 @@ data class FVec4(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
     fun equalTo(v: FVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
     fun toArray() = typeArrayOf(x, y, z, w)
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
+    fun asString(fmt: String) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
 
