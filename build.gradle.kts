@@ -7,7 +7,7 @@ plugins {
 
 group = "io.github.aecsocket"
 version = "0.1.0-SNAPSHOT"
-description = "Linear algebra library"
+description = "Linear algebra library for 2D/3D applications"
 
 dependencies {
     compileOnlyApi(libs.findBugs)
