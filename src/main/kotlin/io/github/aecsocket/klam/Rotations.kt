@@ -1,6 +1,5 @@
 package io.github.aecsocket.klam
 
-import io.github.aecsocket.klam.abs
 import kotlin.math.*
 
 enum class EulerOrder {
