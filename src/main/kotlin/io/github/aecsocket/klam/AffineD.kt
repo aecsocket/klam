@@ -33,8 +33,8 @@ data class DAffine3(
 
     fun backward() = rotation * backward
 
-    fun asString(fmt: String = "%f") = "[${position.asString(fmt)}, ${rotation.asString(fmt)}]"
-    override fun toString() = asString("%.3f")
+    fun asString(fmt: String) = "[${position.asString(fmt)}, ${rotation.asString(fmt)}]"
+    override fun toString() = asString("%f")
 }
 
 inline operator fun DAffine3.times(t: DAffine3) = DAffine3(this).apply { this *= t }

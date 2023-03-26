@@ -2,7 +2,6 @@
 
 package io.github.aecsocket.klam
 
-private const val AS_STRING_FORMAT = "%d"
 private const val TO_STRING_FORMAT = "%d"
 private inline fun typeArrayOf(vararg elements: Int) = intArrayOf(*elements)
 
@@ -48,7 +47,7 @@ data class IMat2(@JvmField val x: IVec2, @JvmField val y: IVec2) {
         y.x, y.y,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt
           $fmt $fmt
@@ -146,7 +145,7 @@ data class IMat3(@JvmField val x: IVec3, @JvmField val y: IVec3, @JvmField val z
         z.x, z.y, z.z,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt $fmt
           $fmt $fmt $fmt
@@ -255,7 +254,7 @@ data class IMat4(@JvmField val x: IVec4, @JvmField val y: IVec4, @JvmField val z
         w.x, w.y, w.z, w.w,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt $fmt $fmt
           $fmt $fmt $fmt $fmt

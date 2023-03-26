@@ -2,7 +2,6 @@
 
 package io.github.aecsocket.klam
 
-private const val AS_STRING_FORMAT = "%s"
 private const val TO_STRING_FORMAT = "%s"
 private inline fun typeArrayOf(vararg elements: Boolean) = booleanArrayOf(*elements)
 
@@ -48,7 +47,7 @@ data class BMat2(@JvmField val x: BVec2, @JvmField val y: BVec2) {
         y.x, y.y,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt
           $fmt $fmt
@@ -114,7 +113,7 @@ data class BMat3(@JvmField val x: BVec3, @JvmField val y: BVec3, @JvmField val z
         z.x, z.y, z.z,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt $fmt
           $fmt $fmt $fmt
@@ -188,7 +187,7 @@ data class BMat4(@JvmField val x: BVec4, @JvmField val y: BVec4, @JvmField val z
         z.x, z.y, z.z,
     )
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = """
+    fun asString(fmt: String) = """
         [
           $fmt $fmt $fmt
           $fmt $fmt $fmt

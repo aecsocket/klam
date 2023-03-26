@@ -3,10 +3,13 @@
 package io.github.aecsocket.klam
 
 internal typealias Index = Int
-internal const val DECIMAL_FORMAT = "%.3f"
+internal const val DECIMAL_FORMAT = "%f"
 
 const val DPI = kotlin.math.PI
 const val FPI = DPI.toFloat()
+
+const val EPSILON     = 0.000001
+const val ONE_EPSILON = 0.999999
 
 inline fun sqr(x: Float) = x * x
 inline fun sqr(x: Double) = x * x

@@ -2,7 +2,6 @@
 
 package io.github.aecsocket.klam
 
-private const val AS_STRING_FORMAT = "%s"
 private const val TO_STRING_FORMAT = "%s"
 private inline fun typeArrayOf(vararg elements: Boolean) = booleanArrayOf(*elements)
 
@@ -29,7 +28,7 @@ data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
     fun equalTo(v: BVec2) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0
     fun toArray() = typeArrayOf(x, y)
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt)".format(x, y)
+    fun asString(fmt: String) = "($fmt, $fmt)".format(x, y)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
 
@@ -66,7 +65,7 @@ data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
     fun equalTo(v: BVec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
     fun toArray() = typeArrayOf(x, y, z)
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt)".format(x, y, z)
+    fun asString(fmt: String) = "($fmt, $fmt, $fmt)".format(x, y, z)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
 
@@ -106,7 +105,7 @@ data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
     fun equalTo(v: BVec4) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0 && w.compareTo(v.w) == 0
     fun toArray() = typeArrayOf(x, y, z, w)
 
-    fun asString(fmt: String = AS_STRING_FORMAT) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
+    fun asString(fmt: String) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
     override fun toString() = asString(TO_STRING_FORMAT)
 }
 

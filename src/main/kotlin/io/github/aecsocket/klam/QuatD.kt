@@ -41,8 +41,8 @@ data class DQuat(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
     fun equalTo(q: DQuat) = x.compareTo(q.x) == 0 && y.compareTo(q.y) == 0 && z.compareTo(q.z) == 0 && w.compareTo(q.w) == 0
     fun toArray() = doubleArrayOf(x, y, z, w)
 
-    fun asString(fmt: String = "%f") = "(${fmt} + ${fmt}i + ${fmt}j + ${fmt}k)".format(w, x, y, z)
-    override fun toString() = asString("%.3f")
+    fun asString(fmt: String) = "(${fmt} + ${fmt}i + ${fmt}j + ${fmt}k)".format(w, x, y, z)
+    override fun toString() = asString("%f")
 }
 
 inline fun DQuat.map(block: (Double) -> Double) = DQuat(block(x), block(y), block(z), block(w))
