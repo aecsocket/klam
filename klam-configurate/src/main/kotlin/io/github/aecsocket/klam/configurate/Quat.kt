@@ -13,6 +13,7 @@ abstract class QuatSerializer<Q, E> : TypeSerializer<Q> {
     protected abstract fun Q.component(idx: Int): E
     protected abstract fun element(node: ConfigurationNode): E
     protected abstract fun quatOf(x: E, y: E, z: E, w: E): Q
+    protected abstract fun quatOf(order: EulerOrder, x: E, y: E, z: E): Q
 
     override fun serialize(type: Type, obj: Q?, node: ConfigurationNode) {
         if (obj == null) node.set(null)
@@ -34,7 +35,7 @@ abstract class QuatSerializer<Q, E> : TypeSerializer<Q> {
             is String -> {
                 val order = list[0].get<EulerOrder>()
                     ?: throw SerializationException(list[0], type, "Expected Euler order; one of ${EulerOrder.values()}")
-                TODO()
+                quatOf(order, element(list[1]), element(list[2]), element(list[3]))
             }
             is Number -> quatOf(element(list[0]), element(list[1]), element(list[2]), element(list[3]))
             else -> throw SerializationException(list[0], type, EXPECTED_LIST_QUAT)
@@ -46,10 +47,12 @@ object FQuatSerializer : QuatSerializer<FQuat, Float>() {
     override fun FQuat.component(idx: Int) = get(idx)
     override fun element(node: ConfigurationNode) = node.float
     override fun quatOf(x: Float, y: Float, z: Float, w: Float) = FQuat(x, y, z, w)
+    override fun quatOf(order: EulerOrder, x: Float, y: Float, z: Float) = asQuat(FVec3(x, y, z), order)
 }
 
 object DQuatSerializer : QuatSerializer<DQuat, Double>() {
     override fun DQuat.component(idx: Int) = get(idx)
     override fun element(node: ConfigurationNode) = node.double
     override fun quatOf(x: Double, y: Double, z: Double, w: Double) = DQuat(x, y, z, w)
+    override fun quatOf(order: EulerOrder, x: Double, y: Double, z: Double) = asQuat(DVec3(x, y, z), order)
 }
