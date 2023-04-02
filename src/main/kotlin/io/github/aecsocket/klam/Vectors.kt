@@ -12,9 +12,25 @@ inline fun min(a: IVec2, b: IVec2) = IVec2(min(a.x, b.x), min(a.y, b.y))
 inline fun min(a: IVec3, b: IVec3) = IVec3(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z))
 inline fun min(a: IVec4, b: IVec4) = IVec4(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z), min(a.w, b.w))
 
+inline fun min(a: FVec2, b: FVec2) = FVec2(min(a.x, b.x), min(a.y, b.y))
+inline fun min(a: FVec3, b: FVec3) = FVec3(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z))
+inline fun min(a: FVec4, b: FVec4) = FVec4(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z), min(a.w, b.w))
+
+inline fun min(a: DVec2, b: DVec2) = DVec2(min(a.x, b.x), min(a.y, b.y))
+inline fun min(a: DVec3, b: DVec3) = DVec3(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z))
+inline fun min(a: DVec4, b: DVec4) = DVec4(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z), min(a.w, b.w))
+
 inline fun max(a: IVec2, b: IVec2) = IVec2(max(a.x, b.x), max(a.y, b.y))
 inline fun max(a: IVec3, b: IVec3) = IVec3(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z))
 inline fun max(a: IVec4, b: IVec4) = IVec4(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z), max(a.w, b.w))
+
+inline fun max(a: FVec2, b: FVec2) = FVec2(max(a.x, b.x), max(a.y, b.y))
+inline fun max(a: FVec3, b: FVec3) = FVec3(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z))
+inline fun max(a: FVec4, b: FVec4) = FVec4(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z), max(a.w, b.w))
+
+inline fun max(a: DVec2, b: DVec2) = DVec2(max(a.x, b.x), max(a.y, b.y))
+inline fun max(a: DVec3, b: DVec3) = DVec3(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z))
+inline fun max(a: DVec4, b: DVec4) = DVec4(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z), max(a.w, b.w))
 
 inline fun clamp(v: IVec2, min: IVec2, max: IVec2) = IVec2(clamp(v.x, min.x, max.x), clamp(v.y, min.y, max.y))
 inline fun clamp(v: IVec2, min: Int, max: Int)     = IVec2(clamp(v.x, min, max), clamp(v.y, min, max))
