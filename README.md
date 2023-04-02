@@ -3,8 +3,8 @@
 # Klam
 [![License](https://img.shields.io/github/license/aecsocket/klam)](LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/aecsocket/klam/build.yml)](https://github.com/aecsocket/klam/actions/workflows/build.yml)
-![Release](https://img.shields.io/maven-central/v/io.github.aecsocket/klam-api?label=release)
-![Snapshot](https://img.shields.io/nexus/s/io.github.aecsocket/klam-api?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)
+![Release](https://img.shields.io/maven-central/v/io.github.aecsocket/klam?label=release)
+![Snapshot](https://img.shields.io/nexus/s/io.github.aecsocket/klam?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)
 
 Linear algebra library for 2D/3D applications
 
