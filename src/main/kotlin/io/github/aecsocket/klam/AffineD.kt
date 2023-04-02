@@ -10,8 +10,8 @@ private val forward  = DVec3( 0.0,  0.0,  1.0)
 private val backward = DVec3( 0.0,  0.0, -1.0)
 
 data class DAffine3(
-    val position: DVec3 = DVec3(0.0),
-    val rotation: FQuat = FQuat(0.0f, 0.0f, 0.0f, 1.0f),
+    @JvmField val position: DVec3 = DVec3(0.0),
+    @JvmField val rotation: FQuat = FQuat(0.0f, 0.0f, 0.0f, 1.0f),
 ) {
     constructor(t: DAffine3) : this(DVec3(t.position), FQuat(t.rotation))
 
