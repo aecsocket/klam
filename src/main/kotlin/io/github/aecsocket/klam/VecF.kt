@@ -9,6 +9,9 @@ data class FVec2(@JvmField var x: Float, @JvmField var y: Float) {
     constructor(v: FVec2) : this(v.x, v.y)
     constructor(s: Float) : this(s, s)
 
+    constructor(v: IVec2) : this(v.x.toFloat(), v.y.toFloat())
+    constructor(v: DVec2) : this(v.x.toFloat(), v.y.toFloat())
+
     fun from(x: Float, y: Float) { this.x = x; this.y = y }
     fun from(v: FVec2) = from(v.x, v.y)
 
@@ -74,6 +77,9 @@ data class FVec3(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
     constructor(v: FVec3) : this(v.x, v.y, v.z)
     constructor(v: FVec2, z: Float) : this(v.x, v.y, z)
     constructor(s: Float) : this(s, s, s)
+
+    constructor(v: IVec3) : this(v.x.toFloat(), v.y.toFloat(), v.z.toFloat())
+    constructor(v: DVec3) : this(v.x.toFloat(), v.y.toFloat(), v.z.toFloat())
 
     fun from(x: Float, y: Float, z: Float) { this.x = x; this.y = y; this.z = z }
     fun from(v: FVec3) = from(v.x, v.y, v.z)
@@ -143,6 +149,9 @@ data class FVec4(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
     constructor(v: FVec3, w: Float) : this(v.x, v.y, v.z, w)
     constructor(v: FVec2, z: Float, w: Float) : this(v.x, v.y, z, w)
     constructor(s: Float) : this(s, s, s, s)
+
+    constructor(v: IVec4) : this(v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), v.w.toFloat())
+    constructor(v: DVec4) : this(v.x.toFloat(), v.y.toFloat(), v.z.toFloat(), v.w.toFloat())
 
     fun from(x: Float, y: Float, z: Float, w: Float) { this.x = x; this.y = y; this.z = z; this.w = w }
     fun from(v: FVec4) = from(v.x, v.y, v.z, v.w)

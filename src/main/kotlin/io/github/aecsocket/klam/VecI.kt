@@ -9,6 +9,9 @@ data class IVec2(@JvmField var x: Int, @JvmField var y: Int) {
     constructor(v: IVec2) : this(v.x, v.y)
     constructor(s: Int) : this(s, s)
 
+    constructor(v: FVec2) : this(v.x.toInt(), v.y.toInt())
+    constructor(v: DVec2) : this(v.x.toInt(), v.y.toInt())
+
     fun from(x: Int, y: Int) { this.x = x; this.y = y }
     fun from(v: IVec2) = from(v.x, v.y)
 
@@ -74,6 +77,9 @@ data class IVec3(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
     constructor(v: IVec3) : this(v.x, v.y, v.z)
     constructor(v: IVec2, z: Int) : this(v.x, v.y, z)
     constructor(s: Int) : this(s, s, s)
+
+    constructor(v: FVec3) : this(v.x.toInt(), v.y.toInt(), v.z.toInt())
+    constructor(v: DVec4) : this(v.x.toInt(), v.y.toInt(), v.z.toInt())
 
     fun from(x: Int, y: Int, z: Int) { this.x = x; this.y = y; this.z = z }
     fun from(v: IVec3) = from(v.x, v.y, v.z)
@@ -143,6 +149,9 @@ data class IVec4(@JvmField var x: Int, @JvmField var y: Int, @JvmField var z: In
     constructor(v: IVec3, w: Int) : this(v.x, v.y, v.z, w)
     constructor(v: IVec2, z: Int, w: Int) : this(v.x, v.y, z, w)
     constructor(s: Int) : this(s, s, s, s)
+
+    constructor(v: FVec4) : this(v.x.toInt(), v.y.toInt(), v.z.toInt(), v.w.toInt())
+    constructor(v: DVec4) : this(v.x.toInt(), v.y.toInt(), v.z.toInt(), v.w.toInt())
 
     fun from(x: Int, y: Int, z: Int, w: Int) {
         this.x = x; this.y = y; this.z = z; this.w = w

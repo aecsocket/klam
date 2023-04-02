@@ -9,6 +9,9 @@ data class DVec2(@JvmField var x: Double, @JvmField var y: Double) {
     constructor(v: DVec2) : this(v.x, v.y)
     constructor(s: Double) : this(s, s)
 
+    constructor(v: IVec2) : this(v.x.toDouble(), v.y.toDouble())
+    constructor(v: FVec2) : this(v.x.toDouble(), v.y.toDouble())
+
     fun from(x: Double, y: Double) { this.x = x; this.y = y }
     fun from(v: DVec2) = from(v.x, v.y)
 
@@ -74,6 +77,9 @@ data class DVec3(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
     constructor(v: DVec3) : this(v.x, v.y, v.z)
     constructor(v: DVec2, z: Double) : this(v.x, v.y, z)
     constructor(s: Double) : this(s, s, s)
+
+    constructor(v: IVec3) : this(v.x.toDouble(), v.y.toDouble(), v.z.toDouble())
+    constructor(v: FVec3) : this(v.x.toDouble(), v.y.toDouble(), v.z.toDouble())
 
     fun from(x: Double, y: Double, z: Double) { this.x = x; this.y = y; this.z = z }
     fun from(v: DVec3) = from(v.x, v.y, v.z)
@@ -143,6 +149,9 @@ data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
     constructor(v: DVec3, w: Double) : this(v.x, v.y, v.z, w)
     constructor(v: DVec2, z: Double, w: Double) : this(v.x, v.y, z, w)
     constructor(s: Double) : this(s, s, s, s)
+
+    constructor(v: IVec4) : this(v.x.toDouble(), v.y.toDouble(), v.z.toDouble(), v.w.toDouble())
+    constructor(v: FVec4) : this(v.x.toDouble(), v.y.toDouble(), v.z.toDouble(), v.w.toDouble())
 
     fun from(x: Double, y: Double, z: Double, w: Double) { this.x = x; this.y = y; this.z = z; this.w = w }
     fun from(v: DVec4) = from(v.x, v.y, v.z, v.w)
