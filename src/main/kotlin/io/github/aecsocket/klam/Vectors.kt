@@ -53,6 +53,18 @@ inline fun clamp(v: DVec3, min: Double, max: Double) = DVec3(clamp(v.x, min, max
 inline fun clamp(v: DVec4, min: DVec4, max: DVec4)   = DVec4(clamp(v.x, min.x, max.x), clamp(v.y, min.y, max.y), clamp(v.z, min.z, max.z), clamp(v.w, min.w, max.w))
 inline fun clamp(v: DVec4, min: Double, max: Double) = DVec4(clamp(v.x, min, max), clamp(v.y, min, max), clamp(v.z, min, max), clamp(v.w, min, max))
 
+inline fun minComponent(v: IVec2) = min(v.x, v.y)
+inline fun minComponent(v: IVec3) = min(v.x, min(v.y, v.z))
+inline fun minComponent(v: IVec4) = min(v.x, min(v.y, min(v.z, v.w)))
+
+inline fun minComponent(v: FVec2) = min(v.x, v.y)
+inline fun minComponent(v: FVec3) = min(v.x, min(v.y, v.z))
+inline fun minComponent(v: FVec4) = min(v.x, min(v.y, min(v.z, v.w)))
+
+inline fun minComponent(v: DVec2) = min(v.x, v.y)
+inline fun minComponent(v: DVec3) = min(v.x, min(v.y, v.z))
+inline fun minComponent(v: DVec4) = min(v.x, min(v.y, min(v.z, v.w)))
+
 // boolean
 inline fun any(v: BVec2) = v.x || v.y
 inline fun any(v: BVec3) = v.x || v.y || v.z

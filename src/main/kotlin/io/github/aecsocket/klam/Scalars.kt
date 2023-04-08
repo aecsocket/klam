@@ -5,20 +5,22 @@ package io.github.aecsocket.klam
 internal typealias Index = Int
 internal const val DECIMAL_FORMAT = "%f"
 
-const val DPI = kotlin.math.PI
-const val FPI = DPI.toFloat()
+const val PI_D = kotlin.math.PI
+const val PI_F = PI_D.toFloat()
 
-const val EPSILON     = 0.000001
-const val ONE_EPSILON = 0.999999
+const val EPSILON_D     = 0.000001
+const val EPSILON_F     = 0.000001f
+const val ONE_EPSILON_D = 0.999999
+const val ONE_EPSILON_F = 0.999999f
 
 inline fun sqr(x: Float) = x * x
 inline fun sqr(x: Double) = x * x
 
-inline fun degrees(x: Float) = x * (180.0f / FPI)
-inline fun degrees(x: Double) = x * (180.0 / DPI)
+inline fun degrees(x: Float) = x * (180.0f / PI_F)
+inline fun degrees(x: Double) = x * (180.0 / PI_D)
 
-inline fun radians(x: Float) = x * (FPI / 180.0f)
-inline fun radians(x: Double) = x * (DPI / 180.0)
+inline fun radians(x: Float) = x * (PI_F / 180.0f)
+inline fun radians(x: Double) = x * (PI_D / 180.0)
 
 inline fun clamp(x: Int, min: Int, max: Int) = if (x < min) min else if (x > max) max else x
 inline fun clamp(x: Long, min: Long, max: Long) = if (x < min) min else if (x > max) max else x

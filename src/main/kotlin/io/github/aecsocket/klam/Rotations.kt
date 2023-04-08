@@ -212,7 +212,7 @@ fun asEuler(m: FMat3, order: EulerOrder): FVec3 {
     return when (order) {
         EulerOrder.XYZ -> {
             val y = asin(clamp(m[0, 2], -1f, 1f))
-            if (abs(m[0, 2]) < ONE_EPSILON) FVec3(
+            if (abs(m[0, 2]) < ONE_EPSILON_D) FVec3(
                 atan2(-m[1, 2], m[2, 2]),
                 y,
                 atan2(-m[0, 1], m[0, 0]),
@@ -224,7 +224,7 @@ fun asEuler(m: FMat3, order: EulerOrder): FVec3 {
         }
         EulerOrder.YXZ -> {
             val x = asin(-clamp(m[1, 2], -1f, 1f))
-            if (abs(m[1, 2]) < ONE_EPSILON) FVec3(
+            if (abs(m[1, 2]) < ONE_EPSILON_D) FVec3(
                 x,
                 atan2(m[0, 2], m[2, 2]),
                 atan2(m[1, 0], m[1, 1]),
@@ -236,7 +236,7 @@ fun asEuler(m: FMat3, order: EulerOrder): FVec3 {
         }
         EulerOrder.ZXY -> {
             val x = asin(clamp(m[2, 1], -1f, 1f))
-            return if (abs(m[2, 1]) < ONE_EPSILON) FVec3(
+            return if (abs(m[2, 1]) < ONE_EPSILON_D) FVec3(
                 x,
                 atan2(-m[2, 0], m[2, 2]),
                 atan2(-m[0, 1], m[1, 1]),
@@ -248,7 +248,7 @@ fun asEuler(m: FMat3, order: EulerOrder): FVec3 {
         }
         EulerOrder.ZYX -> {
             val y = asin(-clamp(m[2, 0], -1f, 1f))
-            if (abs(m[2, 0]) < ONE_EPSILON) FVec3(
+            if (abs(m[2, 0]) < ONE_EPSILON_D) FVec3(
                 atan2(m[2, 1], m[2, 2]),
                 y,
                 atan2(m[1, 0], m[0, 0]),
@@ -260,7 +260,7 @@ fun asEuler(m: FMat3, order: EulerOrder): FVec3 {
         }
         EulerOrder.YZX -> {
             val z = asin(clamp(m[1, 0], -1f, 1f))
-            if (abs(m[1, 0]) < ONE_EPSILON) FVec3(
+            if (abs(m[1, 0]) < ONE_EPSILON_D) FVec3(
                 atan2(-m[1, 2], m[1, 1]),
                 atan2(-m[2, 0], m[0, 0]),
                 z,
@@ -272,7 +272,7 @@ fun asEuler(m: FMat3, order: EulerOrder): FVec3 {
         }
         EulerOrder.XZY -> {
             val z = asin(-clamp(m[0, 1], -1f, 1f))
-            return if (abs(m[0, 1]) < ONE_EPSILON) FVec3(
+            return if (abs(m[0, 1]) < ONE_EPSILON_D) FVec3(
                 atan2(m[2, 1], m[1, 1]),
                 atan2(m[0, 2], m[0, 0]),
                 z,
@@ -288,7 +288,7 @@ fun asEuler(m: DMat3, order: EulerOrder): DVec3 {
     return when (order) {
         EulerOrder.XYZ -> {
             val y = asin(clamp(m[0, 2], -1.0, 1.0))
-            if (abs(m[0, 2]) < ONE_EPSILON) DVec3(
+            if (abs(m[0, 2]) < ONE_EPSILON_D) DVec3(
                 atan2(-m[1, 2], m[2, 2]),
                 y,
                 atan2(-m[0, 1], m[0, 0]),
@@ -300,7 +300,7 @@ fun asEuler(m: DMat3, order: EulerOrder): DVec3 {
         }
         EulerOrder.YXZ -> {
             val x = asin(-clamp(m[1, 2], -1.0, 1.0))
-            if (abs(m[1, 2]) < ONE_EPSILON) DVec3(
+            if (abs(m[1, 2]) < ONE_EPSILON_D) DVec3(
                 x,
                 atan2(m[0, 2], m[2, 2]),
                 atan2(m[1, 0], m[1, 1]),
@@ -312,7 +312,7 @@ fun asEuler(m: DMat3, order: EulerOrder): DVec3 {
         }
         EulerOrder.ZXY -> {
             val x = asin(clamp(m[2, 1], -1.0, 1.0))
-            return if (abs(m[2, 1]) < ONE_EPSILON) DVec3(
+            return if (abs(m[2, 1]) < ONE_EPSILON_D) DVec3(
                 x,
                 atan2(-m[2, 0], m[2, 2]),
                 atan2(-m[0, 1], m[1, 1]),
@@ -324,7 +324,7 @@ fun asEuler(m: DMat3, order: EulerOrder): DVec3 {
         }
         EulerOrder.ZYX -> {
             val y = asin(-clamp(m[2, 0], -1.0, 1.0))
-            if (abs(m[2, 0]) < ONE_EPSILON) DVec3(
+            if (abs(m[2, 0]) < ONE_EPSILON_D) DVec3(
                 atan2(m[2, 1], m[2, 2]),
                 y,
                 atan2(m[1, 0], m[0, 0]),
@@ -336,7 +336,7 @@ fun asEuler(m: DMat3, order: EulerOrder): DVec3 {
         }
         EulerOrder.YZX -> {
             val z = asin(clamp(m[1, 0], -1.0, 1.0))
-            if (abs(m[1, 0]) < ONE_EPSILON) DVec3(
+            if (abs(m[1, 0]) < ONE_EPSILON_D) DVec3(
                 atan2(-m[1, 2], m[1, 1]),
                 atan2(-m[2, 0], m[0, 0]),
                 z,
@@ -348,7 +348,7 @@ fun asEuler(m: DMat3, order: EulerOrder): DVec3 {
         }
         EulerOrder.XZY -> {
             val z = asin(-clamp(m[0, 1], -1.0, 1.0))
-            return if (abs(m[0, 1]) < ONE_EPSILON) DVec3(
+            return if (abs(m[0, 1]) < ONE_EPSILON_D) DVec3(
                 atan2(m[2, 1], m[1, 1]),
                 atan2(m[0, 2], m[0, 0]),
                 z,
