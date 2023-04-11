@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.aecsocket"
-version = "0.1.2"
+version = "0.1.3-SNAPSHOT"
 description = "Linear algebra library for 2D/3D applications"
 
 dependencies {
