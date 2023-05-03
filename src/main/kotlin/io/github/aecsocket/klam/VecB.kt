@@ -6,6 +6,13 @@ private const val TO_STRING_FORMAT = "%s"
 private inline fun typeArrayOf(vararg elements: Boolean) = booleanArrayOf(*elements)
 
 data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
+    companion object {
+        val False get() = BVec2(false, false)
+        val True  get() = BVec2(true,  true )
+        val X     get() = BVec2(true,  false)
+        val Y     get() = BVec2(false, true )
+    }
+
     constructor(v: BVec2) : this(v.x, v.y)
     constructor(s: Boolean) : this(s, s)
 
@@ -30,16 +37,24 @@ data class BVec2(@JvmField var x: Boolean, @JvmField var y: Boolean) {
 
     fun asString(fmt: String) = "($fmt, $fmt)".format(x, y)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Boolean) -> Boolean) = BVec2(block(x), block(y))
+
+    inline operator fun not() = BVec2(!x, !y)
+
+    inline infix fun eq(v: BVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
+    inline infix fun ne(v: BVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
 }
 
-inline fun BVec2.map(block: (Boolean) -> Boolean) = BVec2(block(x), block(y))
-
-inline operator fun BVec2.not() = BVec2(!x, !y)
-
-inline infix fun BVec2.eq(v: BVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
-inline infix fun BVec2.ne(v: BVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
-
 data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean) {
+    companion object {
+        val False get() = BVec3(false, false, false)
+        val True  get() = BVec3(true,  true,  true )
+        val X     get() = BVec3(true,  false, false)
+        val Y     get() = BVec3(false, true,  false)
+        val Z     get() = BVec3(false, false, true )
+    }
+
     constructor(v: BVec3) : this(v.x, v.y, v.z)
     constructor(v: BVec2, z: Boolean) : this(v.x, v.y, z)
     constructor(s: Boolean) : this(s, s, s)
@@ -67,16 +82,25 @@ data class BVec3(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt)".format(x, y, z)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Boolean) -> Boolean) = BVec3(block(x), block(y), block(z))
+
+    inline operator fun not() = BVec3(!x, !y, !z)
+
+    inline infix fun eq(v: BVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
+    inline infix fun ne(v: BVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
 }
 
-inline fun BVec3.map(block: (Boolean) -> Boolean) = BVec3(block(x), block(y), block(z))
-
-inline operator fun BVec3.not() = BVec3(!x, !y, !z)
-
-inline infix fun BVec3.eq(v: BVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
-inline infix fun BVec3.ne(v: BVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
-
 data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField var z: Boolean, @JvmField var w: Boolean) {
+    companion object {
+        val False get() = BVec4(false, false, false, false)
+        val True  get() = BVec4(true,  true,  true,  true )
+        val X     get() = BVec4(true,  false, false, false)
+        val Y     get() = BVec4(false, true,  false, false)
+        val Z     get() = BVec4(false, false, true,  false)
+        val W     get() = BVec4(false, false, false, true )
+    }
+
     constructor(v: BVec4) : this(v.x, v.y, v.z, v.w)
     constructor(v: BVec3, w: Boolean) : this(v.x, v.y, v.z, w)
     constructor(v: BVec2, z: Boolean, w: Boolean) : this(v.x, v.y, z, w)
@@ -107,14 +131,14 @@ data class BVec4(@JvmField var x: Boolean, @JvmField var y: Boolean, @JvmField v
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Boolean) -> Boolean) = BVec4(block(x), block(y), block(z), block(w))
+
+    inline operator fun not() = BVec4(!x, !y, !z, !w)
+
+    inline infix fun eq(v: BVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
+    inline infix fun ne(v: BVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
 }
-
-inline fun BVec4.map(block: (Boolean) -> Boolean) = BVec4(block(x), block(y), block(z), block(w))
-
-inline operator fun BVec4.not() = BVec4(!x, !y, !z, !w)
-
-inline infix fun BVec4.eq(v: BVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
-inline infix fun BVec4.ne(v: BVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
 
 //region Alternate accessors
 inline var BVec2.r get() = x; set(value) { x = value }

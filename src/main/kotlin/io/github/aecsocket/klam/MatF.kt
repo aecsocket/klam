@@ -268,45 +268,45 @@ data class FMat4(@JvmField val x: FVec4, @JvmField val y: FVec4, @JvmField val z
         w.x, w.y, w.z, w.w,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (FVec4) -> FVec4) = FMat4(block(x), block(y), block(z), block(w))
+    inline fun mapScalar(block: (Float) -> Float) = FMat4(x.map(block), y.map(block), z.map(block), w.map(block))
+
+    inline operator fun unaryMinus() = FMat4(-x, -y, -z, -w)
+    inline operator fun inc()        = FMat4(x + 1.0f, y + 1.0f, z + 1.0f, w + 1.0f)
+    inline operator fun dec()        = FMat4(x - 1.0f, y - 1.0f, z - 1.0f, w - 1.0f)
+
+    inline operator fun plus(s: Float)  = FMat4(x + s, y + s, z + s, w + s)
+    inline operator fun minus(s: Float) = FMat4(x - s, y - s, z - s, w - s)
+    inline operator fun times(s: Float) = FMat4(x * s, y * s, z * s, w * s)
+
+    inline operator fun plusAssign(s: Float)  { x += s; y += s; z += s; w += s }
+    inline operator fun minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s }
+    inline operator fun timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
+
+    inline operator fun plus(m: FMat4)  = FMat4(x + m.x, y + m.y, z + m.z, w + m.w)
+    inline operator fun minus(m: FMat4) = FMat4(x - m.x, y - m.y, z - m.z, w + m.w)
+    inline operator fun times(m: FMat4) = FMat4(this).apply { this *= m }
+
+    inline operator fun plusAssign(m: FMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
+    inline operator fun minusAssign(m: FMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
+    inline operator fun timesAssign(m: FMat4) {
+        from(
+            x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,
+            x.x*m.y.x + y.x*m.y.y + z.x*m.y.z + w.x*m.y.w,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z + w.y*m.y.w,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z + w.z*m.y.w,  x.w*m.y.x + y.w*m.y.y + z.w*m.y.z + w.w*m.y.w,
+            x.x*m.z.x + y.x*m.z.y + z.x*m.z.z + w.x*m.z.w,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z + w.y*m.z.w,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z + w.z*m.z.w,  x.w*m.z.x + y.w*m.z.y + z.w*m.z.z + w.w*m.z.w,
+            x.x*m.w.x + y.x*m.w.y + z.x*m.w.z + w.x*m.w.w,  x.y*m.w.x + y.y*m.w.y + z.y*m.w.z + w.y*m.w.w,  x.z*m.w.x + y.z*m.w.y + z.z*m.w.z + w.z*m.w.w,  x.w*m.w.x + y.w*m.w.y + z.w*m.w.z + w.w*m.w.w,
+        )
+    }
+
+    inline operator fun times(v: FVec4) = FVec4(
+        x.x*v.x + y.x*v.y + z.x*v.z + w.x*v.w,
+        x.y*v.x + y.y*v.y + z.y*v.z + w.y*v.w,
+        x.z*v.x + y.z*v.y + z.z*v.z + w.z*v.w,
+        x.w*v.x + y.w*v.y + z.w*v.z + w.w*v.w,
+    )
 }
-
-inline fun FMat4.mapVector(block: (FVec4) -> FVec4) = FMat4(block(x), block(y), block(z), block(w))
-inline fun FMat4.mapScalar(block: (Float) -> Float) = FMat4(x.map(block), y.map(block), z.map(block), w.map(block))
-
-inline operator fun FMat4.unaryMinus() = FMat4(-x, -y, -z, -w)
-inline operator fun FMat4.inc()        = FMat4(x + 1.0f, y + 1.0f, z + 1.0f, w + 1.0f)
-inline operator fun FMat4.dec()        = FMat4(x - 1.0f, y - 1.0f, z - 1.0f, w - 1.0f)
-
-inline operator fun FMat4.plus(s: Float)  = FMat4(x + s, y + s, z + s, w + s)
-inline operator fun FMat4.minus(s: Float) = FMat4(x - s, y - s, z - s, w - s)
-inline operator fun FMat4.times(s: Float) = FMat4(x * s, y * s, z * s, w * s)
 
 inline operator fun Float.plus(m: FMat4)  = FMat4(this + m.x, this + m.y, this + m.z, this + m.w)
 inline operator fun Float.minus(m: FMat4) = FMat4(this - m.x, this - m.y, this - m.z, this - m.w)
 inline operator fun Float.times(m: FMat4) = FMat4(this * m.x, this * m.y, this * m.z, this * m.w)
-
-inline operator fun FMat4.plusAssign(s: Float)  { x += s; y += s; z += s; w += s }
-inline operator fun FMat4.minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s }
-inline operator fun FMat4.timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
-
-inline operator fun FMat4.plus(m: FMat4)  = FMat4(x + m.x, y + m.y, z + m.z, w + m.w)
-inline operator fun FMat4.minus(m: FMat4) = FMat4(x - m.x, y - m.y, z - m.z, w + m.w)
-inline operator fun FMat4.times(m: FMat4) = FMat4(this).apply { this *= m }
-
-inline operator fun FMat4.plusAssign(m: FMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
-inline operator fun FMat4.minusAssign(m: FMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
-inline operator fun FMat4.timesAssign(m: FMat4) {
-    from(
-        x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,
-        x.x*m.y.x + y.x*m.y.y + z.x*m.y.z + w.x*m.y.w,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z + w.y*m.y.w,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z + w.z*m.y.w,  x.w*m.y.x + y.w*m.y.y + z.w*m.y.z + w.w*m.y.w,
-        x.x*m.z.x + y.x*m.z.y + z.x*m.z.z + w.x*m.z.w,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z + w.y*m.z.w,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z + w.z*m.z.w,  x.w*m.z.x + y.w*m.z.y + z.w*m.z.z + w.w*m.z.w,
-        x.x*m.w.x + y.x*m.w.y + z.x*m.w.z + w.x*m.w.w,  x.y*m.w.x + y.y*m.w.y + z.y*m.w.z + w.y*m.w.w,  x.z*m.w.x + y.z*m.w.y + z.z*m.w.z + w.z*m.w.w,  x.w*m.w.x + y.w*m.w.y + z.w*m.w.z + w.w*m.w.w,
-    )
-}
-
-inline operator fun FMat4.times(v: FVec4) = FVec4(
-    x.x*v.x + y.x*v.y + z.x*v.z + w.x*v.w,
-    x.y*v.x + y.y*v.y + z.y*v.z + w.y*v.w,
-    x.z*v.x + y.z*v.y + z.z*v.z + w.z*v.w,
-    x.w*v.x + y.w*v.y + z.w*v.z + w.w*v.w,
-)

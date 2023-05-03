@@ -268,45 +268,45 @@ data class IMat4(@JvmField val x: IVec4, @JvmField val y: IVec4, @JvmField val z
         w.x, w.y, w.z, w.w,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (IVec4) -> IVec4) = IMat4(block(x), block(y), block(z), block(w))
+    inline fun mapScalar(block: (Int) -> Int) = IMat4(x.map(block), y.map(block), z.map(block), w.map(block))
+
+    inline operator fun unaryMinus() = IMat4(-x, -y, -z, -w)
+    inline operator fun inc()        = IMat4(x + 1, y + 1, z + 1, w + 1)
+    inline operator fun dec()        = IMat4(x - 1, y - 1, z - 1, w - 1)
+
+    inline operator fun plus(s: Int)  = IMat4(x + s, y + s, z + s, w + s)
+    inline operator fun minus(s: Int) = IMat4(x - s, y - s, z - s, w - s)
+    inline operator fun times(s: Int) = IMat4(x * s, y * s, z * s, w * s)
+
+    inline operator fun plusAssign(s: Int)  { x += s; y += s; z += s; w += s }
+    inline operator fun minusAssign(s: Int) { x -= s; y -= s; z -= s; w -= s }
+    inline operator fun timesAssign(s: Int) { x *= s; y *= s; z *= s; w *= s }
+
+    inline operator fun plus(m: IMat4)  = IMat4(x + m.x, y + m.y, z + m.z, w + m.w)
+    inline operator fun minus(m: IMat4) = IMat4(x - m.x, y - m.y, z - m.z, w + m.w)
+    inline operator fun times(m: IMat4) = IMat4(this).apply { this *= m }
+
+    inline operator fun plusAssign(m: IMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
+    inline operator fun minusAssign(m: IMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
+    inline operator fun timesAssign(m: IMat4) {
+        from(
+            x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,
+            x.x*m.y.x + y.x*m.y.y + z.x*m.y.z + w.x*m.y.w,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z + w.y*m.y.w,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z + w.z*m.y.w,  x.w*m.y.x + y.w*m.y.y + z.w*m.y.z + w.w*m.y.w,
+            x.x*m.z.x + y.x*m.z.y + z.x*m.z.z + w.x*m.z.w,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z + w.y*m.z.w,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z + w.z*m.z.w,  x.w*m.z.x + y.w*m.z.y + z.w*m.z.z + w.w*m.z.w,
+            x.x*m.w.x + y.x*m.w.y + z.x*m.w.z + w.x*m.w.w,  x.y*m.w.x + y.y*m.w.y + z.y*m.w.z + w.y*m.w.w,  x.z*m.w.x + y.z*m.w.y + z.z*m.w.z + w.z*m.w.w,  x.w*m.w.x + y.w*m.w.y + z.w*m.w.z + w.w*m.w.w,
+        )
+    }
+
+    inline operator fun times(v: IVec4) = IVec4(
+        x.x*v.x + y.x*v.y + z.x*v.z + w.x*v.w,
+        x.y*v.x + y.y*v.y + z.y*v.z + w.y*v.w,
+        x.z*v.x + y.z*v.y + z.z*v.z + w.z*v.w,
+        x.w*v.x + y.w*v.y + z.w*v.z + w.w*v.w,
+    )
 }
-
-inline fun IMat4.mapVector(block: (IVec4) -> IVec4) = IMat4(block(x), block(y), block(z), block(w))
-inline fun IMat4.mapScalar(block: (Int) -> Int) = IMat4(x.map(block), y.map(block), z.map(block), w.map(block))
-
-inline operator fun IMat4.unaryMinus() = IMat4(-x, -y, -z, -w)
-inline operator fun IMat4.inc()        = IMat4(x + 1, y + 1, z + 1, w + 1)
-inline operator fun IMat4.dec()        = IMat4(x - 1, y - 1, z - 1, w - 1)
-
-inline operator fun IMat4.plus(s: Int)  = IMat4(x + s, y + s, z + s, w + s)
-inline operator fun IMat4.minus(s: Int) = IMat4(x - s, y - s, z - s, w - s)
-inline operator fun IMat4.times(s: Int) = IMat4(x * s, y * s, z * s, w * s)
 
 inline operator fun Int.plus(m: IMat4)  = IMat4(this + m.x, this + m.y, this + m.z, this + m.w)
 inline operator fun Int.minus(m: IMat4) = IMat4(this - m.x, this - m.y, this - m.z, this - m.w)
 inline operator fun Int.times(m: IMat4) = IMat4(this * m.x, this * m.y, this * m.z, this * m.w)
-
-inline operator fun IMat4.plusAssign(s: Int)  { x += s; y += s; z += s; w += s }
-inline operator fun IMat4.minusAssign(s: Int) { x -= s; y -= s; z -= s; w -= s }
-inline operator fun IMat4.timesAssign(s: Int) { x *= s; y *= s; z *= s; w *= s }
-
-inline operator fun IMat4.plus(m: IMat4)  = IMat4(x + m.x, y + m.y, z + m.z, w + m.w)
-inline operator fun IMat4.minus(m: IMat4) = IMat4(x - m.x, y - m.y, z - m.z, w + m.w)
-inline operator fun IMat4.times(m: IMat4) = IMat4(this).apply { this *= m }
-
-inline operator fun IMat4.plusAssign(m: IMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
-inline operator fun IMat4.minusAssign(m: IMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
-inline operator fun IMat4.timesAssign(m: IMat4) {
-    from(
-        x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,
-        x.x*m.y.x + y.x*m.y.y + z.x*m.y.z + w.x*m.y.w,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z + w.y*m.y.w,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z + w.z*m.y.w,  x.w*m.y.x + y.w*m.y.y + z.w*m.y.z + w.w*m.y.w,
-        x.x*m.z.x + y.x*m.z.y + z.x*m.z.z + w.x*m.z.w,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z + w.y*m.z.w,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z + w.z*m.z.w,  x.w*m.z.x + y.w*m.z.y + z.w*m.z.z + w.w*m.z.w,
-        x.x*m.w.x + y.x*m.w.y + z.x*m.w.z + w.x*m.w.w,  x.y*m.w.x + y.y*m.w.y + z.y*m.w.z + w.y*m.w.w,  x.z*m.w.x + y.z*m.w.y + z.z*m.w.z + w.z*m.w.w,  x.w*m.w.x + y.w*m.w.y + z.w*m.w.z + w.w*m.w.w,
-    )
-}
-
-inline operator fun IMat4.times(v: IVec4) = IVec4(
-    x.x*v.x + y.x*v.y + z.x*v.z + w.x*v.w,
-    x.y*v.x + y.y*v.y + z.y*v.z + w.y*v.w,
-    x.z*v.x + y.z*v.y + z.z*v.z + w.z*v.w,
-    x.w*v.x + y.w*v.y + z.w*v.z + w.w*v.w,
-)

@@ -23,9 +23,9 @@ object FAffine3Serializer : TypeSerializer<FAffine3> {
 
     override fun deserialize(type: Type, node: ConfigurationNode): FAffine3 {
         return FAffine3(
-            node.node(POSITION).get { FVec3(0.0f) },
-            node.node(ROTATION).get { FQuat.identity() },
-            node.node(SCALE).get { FVec3(1.0f) },
+            node.node(POSITION).get { FVec3.Zero },
+            node.node(ROTATION).get { FQuat.Identity },
+            node.node(SCALE).get { FVec3.One },
         )
     }
 }
@@ -42,9 +42,9 @@ object DAffine3Serializer : TypeSerializer<DAffine3> {
 
     override fun deserialize(type: Type, node: ConfigurationNode): DAffine3 {
         return DAffine3(
-            node.node(POSITION).get { DVec3(0.0) },
-            node.node(ROTATION).get { FQuat.identity() },
-            node.node(SCALE).get { FVec3(1.0f) },
+            node.node(POSITION).get { DVec3.Zero },
+            node.node(ROTATION).get { FQuat.Identity },
+            node.node(SCALE).get { FVec3.One },
         )
     }
 }

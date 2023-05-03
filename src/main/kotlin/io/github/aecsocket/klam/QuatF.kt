@@ -7,7 +7,7 @@ import kotlin.math.sin
 
 data class FQuat(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z: Float, @JvmField var w: Float) {
     companion object {
-        fun identity() = FQuat(0.0f, 0.0f, 0.0f, 1.0f)
+        val Identity get() = FQuat(0.0f, 0.0f, 0.0f, 1.0f)
 
         fun ofAxisAngle(axis: FVec3, angle: Float): FQuat {
             val xyz = axis * sin(angle * 0.5f)
@@ -43,46 +43,48 @@ data class FQuat(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
 
     fun asString(fmt: String) = "(${fmt} + ${fmt}i + ${fmt}j + ${fmt}k)".format(w, x, y, z)
     override fun toString() = asString("%f")
+
+    inline fun map(block: (Float) -> Float) = FQuat(block(x), block(y), block(z), block(w))
+
+    inline operator fun plus(s: Float)  = FQuat(x + s, y + s, z + s, w + s)
+    inline operator fun minus(s: Float) = FQuat(x - s, y - s, z - s, w - s)
+    inline operator fun times(s: Float) = FQuat(x * s, y * s, z * s, w * s)
+    inline operator fun div(s: Float)   = FQuat(x / s, y / s, z / s, w / s)
+
+    inline operator fun plusAssign(s: Float)  { x += s; y += s; z += s; w += s }
+    inline operator fun minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s }
+    inline operator fun timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
+    inline operator fun divAssign(s: Float)   { x /= s; y /= s; z /= s; w /= s }
+
+    inline operator fun times(q: FQuat) = FQuat(this).apply { this *= q }
+
+    inline operator fun timesAssign(q: FQuat) {
+        from(
+            w*q.x + x*q.w + y*q.z - z*q.y,
+            w*q.y - x*q.z + y*q.w + z*q.x,
+            w*q.z + x*q.y - y*q.x + z*q.w,
+            w*q.w - x*q.x - y*q.y - z*q.z,
+        )
+    }
+
+    inline operator fun times(v: FVec3): FVec3 {
+        val u = xyz
+        val s = w
+        return (u * 2.0f * dot(u, v)) +
+                (v * (s*s - dot(u, u))) +
+                (cross(u, v) * 2.0f * s)
+    }
+
+    inline operator fun times(v: DVec3): DVec3 {
+        val u = DVec3(xyz)
+        val s = w.toDouble()
+        return (u * 2.0 * dot(u, v)) +
+                (v * (s*s - dot(u, u))) +
+                (cross(u, v) * 2.0 * s)
+    }
 }
 
-inline fun FQuat.map(block: (Float) -> Float) = FQuat(block(x), block(y), block(z), block(w))
-
-inline operator fun FQuat.plus(s: Float)  = FQuat(x + s, y + s, z + s, w + s)
-inline operator fun FQuat.minus(s: Float) = FQuat(x - s, y - s, z - s, w - s)
-inline operator fun FQuat.times(s: Float) = FQuat(x * s, y * s, z * s, w * s)
-inline operator fun FQuat.div(s: Float)   = FQuat(x / s, y / s, z / s, w / s)
-
-inline operator fun FQuat.plusAssign(s: Float)  { x += s; y += s; z += s; w += s }
-inline operator fun FQuat.minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s }
-inline operator fun FQuat.timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
-inline operator fun FQuat.divAssign(s: Float)   { x /= s; y /= s; z /= s; w /= s }
-
-inline operator fun FQuat.times(q: FQuat) = FQuat(this).apply { this *= q }
-
-inline operator fun FQuat.timesAssign(q: FQuat) {
-    from(
-        w*q.x + x*q.w + y*q.z - z*q.y,
-        w*q.y - x*q.z + y*q.w + z*q.x,
-        w*q.z + x*q.y - y*q.x + z*q.w,
-        w*q.w - x*q.x - y*q.y - z*q.z,
-    )
-}
-
-inline operator fun FQuat.times(v: FVec3): FVec3 {
-    val u = xyz
-    val s = w
-    return (u * 2.0f * dot(u, v)) +
-            (v * (s*s - dot(u, u))) +
-            (cross(u, v) * 2.0f * s)
-}
-
-inline operator fun FQuat.times(v: DVec3): DVec3 {
-    val u = DVec3(xyz)
-    val s = w.toDouble()
-    return (u * 2.0 * dot(u, v)) +
-            (v * (s*s - dot(u, u))) +
-            (cross(u, v) * 2.0 * s)
-}
+inline operator fun Float.times(q: FQuat) = FQuat(this * q.x, this * q.y, this * q.z, this * q.w)
 
 //region Alternate accessors
 inline var FQuat.xyz get() = FVec3(x, y, z); set(value) { x = value.x; y = value.y; z = value.z }

@@ -6,6 +6,13 @@ private const val TO_STRING_FORMAT = "%f"
 private inline fun typeArrayOf(vararg elements: Double) = doubleArrayOf(*elements)
 
 data class DVec2(@JvmField var x: Double, @JvmField var y: Double) {
+    companion object {
+        val Zero get() = DVec2(0.0, 0.0)
+        val One  get() = DVec2(1.0, 1.0)
+        val X    get() = DVec2(1.0, 0.0)
+        val Y    get() = DVec2(0.0, 1.0)
+    }
+
     constructor(v: DVec2) : this(v.x, v.y)
     constructor(s: Double) : this(s, s)
 
@@ -33,47 +40,55 @@ data class DVec2(@JvmField var x: Double, @JvmField var y: Double) {
 
     fun asString(fmt: String) = "($fmt, $fmt)".format(x, y)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Double) -> Double) = DVec2(block(x), block(y))
+
+    inline operator fun unaryMinus() = DVec2(-x, -y)
+    inline operator fun inc()        = DVec2(x + 1, y + 1)
+    inline operator fun dec()        = DVec2(x - 1, y - 1)
+
+    inline operator fun plus(s: Double)  = DVec2(x + s, y + s)
+    inline operator fun minus(s: Double) = DVec2(x - s, y - s)
+    inline operator fun times(s: Double) = DVec2(x * s, y * s)
+    inline operator fun div(s: Double)   = DVec2(x / s, y / s)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s }
+    inline operator fun divAssign(s: Double)   { x /= s; y /= s }
+
+    inline operator fun plus(v: DVec2)  = DVec2(x + v.x, y + v.y)
+    inline operator fun minus(v: DVec2) = DVec2(x - v.x, y - v.y)
+    inline operator fun times(v: DVec2) = DVec2(x * v.x, y * v.y)
+    inline operator fun div(v: DVec2)   = DVec2(x / v.x, y / v.y)
+
+    inline operator fun plusAssign(v: DVec2)  { x += v.x; y += v.y }
+    inline operator fun minusAssign(v: DVec2) { x -= v.x; y -= v.y }
+    inline operator fun timesAssign(v: DVec2) { x *= v.x; y *= v.y }
+    inline operator fun divAssign(v: DVec2)   { x /= v.x; y /= v.y }
+
+    inline infix fun eq(v: DVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
+    inline infix fun ne(v: DVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
+    inline infix fun lt(v: DVec2) = BVec2(x  < v.x, y  < v.y)
+    inline infix fun le(v: DVec2) = BVec2(x <= v.x, y <= v.y)
+    inline infix fun gt(v: DVec2) = BVec2(x  > v.x, y  > v.y)
+    inline infix fun ge(v: DVec2) = BVec2(x >= v.x, y >= v.y)
 }
-
-inline fun DVec2.map(block: (Double) -> Double) = DVec2(block(x), block(y))
-
-inline operator fun DVec2.unaryMinus() = DVec2(-x, -y)
-inline operator fun DVec2.inc()        = DVec2(x + 1, y + 1)
-inline operator fun DVec2.dec()        = DVec2(x - 1, y - 1)
-
-inline operator fun DVec2.plus(s: Double)  = DVec2(x + s, y + s)
-inline operator fun DVec2.minus(s: Double) = DVec2(x - s, y - s)
-inline operator fun DVec2.times(s: Double) = DVec2(x * s, y * s)
-inline operator fun DVec2.div(s: Double)   = DVec2(x / s, y / s)
 
 inline operator fun Double.plus(v: DVec2)  = DVec2(this + v.x, this + v.y)
 inline operator fun Double.minus(v: DVec2) = DVec2(this - v.x, this - v.y)
 inline operator fun Double.times(v: DVec2) = DVec2(this * v.x, this * v.y)
 inline operator fun Double.div(v: DVec2)   = DVec2(this / v.x, this / v.y)
 
-inline operator fun DVec2.plusAssign(s: Double)  { x += s; y += s }
-inline operator fun DVec2.minusAssign(s: Double) { x -= s; y -= s }
-inline operator fun DVec2.timesAssign(s: Double) { x *= s; y *= s }
-inline operator fun DVec2.divAssign(s: Double)   { x /= s; y /= s }
-
-inline operator fun DVec2.plus(v: DVec2)  = DVec2(x + v.x, y + v.y)
-inline operator fun DVec2.minus(v: DVec2) = DVec2(x - v.x, y - v.y)
-inline operator fun DVec2.times(v: DVec2) = DVec2(x * v.x, y * v.y)
-inline operator fun DVec2.div(v: DVec2)   = DVec2(x / v.x, y / v.y)
-
-inline operator fun DVec2.plusAssign(v: DVec2)  { x += v.x; y += v.y }
-inline operator fun DVec2.minusAssign(v: DVec2) { x -= v.x; y -= v.y }
-inline operator fun DVec2.timesAssign(v: DVec2) { x *= v.x; y *= v.y }
-inline operator fun DVec2.divAssign(v: DVec2)   { x /= v.x; y /= v.y }
-
-inline infix fun DVec2.eq(v: DVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
-inline infix fun DVec2.ne(v: DVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
-inline infix fun DVec2.lt(v: DVec2) = BVec2(x  < v.x, y  < v.y)
-inline infix fun DVec2.le(v: DVec2) = BVec2(x <= v.x, y <= v.y)
-inline infix fun DVec2.gt(v: DVec2) = BVec2(x  > v.x, y  > v.y)
-inline infix fun DVec2.ge(v: DVec2) = BVec2(x >= v.x, y >= v.y)
-
 data class DVec3(@JvmField var x: Double, @JvmField var y: Double, @JvmField var z: Double) {
+    companion object {
+        val Zero get() = DVec3(0.0, 0.0, 0.0)
+        val One  get() = DVec3(1.0, 1.0, 1.0)
+        val X    get() = DVec3(1.0, 0.0, 0.0)
+        val Y    get() = DVec3(0.0, 1.0, 0.0)
+        val Z    get() = DVec3(0.0, 0.0, 1.0)
+    }
+
     constructor(v: DVec3) : this(v.x, v.y, v.z)
     constructor(v: DVec2, z: Double) : this(v.x, v.y, z)
     constructor(s: Double) : this(s, s, s)
@@ -104,47 +119,56 @@ data class DVec3(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt)".format(x, y, z)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Double) -> Double) = DVec3(block(x), block(y), block(z))
+
+    inline operator fun unaryMinus() = DVec3(-x, -y, -z)
+    inline operator fun inc()        = DVec3(x + 1, y + 1, z + 1)
+    inline operator fun dec()        = DVec3(x - 1, y - 1, z - 1)
+
+    inline operator fun plus(s: Double)  = DVec3(x + s, y + s, z + s)
+    inline operator fun minus(s: Double) = DVec3(x - s, y - s, z - s)
+    inline operator fun times(s: Double) = DVec3(x * s, y * s, z * s)
+    inline operator fun div(s: Double)   = DVec3(x / s, y / s, z / s)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s }
+    inline operator fun divAssign(s: Double)   { x /= s; y /= s; z /= s }
+
+    inline operator fun plus(v: DVec3)  = DVec3(x + v.x, y + v.y, z + v.z)
+    inline operator fun minus(v: DVec3) = DVec3(x - v.x, y - v.y, z - v.z)
+    inline operator fun times(v: DVec3) = DVec3(x * v.x, y * v.y, z * v.z)
+    inline operator fun div(v: DVec3)   = DVec3(x / v.x, y / v.y, z / v.z)
+
+    inline operator fun plusAssign(v: DVec3)  { x += v.x; y += v.y; z += v.z }
+    inline operator fun minusAssign(v: DVec3) { x -= v.x; y -= v.y; z -= v.z }
+    inline operator fun timesAssign(v: DVec3) { x *= v.x; y *= v.y; z *= v.z }
+    inline operator fun divAssign(v: DVec3)   { x /= v.x; y /= v.y; z /= v.z }
+
+    inline infix fun eq(v: DVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
+    inline infix fun ne(v: DVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
+    inline infix fun lt(v: DVec3) = BVec3(x  < v.x, y  < v.y, z  < v.z)
+    inline infix fun le(v: DVec3) = BVec3(x <= v.x, y <= v.y, z <= v.z)
+    inline infix fun gt(v: DVec3) = BVec3(x  > v.x, y  > v.y, z  > v.z)
+    inline infix fun ge(v: DVec3) = BVec3(x >= v.x, y >= v.y, z >= v.z)
 }
-
-inline fun DVec3.map(block: (Double) -> Double) = DVec3(block(x), block(y), block(z))
-
-inline operator fun DVec3.unaryMinus() = DVec3(-x, -y, -z)
-inline operator fun DVec3.inc()        = DVec3(x + 1, y + 1, z + 1)
-inline operator fun DVec3.dec()        = DVec3(x - 1, y - 1, z - 1)
-
-inline operator fun DVec3.plus(s: Double)  = DVec3(x + s, y + s, z + s)
-inline operator fun DVec3.minus(s: Double) = DVec3(x - s, y - s, z - s)
-inline operator fun DVec3.times(s: Double) = DVec3(x * s, y * s, z * s)
-inline operator fun DVec3.div(s: Double)   = DVec3(x / s, y / s, z / s)
 
 inline operator fun Double.plus(v: DVec3)  = DVec3(this + v.x, this + v.y, this + v.z)
 inline operator fun Double.minus(v: DVec3) = DVec3(this - v.x, this - v.y, this - v.z)
 inline operator fun Double.times(v: DVec3) = DVec3(this * v.x, this * v.y, this * v.z)
 inline operator fun Double.div(v: DVec3)   = DVec3(this / v.x, this / v.y, this / v.z)
 
-inline operator fun DVec3.plusAssign(s: Double)  { x += s; y += s; z += s }
-inline operator fun DVec3.minusAssign(s: Double) { x -= s; y -= s; z -= s }
-inline operator fun DVec3.timesAssign(s: Double) { x *= s; y *= s; z *= s }
-inline operator fun DVec3.divAssign(s: Double)   { x /= s; y /= s; z /= s }
-
-inline operator fun DVec3.plus(v: DVec3)  = DVec3(x + v.x, y + v.y, z + v.z)
-inline operator fun DVec3.minus(v: DVec3) = DVec3(x - v.x, y - v.y, z - v.z)
-inline operator fun DVec3.times(v: DVec3) = DVec3(x * v.x, y * v.y, z * v.z)
-inline operator fun DVec3.div(v: DVec3)   = DVec3(x / v.x, y / v.y, z / v.z)
-
-inline operator fun DVec3.plusAssign(v: DVec3)  { x += v.x; y += v.y; z += v.z }
-inline operator fun DVec3.minusAssign(v: DVec3) { x -= v.x; y -= v.y; z -= v.z }
-inline operator fun DVec3.timesAssign(v: DVec3) { x *= v.x; y *= v.y; z *= v.z }
-inline operator fun DVec3.divAssign(v: DVec3)   { x /= v.x; y /= v.y; z /= v.z }
-
-inline infix fun DVec3.eq(v: DVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
-inline infix fun DVec3.ne(v: DVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
-inline infix fun DVec3.lt(v: DVec3) = BVec3(x  < v.x, y  < v.y, z  < v.z)
-inline infix fun DVec3.le(v: DVec3) = BVec3(x <= v.x, y <= v.y, z <= v.z)
-inline infix fun DVec3.gt(v: DVec3) = BVec3(x  > v.x, y  > v.y, z  > v.z)
-inline infix fun DVec3.ge(v: DVec3) = BVec3(x >= v.x, y >= v.y, z >= v.z)
-
 data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var z: Double, @JvmField var w: Double) {
+    companion object {
+        val Zero get() = DVec4(0.0, 0.0, 0.0, 0.0)
+        val One  get() = DVec4(1.0, 1.0, 1.0, 1.0)
+        val X    get() = DVec4(1.0, 0.0, 0.0, 0.0)
+        val Y    get() = DVec4(0.0, 1.0, 0.0, 0.0)
+        val Z    get() = DVec4(0.0, 0.0, 1.0, 0.0)
+        val W    get() = DVec4(0.0, 0.0, 0.0, 1.0)
+    }
+
     constructor(v: DVec4) : this(v.x, v.y, v.z, v.w)
     constructor(v: DVec3, w: Double) : this(v.x, v.y, v.z, w)
     constructor(v: DVec2, z: Double, w: Double) : this(v.x, v.y, z, w)
@@ -178,45 +202,45 @@ data class DVec4(@JvmField var x: Double, @JvmField var y: Double, @JvmField var
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Double) -> Double) = DVec4(block(x), block(y), block(z), block(w))
+
+    inline operator fun unaryMinus() = DVec4(-x, -y, -z, -w)
+    inline operator fun inc()        = DVec4(x + 1, y + 1, z + 1, w + 1)
+    inline operator fun dec()        = DVec4(x - 1, y - 1, z - 1, w - 1)
+
+    inline operator fun plus(s: Double)  = DVec4(x + s, y + s, z + s, w + s)
+    inline operator fun minus(s: Double) = DVec4(x - s, y - s, z - s, w - s)
+    inline operator fun times(s: Double) = DVec4(x * s, y * s, z * s, w * s)
+    inline operator fun div(s: Double)   = DVec4(x / s, y / s, z / s, w / s)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s; w += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
+    inline operator fun divAssign(s: Double)   { x /= s; y /= s; z /= s; w /= s }
+
+    inline operator fun plus(v: DVec4)  = DVec4(x + v.x, y + v.y, z + v.z, w + v.w)
+    inline operator fun minus(v: DVec4) = DVec4(x - v.x, y - v.y, z - v.z, w - v.w)
+    inline operator fun times(v: DVec4) = DVec4(x * v.x, y * v.y, z * v.z, w * v.w)
+    inline operator fun div(v: DVec4)   = DVec4(x / v.x, y / v.y, z / v.z, w / v.w)
+
+    inline operator fun plusAssign(v: DVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }
+    inline operator fun minusAssign(v: DVec4) { x -= v.x; y -= v.y; z -= v.z; w -= v.w }
+    inline operator fun timesAssign(v: DVec4) { x *= v.x; y *= v.y; z *= v.z; w *= v.w }
+    inline operator fun divAssign(v: DVec4)   { x /= v.x; y /= v.y; z /= v.z; w /= v.w }
+
+    inline infix fun eq(v: DVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
+    inline infix fun ne(v: DVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
+    inline infix fun lt(v: DVec4) = BVec4(x  < v.x, y  < v.y, z  < v.z, w  < v.w)
+    inline infix fun le(v: DVec4) = BVec4(x <= v.x, y <= v.y, z <= v.z, w <= v.w)
+    inline infix fun gt(v: DVec4) = BVec4(x  > v.x, y  > v.y, z  > v.z, w  > v.w)
+    inline infix fun ge(v: DVec4) = BVec4(x >= v.x, y >= v.y, z >= v.z, w >= v.w)
 }
-
-inline fun DVec4.map(block: (Double) -> Double) = DVec4(block(x), block(y), block(z), block(w))
-
-inline operator fun DVec4.unaryMinus() = DVec4(-x, -y, -z, -w)
-inline operator fun DVec4.inc()        = DVec4(x + 1, y + 1, z + 1, w + 1)
-inline operator fun DVec4.dec()        = DVec4(x - 1, y - 1, z - 1, w - 1)
-
-inline operator fun DVec4.plus(s: Double)  = DVec4(x + s, y + s, z + s, w + s)
-inline operator fun DVec4.minus(s: Double) = DVec4(x - s, y - s, z - s, w - s)
-inline operator fun DVec4.times(s: Double) = DVec4(x * s, y * s, z * s, w * s)
-inline operator fun DVec4.div(s: Double)   = DVec4(x / s, y / s, z / s, w / s)
 
 inline operator fun Double.plus(v: DVec4)  = DVec4(this + v.x, this + v.y, this + v.z, this + v.w)
 inline operator fun Double.minus(v: DVec4) = DVec4(this - v.x, this - v.y, this - v.z, this - v.w)
 inline operator fun Double.times(v: DVec4) = DVec4(this * v.x, this * v.y, this * v.z, this * v.w)
 inline operator fun Double.div(v: DVec4)   = DVec4(this / v.x, this / v.y, this / v.z, this / v.w)
-
-inline operator fun DVec4.plusAssign(s: Double)  { x += s; y += s; z += s; w += s }
-inline operator fun DVec4.minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= s }
-inline operator fun DVec4.timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
-inline operator fun DVec4.divAssign(s: Double)   { x /= s; y /= s; z /= s; w /= s }
-
-inline operator fun DVec4.plus(v: DVec4)  = DVec4(x + v.x, y + v.y, z + v.z, w + v.w)
-inline operator fun DVec4.minus(v: DVec4) = DVec4(x - v.x, y - v.y, z - v.z, w - v.w)
-inline operator fun DVec4.times(v: DVec4) = DVec4(x * v.x, y * v.y, z * v.z, w * v.w)
-inline operator fun DVec4.div(v: DVec4)   = DVec4(x / v.x, y / v.y, z / v.z, w / v.w)
-
-inline operator fun DVec4.plusAssign(v: DVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }
-inline operator fun DVec4.minusAssign(v: DVec4) { x -= v.x; y -= v.y; z -= v.z; w -= v.w }
-inline operator fun DVec4.timesAssign(v: DVec4) { x *= v.x; y *= v.y; z *= v.z; w *= v.w }
-inline operator fun DVec4.divAssign(v: DVec4)   { x /= v.x; y /= v.y; z /= v.z; w /= v.w }
-
-inline infix fun DVec4.eq(v: DVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
-inline infix fun DVec4.ne(v: DVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
-inline infix fun DVec4.lt(v: DVec4) = BVec4(x  < v.x, y  < v.y, z  < v.z, w  < v.w)
-inline infix fun DVec4.le(v: DVec4) = BVec4(x <= v.x, y <= v.y, z <= v.z, w <= v.w)
-inline infix fun DVec4.gt(v: DVec4) = BVec4(x  > v.x, y  > v.y, z  > v.z, w  > v.w)
-inline infix fun DVec4.ge(v: DVec4) = BVec4(x >= v.x, y >= v.y, z >= v.z, w >= v.w)
 
 //region Alternate accessors
 inline var DVec2.r get() = x; set(value) { x = value }

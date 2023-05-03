@@ -124,6 +124,13 @@ inline fun normalize(v: DVec4): DVec4 {
     return DVec4(v.x * l, v.y * l, v.z * l, v.w * l)
 }
 
+inline fun distanceSq(a: FVec2, b: FVec2) = lengthSq(b - a)
+inline fun distanceSq(a: FVec3, b: FVec3) = lengthSq(b - a)
+inline fun distanceSq(a: FVec4, b: FVec4) = lengthSq(b - a)
+inline fun distanceSq(a: DVec2, b: DVec2) = lengthSq(b - a)
+inline fun distanceSq(a: DVec3, b: DVec3) = lengthSq(b - a)
+inline fun distanceSq(a: DVec4, b: DVec4) = lengthSq(b - a)
+
 inline fun distance(a: FVec2, b: FVec2) = length(b - a)
 inline fun distance(a: FVec3, b: FVec3) = length(b - a)
 inline fun distance(a: FVec4, b: FVec4) = length(b - a)

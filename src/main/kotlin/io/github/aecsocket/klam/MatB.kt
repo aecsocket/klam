@@ -57,12 +57,12 @@ data class BMat2(@JvmField val x: BVec2, @JvmField val y: BVec2) {
         y.x, y.y,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (BVec2) -> BVec2) = BMat2(block(x), block(y))
+    inline fun mapScalar(block: (Boolean) -> Boolean) = BMat2(x.map(block), y.map(block))
+
+    inline operator fun not() = BMat2(!x, !y)
 }
-
-inline fun BMat2.mapVector(block: (BVec2) -> BVec2) = BMat2(block(x), block(y))
-inline fun BMat2.mapScalar(block: (Boolean) -> Boolean) = BMat2(x.map(block), y.map(block))
-
-inline operator fun BMat2.not() = BMat2(!x, !y)
 
 data class BMat3(@JvmField val x: BVec3, @JvmField val y: BVec3, @JvmField val z: BVec3) {
     constructor(m: BMat3) : this(BVec3(m.x), BVec3(m.y), BVec3(m.z))
@@ -125,12 +125,12 @@ data class BMat3(@JvmField val x: BVec3, @JvmField val y: BVec3, @JvmField val z
         z.x, z.y, z.z,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (BVec3) -> BVec3) = BMat3(block(x), block(y), block(z))
+    inline fun mapScalar(block: (Boolean) -> Boolean) = BMat3(x.map(block), y.map(block), z.map(block))
+
+    inline operator fun not() = BMat3(!x, !y, !z)
 }
-
-inline fun BMat3.mapVector(block: (BVec3) -> BVec3) = BMat3(block(x), block(y), block(z))
-inline fun BMat3.mapScalar(block: (Boolean) -> Boolean) = BMat3(x.map(block), y.map(block), z.map(block))
-
-inline operator fun BMat3.not() = BMat3(!x, !y, !z)
 
 data class BMat4(@JvmField val x: BVec4, @JvmField val y: BVec4, @JvmField val z: BVec4, @JvmField val w: BVec4) {
     constructor(m: BMat4) : this(BVec4(m.x), BVec4(m.y), BVec4(m.z), BVec4(m.w))
@@ -199,9 +199,10 @@ data class BMat4(@JvmField val x: BVec4, @JvmField val y: BVec4, @JvmField val z
         z.x, z.y, z.z,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (BVec4) -> BVec4) = BMat4(block(x), block(y), block(z), block(w))
+    inline fun mapScalar(block: (Boolean) -> Boolean) = BMat4(x.map(block), y.map(block), z.map(block), w.map(block))
+
+    inline operator fun not() = BMat4(!x, !y, !z, !w)
+
 }
-
-inline fun BMat4.mapVector(block: (BVec4) -> BVec4) = BMat4(block(x), block(y), block(z), block(w))
-inline fun BMat4.mapScalar(block: (Boolean) -> Boolean) = BMat4(x.map(block), y.map(block), z.map(block), w.map(block))
-
-inline operator fun BMat4.not() = BMat4(!x, !y, !z, !w)

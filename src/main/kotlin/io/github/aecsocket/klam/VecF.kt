@@ -6,6 +6,13 @@ private const val TO_STRING_FORMAT = "%f"
 private inline fun typeArrayOf(vararg elements: Float) = floatArrayOf(*elements)
 
 data class FVec2(@JvmField var x: Float, @JvmField var y: Float) {
+    companion object {
+        val Zero get() = FVec2(0.0f, 0.0f)
+        val One  get() = FVec2(1.0f, 1.0f)
+        val X    get() = FVec2(1.0f, 0.0f)
+        val Y    get() = FVec2(0.0f, 1.0f)
+    }
+
     constructor(v: FVec2) : this(v.x, v.y)
     constructor(s: Float) : this(s, s)
 
@@ -33,47 +40,55 @@ data class FVec2(@JvmField var x: Float, @JvmField var y: Float) {
 
     fun asString(fmt: String) = "($fmt, $fmt)".format(x, y)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Float) -> Float) = FVec2(block(x), block(y))
+
+    inline operator fun unaryMinus() = FVec2(-x, -y)
+    inline operator fun inc()        = FVec2(x + 1, y + 1)
+    inline operator fun dec()        = FVec2(x - 1, y - 1)
+
+    inline operator fun plus(s: Float)  = FVec2(x + s, y + s)
+    inline operator fun minus(s: Float) = FVec2(x - s, y - s)
+    inline operator fun times(s: Float) = FVec2(x * s, y * s)
+    inline operator fun div(s: Float)   = FVec2(x / s, y / s)
+
+    inline operator fun plusAssign(s: Float)  { x += s; y += s }
+    inline operator fun minusAssign(s: Float) { x -= s; y -= s }
+    inline operator fun timesAssign(s: Float) { x *= s; y *= s }
+    inline operator fun divAssign(s: Float)   { x /= s; y /= s }
+
+    inline operator fun plus(v: FVec2)  = FVec2(x + v.x, y + v.y)
+    inline operator fun minus(v: FVec2) = FVec2(x - v.x, y - v.y)
+    inline operator fun times(v: FVec2) = FVec2(x * v.x, y * v.y)
+    inline operator fun div(v: FVec2)   = FVec2(x / v.x, y / v.y)
+
+    inline operator fun plusAssign(v: FVec2)  { x += v.x; y += v.y }
+    inline operator fun minusAssign(v: FVec2) { x -= v.x; y -= v.y }
+    inline operator fun timesAssign(v: FVec2) { x *= v.x; y *= v.y }
+    inline operator fun divAssign(v: FVec2)   { x /= v.x; y /= v.y }
+
+    inline infix fun eq(v: FVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
+    inline infix fun ne(v: FVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
+    inline infix fun lt(v: FVec2) = BVec2(x  < v.x, y  < v.y)
+    inline infix fun le(v: FVec2) = BVec2(x <= v.x, y <= v.y)
+    inline infix fun gt(v: FVec2) = BVec2(x  > v.x, y  > v.y)
+    inline infix fun ge(v: FVec2) = BVec2(x >= v.x, y >= v.y)
 }
-
-inline fun FVec2.map(block: (Float) -> Float) = FVec2(block(x), block(y))
-
-inline operator fun FVec2.unaryMinus() = FVec2(-x, -y)
-inline operator fun FVec2.inc()        = FVec2(x + 1, y + 1)
-inline operator fun FVec2.dec()        = FVec2(x - 1, y - 1)
-
-inline operator fun FVec2.plus(s: Float)  = FVec2(x + s, y + s)
-inline operator fun FVec2.minus(s: Float) = FVec2(x - s, y - s)
-inline operator fun FVec2.times(s: Float) = FVec2(x * s, y * s)
-inline operator fun FVec2.div(s: Float)   = FVec2(x / s, y / s)
 
 inline operator fun Float.plus(v: FVec2)  = FVec2(this + v.x, this + v.y)
 inline operator fun Float.minus(v: FVec2) = FVec2(this - v.x, this - v.y)
 inline operator fun Float.times(v: FVec2) = FVec2(this * v.x, this * v.y)
 inline operator fun Float.div(v: FVec2)   = FVec2(this / v.x, this / v.y)
 
-inline operator fun FVec2.plusAssign(s: Float)  { x += s; y += s }
-inline operator fun FVec2.minusAssign(s: Float) { x -= s; y -= s }
-inline operator fun FVec2.timesAssign(s: Float) { x *= s; y *= s }
-inline operator fun FVec2.divAssign(s: Float)   { x /= s; y /= s }
-
-inline operator fun FVec2.plus(v: FVec2)  = FVec2(x + v.x, y + v.y)
-inline operator fun FVec2.minus(v: FVec2) = FVec2(x - v.x, y - v.y)
-inline operator fun FVec2.times(v: FVec2) = FVec2(x * v.x, y * v.y)
-inline operator fun FVec2.div(v: FVec2)   = FVec2(x / v.x, y / v.y)
-
-inline operator fun FVec2.plusAssign(v: FVec2)  { x += v.x; y += v.y }
-inline operator fun FVec2.minusAssign(v: FVec2) { x -= v.x; y -= v.y }
-inline operator fun FVec2.timesAssign(v: FVec2) { x *= v.x; y *= v.y }
-inline operator fun FVec2.divAssign(v: FVec2)   { x /= v.x; y /= v.y }
-
-inline infix fun FVec2.eq(v: FVec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
-inline infix fun FVec2.ne(v: FVec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
-inline infix fun FVec2.lt(v: FVec2) = BVec2(x  < v.x, y  < v.y)
-inline infix fun FVec2.le(v: FVec2) = BVec2(x <= v.x, y <= v.y)
-inline infix fun FVec2.gt(v: FVec2) = BVec2(x  > v.x, y  > v.y)
-inline infix fun FVec2.ge(v: FVec2) = BVec2(x >= v.x, y >= v.y)
-
 data class FVec3(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z: Float) {
+    companion object {
+        val Zero get() = FVec3(0.0f, 0.0f, 0.0f)
+        val One  get() = FVec3(1.0f, 1.0f, 1.0f)
+        val X    get() = FVec3(1.0f, 0.0f, 0.0f)
+        val Y    get() = FVec3(0.0f, 1.0f, 0.0f)
+        val Z    get() = FVec3(0.0f, 0.0f, 1.0f)
+    }
+
     constructor(v: FVec3) : this(v.x, v.y, v.z)
     constructor(v: FVec2, z: Float) : this(v.x, v.y, z)
     constructor(s: Float) : this(s, s, s)
@@ -104,47 +119,56 @@ data class FVec3(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt)".format(x, y, z)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Float) -> Float) = FVec3(block(x), block(y), block(z))
+
+    inline operator fun unaryMinus() = FVec3(-x, -y, -z)
+    inline operator fun inc()        = FVec3(x + 1, y + 1, z + 1)
+    inline operator fun dec()        = FVec3(x - 1, y - 1, z - 1)
+
+    inline operator fun plus(s: Float)  = FVec3(x + s, y + s, z + s)
+    inline operator fun minus(s: Float) = FVec3(x - s, y - s, z - s)
+    inline operator fun times(s: Float) = FVec3(x * s, y * s, z * s)
+    inline operator fun div(s: Float)   = FVec3(x / s, y / s, z / s)
+
+    inline operator fun plusAssign(s: Float)  { x += s; y += s; z += s }
+    inline operator fun minusAssign(s: Float) { x -= s; y -= s; z -= s }
+    inline operator fun timesAssign(s: Float) { x *= s; y *= s; z *= s }
+    inline operator fun divAssign(s: Float)   { x /= s; y /= s; z /= s }
+
+    inline operator fun plus(v: FVec3)  = FVec3(x + v.x, y + v.y, z + v.z)
+    inline operator fun minus(v: FVec3) = FVec3(x - v.x, y - v.y, z - v.z)
+    inline operator fun times(v: FVec3) = FVec3(x * v.x, y * v.y, z * v.z)
+    inline operator fun div(v: FVec3)   = FVec3(x / v.x, y / v.y, z / v.z)
+
+    inline operator fun plusAssign(v: FVec3)  { x += v.x; y += v.y; z += v.z }
+    inline operator fun minusAssign(v: FVec3) { x -= v.x; y -= v.y; z -= v.z }
+    inline operator fun timesAssign(v: FVec3) { x *= v.x; y *= v.y; z *= v.z }
+    inline operator fun divAssign(v: FVec3)   { x /= v.x; y /= v.y; z /= v.z }
+
+    inline infix fun eq(v: FVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
+    inline infix fun ne(v: FVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
+    inline infix fun lt(v: FVec3) = BVec3(x  < v.x, y  < v.y, z  < v.z)
+    inline infix fun le(v: FVec3) = BVec3(x <= v.x, y <= v.y, z <= v.z)
+    inline infix fun gt(v: FVec3) = BVec3(x  > v.x, y  > v.y, z  > v.z)
+    inline infix fun ge(v: FVec3) = BVec3(x >= v.x, y >= v.y, z >= v.z)
 }
-
-inline fun FVec3.map(block: (Float) -> Float) = FVec3(block(x), block(y), block(z))
-
-inline operator fun FVec3.unaryMinus() = FVec3(-x, -y, -z)
-inline operator fun FVec3.inc()        = FVec3(x + 1, y + 1, z + 1)
-inline operator fun FVec3.dec()        = FVec3(x - 1, y - 1, z - 1)
-
-inline operator fun FVec3.plus(s: Float)  = FVec3(x + s, y + s, z + s)
-inline operator fun FVec3.minus(s: Float) = FVec3(x - s, y - s, z - s)
-inline operator fun FVec3.times(s: Float) = FVec3(x * s, y * s, z * s)
-inline operator fun FVec3.div(s: Float)   = FVec3(x / s, y / s, z / s)
 
 inline operator fun Float.plus(v: FVec3)  = FVec3(this + v.x, this + v.y, this + v.z)
 inline operator fun Float.minus(v: FVec3) = FVec3(this - v.x, this - v.y, this - v.z)
 inline operator fun Float.times(v: FVec3) = FVec3(this * v.x, this * v.y, this * v.z)
 inline operator fun Float.div(v: FVec3)   = FVec3(this / v.x, this / v.y, this / v.z)
 
-inline operator fun FVec3.plusAssign(s: Float)  { x += s; y += s; z += s }
-inline operator fun FVec3.minusAssign(s: Float) { x -= s; y -= s; z -= s }
-inline operator fun FVec3.timesAssign(s: Float) { x *= s; y *= s; z *= s }
-inline operator fun FVec3.divAssign(s: Float)   { x /= s; y /= s; z /= s }
-
-inline operator fun FVec3.plus(v: FVec3)  = FVec3(x + v.x, y + v.y, z + v.z)
-inline operator fun FVec3.minus(v: FVec3) = FVec3(x - v.x, y - v.y, z - v.z)
-inline operator fun FVec3.times(v: FVec3) = FVec3(x * v.x, y * v.y, z * v.z)
-inline operator fun FVec3.div(v: FVec3)   = FVec3(x / v.x, y / v.y, z / v.z)
-
-inline operator fun FVec3.plusAssign(v: FVec3)  { x += v.x; y += v.y; z += v.z }
-inline operator fun FVec3.minusAssign(v: FVec3) { x -= v.x; y -= v.y; z -= v.z }
-inline operator fun FVec3.timesAssign(v: FVec3) { x *= v.x; y *= v.y; z *= v.z }
-inline operator fun FVec3.divAssign(v: FVec3)   { x /= v.x; y /= v.y; z /= v.z }
-
-inline infix fun FVec3.eq(v: FVec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
-inline infix fun FVec3.ne(v: FVec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
-inline infix fun FVec3.lt(v: FVec3) = BVec3(x  < v.x, y  < v.y, z  < v.z)
-inline infix fun FVec3.le(v: FVec3) = BVec3(x <= v.x, y <= v.y, z <= v.z)
-inline infix fun FVec3.gt(v: FVec3) = BVec3(x  > v.x, y  > v.y, z  > v.z)
-inline infix fun FVec3.ge(v: FVec3) = BVec3(x >= v.x, y >= v.y, z >= v.z)
-
 data class FVec4(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z: Float, @JvmField var w: Float) {
+    companion object {
+        val Zero get() = FVec4(0.0f, 0.0f, 0.0f, 0.0f)
+        val One  get() = FVec4(1.0f, 1.0f, 1.0f, 1.0f)
+        val X    get() = FVec4(1.0f, 0.0f, 0.0f, 0.0f)
+        val Y    get() = FVec4(0.0f, 1.0f, 0.0f, 0.0f)
+        val Z    get() = FVec4(0.0f, 0.0f, 1.0f, 0.0f)
+        val W    get() = FVec4(0.0f, 0.0f, 0.0f, 1.0f)
+    }
+
     constructor(v: FVec4) : this(v.x, v.y, v.z, v.w)
     constructor(v: FVec3, w: Float) : this(v.x, v.y, v.z, w)
     constructor(v: FVec2, z: Float, w: Float) : this(v.x, v.y, z, w)
@@ -178,45 +202,45 @@ data class FVec4(@JvmField var x: Float, @JvmField var y: Float, @JvmField var z
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun map(block: (Float) -> Float) = FVec4(block(x), block(y), block(z), block(w))
+
+    inline operator fun unaryMinus() = FVec4(-x, -y, -z, -w)
+    inline operator fun inc()        = FVec4(x + 1, y + 1, z + 1, w + 1)
+    inline operator fun dec()        = FVec4(x - 1, y - 1, z - 1, w - 1)
+
+    inline operator fun plus(s: Float)  = FVec4(x + s, y + s, z + s, w + s)
+    inline operator fun minus(s: Float) = FVec4(x - s, y - s, z - s, w - s)
+    inline operator fun times(s: Float) = FVec4(x * s, y * s, z * s, w * s)
+    inline operator fun div(s: Float)   = FVec4(x / s, y / s, z / s, w / s)
+
+    inline operator fun plusAssign(s: Float)  { x += s; y += s; z += s; w += s }
+    inline operator fun minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s }
+    inline operator fun timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
+    inline operator fun divAssign(s: Float)   { x /= s; y /= s; z /= s; w /= s }
+
+    inline operator fun plus(v: FVec4)  = FVec4(x + v.x, y + v.y, z + v.z, w + v.w)
+    inline operator fun minus(v: FVec4) = FVec4(x - v.x, y - v.y, z - v.z, w - v.w)
+    inline operator fun times(v: FVec4) = FVec4(x * v.x, y * v.y, z * v.z, w * v.w)
+    inline operator fun div(v: FVec4)   = FVec4(x / v.x, y / v.y, z / v.z, w / v.w)
+
+    inline operator fun plusAssign(v: FVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }
+    inline operator fun minusAssign(v: FVec4) { x -= v.x; y -= v.y; z -= v.z; w -= v.w }
+    inline operator fun timesAssign(v: FVec4) { x *= v.x; y *= v.y; z *= v.z; w *= v.w }
+    inline operator fun divAssign(v: FVec4)   { x /= v.x; y /= v.y; z /= v.z; w /= v.w }
+
+    inline infix fun eq(v: FVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
+    inline infix fun ne(v: FVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
+    inline infix fun lt(v: FVec4) = BVec4(x  < v.x, y  < v.y, z  < v.z, w  < v.w)
+    inline infix fun le(v: FVec4) = BVec4(x <= v.x, y <= v.y, z <= v.z, w <= v.w)
+    inline infix fun gt(v: FVec4) = BVec4(x  > v.x, y  > v.y, z  > v.z, w  > v.w)
+    inline infix fun ge(v: FVec4) = BVec4(x >= v.x, y >= v.y, z >= v.z, w >= v.w)
 }
-
-inline fun FVec4.map(block: (Float) -> Float) = FVec4(block(x), block(y), block(z), block(w))
-
-inline operator fun FVec4.unaryMinus() = FVec4(-x, -y, -z, -w)
-inline operator fun FVec4.inc()        = FVec4(x + 1, y + 1, z + 1, w + 1)
-inline operator fun FVec4.dec()        = FVec4(x - 1, y - 1, z - 1, w - 1)
-
-inline operator fun FVec4.plus(s: Float)  = FVec4(x + s, y + s, z + s, w + s)
-inline operator fun FVec4.minus(s: Float) = FVec4(x - s, y - s, z - s, w - s)
-inline operator fun FVec4.times(s: Float) = FVec4(x * s, y * s, z * s, w * s)
-inline operator fun FVec4.div(s: Float)   = FVec4(x / s, y / s, z / s, w / s)
 
 inline operator fun Float.plus(v: FVec4)  = FVec4(this + v.x, this + v.y, this + v.z, this + v.w)
 inline operator fun Float.minus(v: FVec4) = FVec4(this - v.x, this - v.y, this - v.z, this - v.w)
 inline operator fun Float.times(v: FVec4) = FVec4(this * v.x, this * v.y, this * v.z, this * v.w)
 inline operator fun Float.div(v: FVec4)   = FVec4(this / v.x, this / v.y, this / v.z, this / v.w)
-
-inline operator fun FVec4.plusAssign(s: Float)  { x += s; y += s; z += s; w += s }
-inline operator fun FVec4.minusAssign(s: Float) { x -= s; y -= s; z -= s; w -= s }
-inline operator fun FVec4.timesAssign(s: Float) { x *= s; y *= s; z *= s; w *= s }
-inline operator fun FVec4.divAssign(s: Float)   { x /= s; y /= s; z /= s; w /= s }
-
-inline operator fun FVec4.plus(v: FVec4)  = FVec4(x + v.x, y + v.y, z + v.z, w + v.w)
-inline operator fun FVec4.minus(v: FVec4) = FVec4(x - v.x, y - v.y, z - v.z, w - v.w)
-inline operator fun FVec4.times(v: FVec4) = FVec4(x * v.x, y * v.y, z * v.z, w * v.w)
-inline operator fun FVec4.div(v: FVec4)   = FVec4(x / v.x, y / v.y, z / v.z, w / v.w)
-
-inline operator fun FVec4.plusAssign(v: FVec4)  { x += v.x; y += v.y; z += v.z; w += v.w }
-inline operator fun FVec4.minusAssign(v: FVec4) { x -= v.x; y -= v.y; z -= v.z; w -= v.w }
-inline operator fun FVec4.timesAssign(v: FVec4) { x *= v.x; y *= v.y; z *= v.z; w *= v.w }
-inline operator fun FVec4.divAssign(v: FVec4)   { x /= v.x; y /= v.y; z /= v.z; w /= v.w }
-
-inline infix fun FVec4.eq(v: FVec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
-inline infix fun FVec4.ne(v: FVec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
-inline infix fun FVec4.lt(v: FVec4) = BVec4(x  < v.x, y  < v.y, z  < v.z, w  < v.w)
-inline infix fun FVec4.le(v: FVec4) = BVec4(x <= v.x, y <= v.y, z <= v.z, w <= v.w)
-inline infix fun FVec4.gt(v: FVec4) = BVec4(x  > v.x, y  > v.y, z  > v.z, w  > v.w)
-inline infix fun FVec4.ge(v: FVec4) = BVec4(x >= v.x, y >= v.y, z >= v.z, w >= v.w)
 
 //region Alternate accessors
 inline var FVec2.r get() = x; set(value) { x = value }

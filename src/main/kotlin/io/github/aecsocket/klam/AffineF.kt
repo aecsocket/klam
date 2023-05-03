@@ -37,15 +37,15 @@ data class FAffine3(
 
     fun asString(fmt: String) = "[${position.asString(fmt)}, ${rotation.asString(fmt)}, ${scale.asString(fmt)}]"
     override fun toString() = asString("%f")
+
+    inline operator fun times(t: FAffine3) = FAffine3(this).apply { this *= t }
+
+    inline operator fun timesAssign(t: FAffine3) {
+        val scale = this.scale * t.scale
+        val rotation = this.rotation * t.rotation
+        val position = (this.rotation * (t.position * this.scale)) + this.position
+        from(position, rotation, scale)
+    }
+
+    inline operator fun times(v: FVec3) = (rotation * (v * scale)) + position
 }
-
-inline operator fun FAffine3.times(t: FAffine3) = FAffine3(this).apply { this *= t }
-
-inline operator fun FAffine3.timesAssign(t: FAffine3) {
-    val scale = this.scale * t.scale
-    val rotation = this.rotation * t.rotation
-    val position = (this.rotation * (t.position * this.scale)) + this.position
-    from(position, rotation, scale)
-}
-
-inline operator fun FAffine3.times(v: FVec3) = (rotation * (v * scale)) + position

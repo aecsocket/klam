@@ -37,15 +37,16 @@ data class DAffine3(
 
     fun asString(fmt: String) = "[${position.asString(fmt)}, ${rotation.asString(fmt)}, ${scale.asString(fmt)}]"
     override fun toString() = asString("%f")
+
+    inline operator fun times(t: DAffine3) = DAffine3(this).apply { this *= t }
+
+    inline operator fun timesAssign(t: DAffine3) {
+        val scale = this.scale * t.scale
+        val rotation = this.rotation * t.rotation
+        val position = (this.rotation * (t.position * DVec3(this.scale))) + this.position
+        from(position, rotation, scale)
+    }
+
+    inline operator fun times(v: DVec3) = (rotation * (v * DVec3(scale))) + position
+
 }
-
-inline operator fun DAffine3.times(t: DAffine3) = DAffine3(this).apply { this *= t }
-
-inline operator fun DAffine3.timesAssign(t: DAffine3) {
-    val scale = this.scale * t.scale
-    val rotation = this.rotation * t.rotation
-    val position = (this.rotation * (t.position * DVec3(this.scale))) + this.position
-    from(position, rotation, scale)
-}
-
-inline operator fun DAffine3.times(v: DVec3) = (rotation * (v * DVec3(scale))) + position

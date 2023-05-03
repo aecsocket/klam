@@ -57,44 +57,44 @@ data class DMat2(@JvmField val x: DVec2, @JvmField val y: DVec2) {
         x.y, y.y,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (DVec2) -> DVec2) = DMat2(block(x), block(y))
+    inline fun mapScalar(block: (Double) -> Double) = DMat2(x.map(block), y.map(block))
+
+    inline operator fun unaryMinus() = DMat2(-x, -y)
+    inline operator fun inc()        = DMat2(x + 1.0, y + 1.0)
+    inline operator fun dec()        = DMat2(x - 1.0, y - 1.0)
+
+    inline operator fun plus(s: Double)  = DMat2(x + s, y + s)
+    inline operator fun minus(s: Double) = DMat2(x - s, y - s)
+    inline operator fun times(s: Double) = DMat2(x * s, y * s)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s }
+
+    inline operator fun plus(m: DMat2)  = DMat2(x + m.x, y + m.y)
+    inline operator fun minus(m: DMat2) = DMat2(x - m.x, y - m.y)
+    inline operator fun times(m: DMat2) = DMat2(this).apply { this *= m }
+
+    inline operator fun plusAssign(m: DMat2)  { x += m.x; y += m.y }
+    inline operator fun minusAssign(m: DMat2) { x -= m.x; y -= m.y }
+    inline operator fun timesAssign(m: DMat2) {
+        from(
+            x.x*m.x.x + y.x*m.x.y,  x.y*m.x.x + y.y*m.x.y,
+            x.x*m.y.x + y.x*m.y.y,  x.y*m.y.x + y.y*m.y.y,
+        )
+    }
+
+    inline operator fun times(v: DVec2) = DVec2(
+        x.x*v.x + y.x*v.y,
+        y.x*v.x + y.y*v.y,
+    )
 }
-
-inline fun DMat2.mapVector(block: (DVec2) -> DVec2) = DMat2(block(x), block(y))
-inline fun DMat2.mapScalar(block: (Double) -> Double) = DMat2(x.map(block), y.map(block))
-
-inline operator fun DMat2.unaryMinus() = DMat2(-x, -y)
-inline operator fun DMat2.inc()        = DMat2(x + 1.0, y + 1.0)
-inline operator fun DMat2.dec()        = DMat2(x - 1.0, y - 1.0)
-
-inline operator fun DMat2.plus(s: Double)  = DMat2(x + s, y + s)
-inline operator fun DMat2.minus(s: Double) = DMat2(x - s, y - s)
-inline operator fun DMat2.times(s: Double) = DMat2(x * s, y * s)
 
 inline operator fun Double.plus(m: DMat2)  = DMat2(this + m.x, this + m.y)
 inline operator fun Double.minus(m: DMat2) = DMat2(this - m.x, this - m.y)
 inline operator fun Double.times(m: DMat2) = DMat2(this * m.x, this * m.y)
-
-inline operator fun DMat2.plusAssign(s: Double)  { x += s; y += s }
-inline operator fun DMat2.minusAssign(s: Double) { x -= s; y -= s }
-inline operator fun DMat2.timesAssign(s: Double) { x *= s; y *= s }
-
-inline operator fun DMat2.plus(m: DMat2)  = DMat2(x + m.x, y + m.y)
-inline operator fun DMat2.minus(m: DMat2) = DMat2(x - m.x, y - m.y)
-inline operator fun DMat2.times(m: DMat2) = DMat2(this).apply { this *= m }
-
-inline operator fun DMat2.plusAssign(m: DMat2)  { x += m.x; y += m.y }
-inline operator fun DMat2.minusAssign(m: DMat2) { x -= m.x; y -= m.y }
-inline operator fun DMat2.timesAssign(m: DMat2) {
-    from(
-        x.x*m.x.x + y.x*m.x.y,  x.y*m.x.x + y.y*m.x.y,
-        x.x*m.y.x + y.x*m.y.y,  x.y*m.y.x + y.y*m.y.y,
-    )
-}
-
-inline operator fun DMat2.times(v: DVec2) = DVec2(
-    x.x*v.x + y.x*v.y,
-    y.x*v.x + y.y*v.y,
-)
 
 data class DMat3(@JvmField val x: DVec3, @JvmField val y: DVec3, @JvmField val z: DVec3) {
     companion object {
@@ -157,46 +157,46 @@ data class DMat3(@JvmField val x: DVec3, @JvmField val y: DVec3, @JvmField val z
         x.z, y.z, z.z,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (DVec3) -> DVec3) = DMat3(block(x), block(y), block(z))
+    inline fun mapScalar(block: (Double) -> Double) = DMat3(x.map(block), y.map(block), z.map(block))
+
+    inline operator fun unaryMinus() = DMat3(-x, -y, -z)
+    inline operator fun inc()        = DMat3(x + 1.0, y + 1.0, z + 1.0)
+    inline operator fun dec()        = DMat3(x - 1.0, y - 1.0, z - 1.0)
+
+    inline operator fun plus(s: Double)  = DMat3(x + s, y + s, z + s)
+    inline operator fun minus(s: Double) = DMat3(x - s, y - s, z - s)
+    inline operator fun times(s: Double) = DMat3(x * s, y * s, z * s)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s }
+
+    inline operator fun plus(m: DMat3)  = DMat3(x + m.x, y + m.y, z + m.z)
+    inline operator fun minus(m: DMat3) = DMat3(x - m.x, y - m.y, z - m.z)
+    inline operator fun times(m: DMat3) = DMat3(this).apply { this *= m }
+
+    inline operator fun plusAssign(m: DMat3)  { x += m.x; y += m.y; z += m.z }
+    inline operator fun minusAssign(m: DMat3) { x -= m.x; y -= m.y; z -= m.z }
+    inline operator fun timesAssign(m: DMat3) {
+        from(
+            x.x*m.x.x + y.x*m.x.y + z.x*m.x.z,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z,
+            x.x*m.y.x + y.x*m.y.y + z.x*m.y.z,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z,
+            x.x*m.z.x + y.x*m.z.y + z.x*m.z.z,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z,
+        )
+    }
+
+    inline operator fun times(v: DVec3) = DVec3(
+        x.x*v.x + y.x*v.y + z.x*v.z,
+        x.y*v.x + y.y*v.y + z.y*v.z,
+        x.z*v.x + y.z*v.y + z.z*v.z,
+    )
 }
-
-inline fun DMat3.mapVector(block: (DVec3) -> DVec3) = DMat3(block(x), block(y), block(z))
-inline fun DMat3.mapScalar(block: (Double) -> Double) = DMat3(x.map(block), y.map(block), z.map(block))
-
-inline operator fun DMat3.unaryMinus() = DMat3(-x, -y, -z)
-inline operator fun DMat3.inc()        = DMat3(x + 1.0, y + 1.0, z + 1.0)
-inline operator fun DMat3.dec()        = DMat3(x - 1.0, y - 1.0, z - 1.0)
-
-inline operator fun DMat3.plus(s: Double)  = DMat3(x + s, y + s, z + s)
-inline operator fun DMat3.minus(s: Double) = DMat3(x - s, y - s, z - s)
-inline operator fun DMat3.times(s: Double) = DMat3(x * s, y * s, z * s)
 
 inline operator fun Double.plus(m: DMat3)  = DMat3(this + m.x, this + m.y, this + m.z)
 inline operator fun Double.minus(m: DMat3) = DMat3(this - m.x, this - m.y, this - m.z)
 inline operator fun Double.times(m: DMat3) = DMat3(this * m.x, this * m.y, this * m.z)
-
-inline operator fun DMat3.plusAssign(s: Double)  { x += s; y += s; z += s }
-inline operator fun DMat3.minusAssign(s: Double) { x -= s; y -= s; z -= s }
-inline operator fun DMat3.timesAssign(s: Double) { x *= s; y *= s; z *= s }
-
-inline operator fun DMat3.plus(m: DMat3)  = DMat3(x + m.x, y + m.y, z + m.z)
-inline operator fun DMat3.minus(m: DMat3) = DMat3(x - m.x, y - m.y, z - m.z)
-inline operator fun DMat3.times(m: DMat3) = DMat3(this).apply { this *= m }
-
-inline operator fun DMat3.plusAssign(m: DMat3)  { x += m.x; y += m.y; z += m.z }
-inline operator fun DMat3.minusAssign(m: DMat3) { x -= m.x; y -= m.y; z -= m.z }
-inline operator fun DMat3.timesAssign(m: DMat3) {
-    from(
-        x.x*m.x.x + y.x*m.x.y + z.x*m.x.z,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z,
-        x.x*m.y.x + y.x*m.y.y + z.x*m.y.z,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z,
-        x.x*m.z.x + y.x*m.z.y + z.x*m.z.z,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z,
-    )
-}
-
-inline operator fun DMat3.times(v: DVec3) = DVec3(
-    x.x*v.x + y.x*v.y + z.x*v.z,
-    x.y*v.x + y.y*v.y + z.y*v.z,
-    x.z*v.x + y.z*v.y + z.z*v.z,
-)
 
 data class DMat4(@JvmField val x: DVec4, @JvmField val y: DVec4, @JvmField val z: DVec4, @JvmField val w: DVec4) {
     companion object {
@@ -268,45 +268,45 @@ data class DMat4(@JvmField val x: DVec4, @JvmField val y: DVec4, @JvmField val z
         w.x, w.y, w.z, w.w,
     )
     override fun toString() = asString(TO_STRING_FORMAT)
+
+    inline fun mapVector(block: (DVec4) -> DVec4) = DMat4(block(x), block(y), block(z), block(w))
+    inline fun mapScalar(block: (Double) -> Double) = DMat4(x.map(block), y.map(block), z.map(block), w.map(block))
+
+    inline operator fun unaryMinus() = DMat4(-x, -y, -z, -w)
+    inline operator fun inc()        = DMat4(x + 1.0, y + 1.0, z + 1.0, w + 1.0)
+    inline operator fun dec()        = DMat4(x - 1.0, y - 1.0, z - 1.0, w - 1.0)
+
+    inline operator fun plus(s: Double)  = DMat4(x + s, y + s, z + s, w + s)
+    inline operator fun minus(s: Double) = DMat4(x - s, y - s, z - s, w - s)
+    inline operator fun times(s: Double) = DMat4(x * s, y * s, z * s, w * s)
+
+    inline operator fun plusAssign(s: Double)  { x += s; y += s; z += s; w += s }
+    inline operator fun minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= s }
+    inline operator fun timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
+
+    inline operator fun plus(m: DMat4)  = DMat4(x + m.x, y + m.y, z + m.z, w + m.w)
+    inline operator fun minus(m: DMat4) = DMat4(x - m.x, y - m.y, z - m.z, w + m.w)
+    inline operator fun times(m: DMat4) = DMat4(this).apply { this *= m }
+
+    inline operator fun plusAssign(m: DMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
+    inline operator fun minusAssign(m: DMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
+    inline operator fun timesAssign(m: DMat4) {
+        from(
+            x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,
+            x.x*m.y.x + y.x*m.y.y + z.x*m.y.z + w.x*m.y.w,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z + w.y*m.y.w,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z + w.z*m.y.w,  x.w*m.y.x + y.w*m.y.y + z.w*m.y.z + w.w*m.y.w,
+            x.x*m.z.x + y.x*m.z.y + z.x*m.z.z + w.x*m.z.w,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z + w.y*m.z.w,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z + w.z*m.z.w,  x.w*m.z.x + y.w*m.z.y + z.w*m.z.z + w.w*m.z.w,
+            x.x*m.w.x + y.x*m.w.y + z.x*m.w.z + w.x*m.w.w,  x.y*m.w.x + y.y*m.w.y + z.y*m.w.z + w.y*m.w.w,  x.z*m.w.x + y.z*m.w.y + z.z*m.w.z + w.z*m.w.w,  x.w*m.w.x + y.w*m.w.y + z.w*m.w.z + w.w*m.w.w,
+        )
+    }
+
+    inline operator fun times(v: DVec4) = DVec4(
+        x.x*v.x + y.x*v.y + z.x*v.z + w.x*v.w,
+        x.y*v.x + y.y*v.y + z.y*v.z + w.y*v.w,
+        x.z*v.x + y.z*v.y + z.z*v.z + w.z*v.w,
+        x.w*v.x + y.w*v.y + z.w*v.z + w.w*v.w,
+    )
 }
-
-inline fun DMat4.mapVector(block: (DVec4) -> DVec4) = DMat4(block(x), block(y), block(z), block(w))
-inline fun DMat4.mapScalar(block: (Double) -> Double) = DMat4(x.map(block), y.map(block), z.map(block), w.map(block))
-
-inline operator fun DMat4.unaryMinus() = DMat4(-x, -y, -z, -w)
-inline operator fun DMat4.inc()        = DMat4(x + 1.0, y + 1.0, z + 1.0, w + 1.0)
-inline operator fun DMat4.dec()        = DMat4(x - 1.0, y - 1.0, z - 1.0, w - 1.0)
-
-inline operator fun DMat4.plus(s: Double)  = DMat4(x + s, y + s, z + s, w + s)
-inline operator fun DMat4.minus(s: Double) = DMat4(x - s, y - s, z - s, w - s)
-inline operator fun DMat4.times(s: Double) = DMat4(x * s, y * s, z * s, w * s)
 
 inline operator fun Double.plus(m: DMat4)  = DMat4(this + m.x, this + m.y, this + m.z, this + m.w)
 inline operator fun Double.minus(m: DMat4) = DMat4(this - m.x, this - m.y, this - m.z, this - m.w)
 inline operator fun Double.times(m: DMat4) = DMat4(this * m.x, this * m.y, this * m.z, this * m.w)
-
-inline operator fun DMat4.plusAssign(s: Double)  { x += s; y += s; z += s; w += s }
-inline operator fun DMat4.minusAssign(s: Double) { x -= s; y -= s; z -= s; w -= s }
-inline operator fun DMat4.timesAssign(s: Double) { x *= s; y *= s; z *= s; w *= s }
-
-inline operator fun DMat4.plus(m: DMat4)  = DMat4(x + m.x, y + m.y, z + m.z, w + m.w)
-inline operator fun DMat4.minus(m: DMat4) = DMat4(x - m.x, y - m.y, z - m.z, w + m.w)
-inline operator fun DMat4.times(m: DMat4) = DMat4(this).apply { this *= m }
-
-inline operator fun DMat4.plusAssign(m: DMat4)  { x += m.x; y += m.y; z += m.z; w += m.w }
-inline operator fun DMat4.minusAssign(m: DMat4) { x -= m.x; y -= m.y; z -= m.z; w -= m.w }
-inline operator fun DMat4.timesAssign(m: DMat4) {
-    from(
-        x.x*m.x.x + y.x*m.x.y + z.x*m.x.z + w.x*m.x.w,  x.y*m.x.x + y.y*m.x.y + z.y*m.x.z + w.y*m.x.w,  x.z*m.x.x + y.z*m.x.y + z.z*m.x.z + w.z*m.x.w,  x.w*m.x.x + y.w*m.x.y + z.w*m.x.z + w.w*m.x.w,
-        x.x*m.y.x + y.x*m.y.y + z.x*m.y.z + w.x*m.y.w,  x.y*m.y.x + y.y*m.y.y + z.y*m.y.z + w.y*m.y.w,  x.z*m.y.x + y.z*m.y.y + z.z*m.y.z + w.z*m.y.w,  x.w*m.y.x + y.w*m.y.y + z.w*m.y.z + w.w*m.y.w,
-        x.x*m.z.x + y.x*m.z.y + z.x*m.z.z + w.x*m.z.w,  x.y*m.z.x + y.y*m.z.y + z.y*m.z.z + w.y*m.z.w,  x.z*m.z.x + y.z*m.z.y + z.z*m.z.z + w.z*m.z.w,  x.w*m.z.x + y.w*m.z.y + z.w*m.z.z + w.w*m.z.w,
-        x.x*m.w.x + y.x*m.w.y + z.x*m.w.z + w.x*m.w.w,  x.y*m.w.x + y.y*m.w.y + z.y*m.w.z + w.y*m.w.w,  x.z*m.w.x + y.z*m.w.y + z.z*m.w.z + w.z*m.w.w,  x.w*m.w.x + y.w*m.w.y + z.w*m.w.z + w.w*m.w.w,
-    )
-}
-
-inline operator fun DMat4.times(v: DVec4) = DVec4(
-    x.x*v.x + y.x*v.y + z.x*v.z + w.x*v.w,
-    x.y*v.x + y.y*v.y + z.y*v.z + w.y*v.w,
-    x.z*v.x + y.z*v.y + z.z*v.z + w.z*v.w,
-    x.w*v.x + y.w*v.y + z.w*v.z + w.w*v.w,
-)
