@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.klam)
-    implementation(libs.configurateCore)
-    implementation(libs.configurateExtraKotlin)
+    api(projects.klam)
+    api(libs.configurate.core)
+    implementation(libs.configurate.extra.kotlin)
 
-    testImplementation(libs.configurateYaml)
+    testImplementation(libs.configurate.yaml)
 }
