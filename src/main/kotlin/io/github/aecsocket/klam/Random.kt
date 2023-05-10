@@ -1,7 +1,7 @@
 package io.github.aecsocket.klam
 
-private typealias JRandom = java.util.Random
-private typealias KRandom = kotlin.random.Random
+internal typealias JRandom = java.util.Random
+internal typealias KRandom = kotlin.random.Random
 
 // kotlin
 

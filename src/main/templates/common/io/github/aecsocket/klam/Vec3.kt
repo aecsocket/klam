@@ -16,6 +16,7 @@ data class {{ T }}Vec3(
         val Z get() = {{ T }}Vec3({{ zero }}, {{ zero }}, {{ one }})
     }
 
+    constructor(v: {{ T }}Vec2, z: {{ Type }}) : this(v.x, v.y, z)
     constructor(s: {{ Type }}) : this(s, s, s)
 
     operator fun get(index: Int) = when (index) {
@@ -30,7 +31,6 @@ data class {{ T }}Vec3(
     fun z(z: {{ Type }}) = {{ T }}Vec3(x, y, z)
 
     fun compareTo(v: {{ T }}Vec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
-    fun equalTo(v: {{ T }}Vec3) = x.compareTo(v.x) == 0 && y.compareTo(v.y) == 0 && z.compareTo(v.z) == 0
     fun toArray() = {{ arrayOf }}(x, y, z)
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt)".format(x, y, z)
@@ -47,7 +47,7 @@ data class {{ T }}Vec3(
     inline operator fun plus (s: {{ Type }}) = {{ T }}Vec3(x + s, y + s, z + s)
     @JvmName("sub")
     inline operator fun minus(s: {{ Type }}) = {{ T }}Vec3(x - s, y - s, z - s)
-    @JvmName("times")
+    @JvmName("mul")
     inline operator fun times(s: {{ Type }}) = {{ T }}Vec3(x * s, y * s, z * s)
     @JvmName("div")
     inline operator fun div  (s: {{ Type }}) = {{ T }}Vec3(x / s, y / s, z / s)
@@ -56,7 +56,7 @@ data class {{ T }}Vec3(
     inline operator fun plus (v: {{ T }}Vec3) = {{ T }}Vec3(x + v.x, y + v.y, z + v.z)
     @JvmName("sub")
     inline operator fun minus(v: {{ T }}Vec3) = {{ T }}Vec3(x - v.x, y - v.y, z - v.z)
-    @JvmName("times")
+    @JvmName("mul")
     inline operator fun times(v: {{ T }}Vec3) = {{ T }}Vec3(x * v.x, y * v.y, z * v.z)
     @JvmName("div")
     inline operator fun div  (v: {{ T }}Vec3) = {{ T }}Vec3(x / v.x, y / v.y, z / v.z)
@@ -76,30 +76,47 @@ data class {{ T }}Vec3(
 }
 
 {% if isNumber %}
-inline operator fun {{ Type }}.plus (v: {{ T }}Vec3) = {{ T }}Vec3(this + v.x, this + v.y, this + v.z)
+@JvmName("add")
+inline operator fun {{ Type }}.plus (v: {{ T }}Vec3) = {{ T }}Vec3(this + v.x, this + v.y, this + v.z
+@JvmName("sub")
 inline operator fun {{ Type }}.minus(v: {{ T }}Vec3) = {{ T }}Vec3(this - v.x, this - v.y, this - v.z)
+@JvmName("mul")
 inline operator fun {{ Type }}.times(v: {{ T }}Vec3) = {{ T }}Vec3(this * v.x, this * v.y, this * v.z)
+@JvmName("div")
 inline operator fun {{ Type }}.div  (v: {{ T }}Vec3) = {{ T }}Vec3(this / v.x, this / v.y, this / v.z)
 
 inline fun min(a: {{ T }}Vec3, b: {{ T }}Vec3) = {{ T }}Vec3(kotlin.math.min(a.x, b.x), kotlin.math.min(a.y, b.y), kotlin.math.min(a.z, b.z))
+
 inline fun max(a: {{ T }}Vec3, b: {{ T }}Vec3) = {{ T }}Vec3(kotlin.math.max(a.x, b.x), kotlin.math.max(a.y, b.y), kotlin.math.max(a.z, b.z))
+
 inline fun minComponent(v: {{ T }}Vec3) = kotlin.math.min(v.x, kotlin.math.min(v.y, v.z))
+
 inline fun maxComponent(v: {{ T }}Vec3) = kotlin.math.max(v.x, kotlin.math.max(v.y, v.z))
+
 inline fun clamp(v: {{ T }}Vec3, min: {{ T }}Vec3, max: {{ T }}Vec3) = {{ T }}Vec3(clamp(v.x, min.x, max.x), clamp(v.y, min.y, max.y), clamp(v.z, min.z, max.z))
+
 inline fun clamp(v: {{ T }}Vec3, min: {{ Type }}, max: {{ Type }}) = {{ T }}Vec3(clamp(v.x, min, max), clamp(v.y, min, max), clamp(v.z, min, max))
+
 inline fun abs(v: {{ T }}Vec3) = {{ T }}Vec3(kotlin.math.abs(v.x), kotlin.math.abs(v.y), kotlin.math.abs(v.z))
 
 {% if isDecimal %}
 inline fun lengthSq(v: {{ T }}Vec3) = sqr(v.x) + sqr(v.y) + sqr(v.z)
+
 inline fun length(v: {{ T }}Vec3) = kotlin.math.sqrt(lengthSq(v))
+
 inline fun normalize(v: {{ T }}Vec3): {{ T }}Vec3 {
     val l = 1.0f / length(v)
     return {{ T }}Vec3(v.x * l, v.y * l, v.z * l)
 }
+
 inline fun distanceSq(a: {{ T }}Vec3, b: {{ T }}Vec3) = lengthSq(b - a)
+
 inline fun distance(a: {{ T }}Vec3, b: {{ T }}Vec3) = length(b - a)
+
 inline fun mix(a: {{ T }}Vec3, b: {{ T }}Vec3, f: {{ Type }}) = {{ T }}Vec3(mix(a.x, b.x, f), mix(a.y, b.y, f), mix(a.z, b.z, f))
+
 inline fun dot(a: {{ T }}Vec3, b: {{ T }}Vec3) = a.x * b.x + a.y * b.y + a.z * b.z
+
 inline fun cross(a: {{ T }}Vec3, b: {{ T }}Vec3) = {{ T }}Vec3(
     a.y * b.z - a.z * b.y,
     a.z * b.x - a.x * b.z,
@@ -108,10 +125,14 @@ inline fun cross(a: {{ T }}Vec3, b: {{ T }}Vec3) = {{ T }}Vec3(
 {% endif %}
 {% endif %}
 
+fun JRandom.next{{ T }}Vec3() = {{ T }}Vec3({{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}())
+
+fun KRandom.next{{ T }}Vec3() = {{ T }}Vec3({{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}())
+
 //region Alternate accessors
-{{ alternateAccessors3 }}
+{{ vecAlternateAccessors3 }}
 //endregion
 
 //region Swizzles
-{{ swizzles3 }}
+{{ vecSwizzles3 }}
 //endregion

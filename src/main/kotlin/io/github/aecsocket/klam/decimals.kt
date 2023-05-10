@@ -2,7 +2,6 @@
 
 package io.github.aecsocket.klam
 
-internal typealias Index = Int
 internal const val DECIMAL_FORMAT = "%f"
 
 const val PI_D = kotlin.math.PI
