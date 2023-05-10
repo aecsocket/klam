@@ -4,6 +4,7 @@ package io.github.aecsocket.klam
 
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 data class {{ T }}Quat(
     @JvmField val x: {{ Type }},
@@ -17,7 +18,7 @@ data class {{ T }}Quat(
 
         fun ofAxisAngle(axis: {{ T }}Vec3, angle: {{ Type }}): {{ T }}Quat {
             val xyz = axis * sin(angle * {{ half }})
-            return DQuat(xyz.x, xyz.y, xyz.z, cos(angle * 0.5))
+            return {{ T }}Quat(xyz.x, xyz.y, xyz.z, cos(angle * {{ half }}))
         }
     }
 
@@ -36,7 +37,6 @@ data class {{ T }}Quat(
     fun z(z: {{ Type }}) = {{ T }}Quat(x, y, z, w)
     fun w(w: {{ Type }}) = {{ T }}Quat(x, y, z, w)
 
-    fun compareTo(q: {{ T }}Quat) = IVec4(x.compareTo(q.x), y.compareTo(q.y), z.compareTo(q.z), w.compareTo(q.w))
     fun toArray() = {{ arrayOf }}(x, y, z, w)
 
     fun asString(fmt: String) = "(${fmt} + ${fmt}i + ${fmt}j + ${fmt}k)".format(w, x, y, z)
@@ -70,8 +70,10 @@ data class {{ T }}Quat(
                 (cross(u, v) * {{ two }} * s)
     }
 
-    inline infix fun eq(q: {{ T }}Quat) = BVec4(x.compareTo(v.x) == 0, q.compareTo(q.y) == 0, z.compareTo(q.z), w.compareTo(q.w))
-    inline infix fun ne(q: {{ T }}Quat) = BVec4(x.compareTo(v.x) != 0, q.compareTo(q.y) != 0, z.compareTo(q.z), w.compareTo(q.w))
+    fun compareTo(q: {{ T }}Quat) = IVec4(x.compareTo(q.x), y.compareTo(q.y), z.compareTo(q.z), w.compareTo(q.w))
+
+    inline infix fun eq(q: {{ T }}Quat) = BVec4(x.compareTo(q.x) == 0, y.compareTo(q.y) == 0, z.compareTo(q.z) == 0, w.compareTo(q.w) == 0)
+    inline infix fun ne(q: {{ T }}Quat) = BVec4(x.compareTo(q.x) != 0, y.compareTo(q.y) != 0, z.compareTo(q.z) != 0, w.compareTo(q.w) != 0)
 
     inline infix fun lt(q: {{ T }}Quat) = BVec4(x  < q.x, y  < q.y, z  < q.z, w  < q.w)
     inline infix fun le(q: {{ T }}Quat) = BVec4(x <= q.x, y <= q.y, z <= q.z, w <= q.w)
@@ -79,9 +81,22 @@ data class {{ T }}Quat(
     inline infix fun ge(q: {{ T }}Quat) = BVec4(x >= q.x, y >= q.y, z >= q.z, w >= q.w)
 }
 
-{% if isNumber %}
 inline operator fun {{ Type }}.plus (q: {{ T }}Quat) = {{ T }}Quat(this + q.x, this + q.y, this + q.z, this + q.w)
 inline operator fun {{ Type }}.minus(q: {{ T }}Quat) = {{ T }}Quat(this - q.x, this - q.y, this - q.z, this - q.w)
 inline operator fun {{ Type }}.times(q: {{ T }}Quat) = {{ T }}Quat(this * q.x, this * q.y, this * q.z, this * q.w)
 inline operator fun {{ Type }}.div  (q: {{ T }}Quat) = {{ T }}Quat(this / q.x, this / q.y, this / q.z, this / q.w)
-{% endif %}
+
+inline fun lengthSq(q: {{ T }}Quat) = sqr(q.x) + sqr(q.y) + sqr(q.z) + sqr(q.w)
+
+inline fun length(q: {{ T }}Quat) = sqrt(lengthSq(q))
+
+inline fun normalize(q: {{ T }}Quat): {{ T }}Quat {
+    val l = {{ one }} / length(q)
+    return {{ T }}Quat(q.x * l, q.y * l, q.z * l, q.w * l)
+}
+
+inline fun inverse(q: {{ T }}Quat) = {{ T }}Quat(-q.x, -q.y, -q.z, q.w)
+
+//region Alternate accessors
+inline val {{ T }}Quat.xyz get() = {{ T }}Vec3(x, y, z)
+//endregion

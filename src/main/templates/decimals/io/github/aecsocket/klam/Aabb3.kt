@@ -24,13 +24,13 @@ data class {{ T }}Aabb3(
     inline operator fun div  (s: {{ Type }}) = {{ T }}Aabb3(min / s, max / s)
 
     @JvmName("add")
-    inline operator fun plus (b: {{ T }}Aabb2) = {{ T }}Aabb3(min + b.min, max + b.max)
+    inline operator fun plus (b: {{ T }}Aabb3) = {{ T }}Aabb3(min + b.min, max + b.max)
     @JvmName("sub")
-    inline operator fun minus(b: {{ T }}Aabb2) = {{ T }}Aabb3(min - b.min, max - b.max)
+    inline operator fun minus(b: {{ T }}Aabb3) = {{ T }}Aabb3(min - b.min, max - b.max)
     @JvmName("mul")
-    inline operator fun times(b: {{ T }}Aabb2) = {{ T }}Aabb3(min * b.min, max * b.max)
+    inline operator fun times(b: {{ T }}Aabb3) = {{ T }}Aabb3(min * b.min, max * b.max)
     @JvmName("div")
-    inline operator fun div  (b: {{ T }}Aabb2) = {{ T }}Aabb3(min / b.min, max / b.max)
+    inline operator fun div  (b: {{ T }}Aabb3) = {{ T }}Aabb3(min / b.min, max / b.max)
 }
 
 @JvmName("add")

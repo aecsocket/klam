@@ -85,9 +85,9 @@ data class {{ T }}Mat3(
     inline operator fun times(s: {{ Type }}) = {{ T }}Mat3(x * s, y * s, z * s)
 
     @JvmName("add")
-    inline operator fun plus (m: {{ T }}Mat2) = {{ T }}Mat3(x + m.x, y + m.y, z + m.z)
+    inline operator fun plus (m: {{ T }}Mat3) = {{ T }}Mat3(x + m.x, y + m.y, z + m.z)
     @JvmName("sub")
-    inline operator fun minus(m: {{ T }}Mat2) = {{ T }}Mat3(x - m.x, y - m.y, z - m.z)
+    inline operator fun minus(m: {{ T }}Mat3) = {{ T }}Mat3(x - m.x, y - m.y, z - m.z)
 
     @JvmName("mul")
     inline operator fun times(m: {{ T }}Mat3) = {{ T }}Mat3(

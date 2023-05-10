@@ -30,7 +30,6 @@ data class {{ T }}Vec3(
     fun y(y: {{ Type }}) = {{ T }}Vec3(x, y, z)
     fun z(z: {{ Type }}) = {{ T }}Vec3(x, y, z)
 
-    fun compareTo(v: {{ T }}Vec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
     fun toArray() = {{ arrayOf }}(x, y, z)
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt)".format(x, y, z)
@@ -64,6 +63,8 @@ data class {{ T }}Vec3(
     inline operator fun not() = {{ T }}Vec3(!x, !y, !z)
 {% endif %}
 
+    fun compareTo(v: {{ T }}Vec3) = IVec3(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z))
+
     inline infix fun eq(v: {{ T }}Vec3) = BVec3(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0)
     inline infix fun ne(v: {{ T }}Vec3) = BVec3(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0)
 
@@ -77,7 +78,7 @@ data class {{ T }}Vec3(
 
 {% if isNumber %}
 @JvmName("add")
-inline operator fun {{ Type }}.plus (v: {{ T }}Vec3) = {{ T }}Vec3(this + v.x, this + v.y, this + v.z
+inline operator fun {{ Type }}.plus (v: {{ T }}Vec3) = {{ T }}Vec3(this + v.x, this + v.y, this + v.z)
 @JvmName("sub")
 inline operator fun {{ Type }}.minus(v: {{ T }}Vec3) = {{ T }}Vec3(this - v.x, this - v.y, this - v.z)
 @JvmName("mul")
@@ -105,7 +106,7 @@ inline fun lengthSq(v: {{ T }}Vec3) = sqr(v.x) + sqr(v.y) + sqr(v.z)
 inline fun length(v: {{ T }}Vec3) = kotlin.math.sqrt(lengthSq(v))
 
 inline fun normalize(v: {{ T }}Vec3): {{ T }}Vec3 {
-    val l = 1.0f / length(v)
+    val l = {{ one }} / length(v)
     return {{ T }}Vec3(v.x * l, v.y * l, v.z * l)
 }
 
@@ -123,6 +124,12 @@ inline fun cross(a: {{ T }}Vec3, b: {{ T }}Vec3) = {{ T }}Vec3(
     a.x * b.y - a.y * b.x,
 )
 {% endif %}
+{% else %}
+inline fun all(v: {{ T }}Vec3) = v.x && v.y && v.z
+
+inline fun any(v: {{ T }}Vec3) = v.x || v.y || v.z
+
+inline fun none(v: {{ T }}Vec3) = !v.x && !v.y && !v.z
 {% endif %}
 
 fun JRandom.next{{ T }}Vec3() = {{ T }}Vec3({{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}())

@@ -35,7 +35,6 @@ data class {{ T }}Vec4(
     fun z(z: {{ Type }}) = {{ T }}Vec4(x, y, z, w)
     fun w(w: {{ Type }}) = {{ T }}Vec4(x, y, z, w)
 
-    fun compareTo(v: {{ T }}Vec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
     fun toArray() = {{ arrayOf }}(x, y, z, w)
 
     fun asString(fmt: String) = "($fmt, $fmt, $fmt, $fmt)".format(x, y, z, w)
@@ -68,6 +67,8 @@ data class {{ T }}Vec4(
 {% else %}
     inline operator fun not() = {{ T }}Vec4(!x, !y, !z, !w)
 {% endif %}
+
+    fun compareTo(v: {{ T }}Vec4) = IVec4(x.compareTo(v.x), y.compareTo(v.y), z.compareTo(v.z), w.compareTo(v.w))
 
     inline infix fun eq(v: {{ T }}Vec4) = BVec4(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0, z.compareTo(v.z) == 0, w.compareTo(v.w) == 0)
     inline infix fun ne(v: {{ T }}Vec4) = BVec4(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0, z.compareTo(v.z) != 0, w.compareTo(v.w) != 0)
@@ -110,7 +111,7 @@ inline fun lengthSq(v: {{ T }}Vec4) = sqr(v.x) + sqr(v.y) + sqr(v.z) + sqr(v.w)
 inline fun length(v: {{ T }}Vec4) = kotlin.math.sqrt(lengthSq(v))
 
 inline fun normalize(v: {{ T }}Vec4): {{ T }}Vec4 {
-    val l = 1.0f / length(v)
+    val l = {{ one }} / length(v)
     return {{ T }}Vec4(v.x * l, v.y * l, v.z * l, v.w * l)
 }
 
@@ -122,11 +123,17 @@ inline fun mix(a: {{ T }}Vec4, b: {{ T }}Vec4, f: {{ Type }}) = {{ T }}Vec4(mix(
 
 inline fun dot(a: {{ T }}Vec4, b: {{ T }}Vec4) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
 {% endif %}
+{% else %}
+inline fun all(v: {{ T }}Vec4) = v.x && v.y && v.z && v.w
+
+inline fun any(v: {{ T }}Vec4) = v.x || v.y || v.z || v.w
+
+inline fun none(v: {{ T }}Vec4) = !v.x && !v.y && !v.z && !v.w
 {% endif %}
 
-fun JRandom.next{{ T }}Vec4() = {{ T }}Vec4({{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}())
+fun JRandom.next{{ T }}Vec4() = {{ T }}Vec4({{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}())
 
-fun KRandom.next{{ T }}Vec4() = {{ T }}Vec4({{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}())
+fun KRandom.next{{ T }}Vec4() = {{ T }}Vec4({{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}(), {{ nextRandom }}())
 
 //region Alternate accessors
 {{ vecAlternateAccessors4 }}

@@ -76,6 +76,7 @@ sealed interface TypeVariant {
         override val name: String,
         override val code: String,
         override val zero: String,
+        val quarter: String,
         val half: String,
         override val one: String,
         val two: String,
@@ -83,15 +84,20 @@ sealed interface TypeVariant {
         override val nextRandom: String,
         val pi: String,
         val oneEighty: String,
+        val epsilon: String,
+        val oneEpsilon: String,
     ) : Number {
         override val toStringFormat get() = "%f"
         override val isDecimal get() = true
 
         override fun context() = super.context() + mapOf(
+            "quarter" to quarter,
             "half" to half,
             "two" to two,
             "pi" to pi,
             "oneEighty" to oneEighty,
+            "epsilon" to epsilon,
+            "oneEpsilon" to oneEpsilon,
         )
     }
 }
@@ -113,18 +119,18 @@ object Variants {
 
     val Float = TypeVariant.Decimal(
         name = "Float", code = "F",
-        zero = "0.0f", half = "0.5f", one = "1.0f", two = "2.0f",
+        zero = "0.0f", quarter = "0.25f", half = "0.5f", one = "1.0f", two = "2.0f",
         arrayOf = "floatArrayOf", nextRandom = "nextFloat",
-        pi = "kotlin.math.PI.toFloat()",
-        oneEighty = "180.0f",
+        pi = "kotlin.math.PI.toFloat()", oneEighty = "180.0f",
+        epsilon = "0.000001f", oneEpsilon = "0.999999f",
     )
 
     val Double = TypeVariant.Decimal(
         name = "Double", code = "D",
-        zero = "0.0", half = "0.5", one = "1.0", two = "2.0",
+        zero = "0.0", quarter = "0.25", half = "0.5", one = "1.0", two = "2.0",
         arrayOf = "doubleArrayOf", nextRandom = "nextDouble",
-        pi = "kotlin.math.PI",
-        oneEighty = "180.0",
+        pi = "kotlin.math.PI", oneEighty = "180.0",
+        epsilon = "0.000001", oneEpsilon = "0.999999",
     )
 }
 
@@ -163,18 +169,18 @@ val templateSets = listOf(
 )
 
 // for IDE autocompletion
-extensions.configure<IdeaModel> {
-    module {
-        sourceSets.forEach { sourceSet ->
-            templateSets.forEach { templateSet ->
-                val file = projectDir.resolve("src/${sourceSet.name}/templates/${templateSet.name}")
-                if (file.exists()) {
-                    sourceDirs.add(file)
-                }
-            }
-        }
-    }
-}
+//extensions.configure<IdeaModel> {
+//    module {
+//        sourceSets.forEach { sourceSet ->
+//            templateSets.forEach { templateSet ->
+//                val file = projectDir.resolve("src/${sourceSet.name}/templates/${templateSet.name}")
+//                if (file.exists()) {
+//                    sourceDirs.add(file)
+//                }
+//            }
+//        }
+//    }
+//}
 
 val realFields = listOf("x", "y", "z", "w")
 val proxyFields = listOf(

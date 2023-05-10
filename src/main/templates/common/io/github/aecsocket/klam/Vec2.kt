@@ -25,7 +25,6 @@ data class {{ T }}Vec2(
     fun x(x: {{ Type }}) = {{ T }}Vec2(x, y)
     fun y(y: {{ Type }}) = {{ T }}Vec2(x, y)
 
-    fun compareTo(v: {{ T }}Vec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
     fun toArray() = {{ arrayOf }}(x, y)
 
     fun asString(fmt: String) = "($fmt, $fmt)".format(x, y)
@@ -58,6 +57,8 @@ data class {{ T }}Vec2(
 {% else %}
     inline operator fun not() = {{ T }}Vec2(!x, !y)
 {% endif %}
+
+    fun compareTo(v: {{ T }}Vec2) = IVec2(x.compareTo(v.x), y.compareTo(v.y))
 
     inline infix fun eq(v: {{ T }}Vec2) = BVec2(x.compareTo(v.x) == 0, y.compareTo(v.y) == 0)
     inline infix fun ne(v: {{ T }}Vec2) = BVec2(x.compareTo(v.x) != 0, y.compareTo(v.y) != 0)
@@ -100,7 +101,7 @@ inline fun lengthSq(v: {{ T }}Vec2) = sqr(v.x) + sqr(v.y)
 inline fun length(v: {{ T }}Vec2) = kotlin.math.sqrt(lengthSq(v))
 
 inline fun normalize(v: {{ T }}Vec2): {{ T }}Vec2 {
-    val l = 1.0f / length(v)
+    val l = {{ one }} / length(v)
     return {{ T }}Vec2(v.x * l, v.y * l)
 }
 
@@ -112,6 +113,12 @@ inline fun mix(a: {{ T }}Vec2, b: {{ T }}Vec2, f: {{ Type }}) = {{ T }}Vec2(mix(
 
 inline fun dot(a: {{ T }}Vec2, b: {{ T }}Vec2) = a.x * b.x + a.y * b.y
 {% endif %}
+{% else %}
+inline fun all(v: {{ T }}Vec2) = v.x && v.y
+
+inline fun any(v: {{ T }}Vec2) = v.x || v.y
+
+inline fun none(v: {{ T }}Vec2) = !v.x && !v.y
 {% endif %}
 
 fun JRandom.next{{ T }}Vec2() = {{ T }}Vec2({{ nextRandom }}(), {{ nextRandom }}())

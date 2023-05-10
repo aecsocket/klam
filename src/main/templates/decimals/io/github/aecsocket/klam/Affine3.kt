@@ -25,5 +25,5 @@ data class {{ T }}Affine3(
 inline fun inverse(t: {{ T }}Affine3): {{ T }}Affine3 {
     val scaleInv = {{ one }} / t.scale
     val rotInv = inverse(t.rotation)
-    return {{ T }}Affine3((rotInv * -t.position) * {{ T }}Vec3(scaleInv), rotInv, scaleInv)
+    return {{ T }}Affine3((rotInv * -t.position) * scaleInv, rotInv, scaleInv)
 }
