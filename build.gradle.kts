@@ -169,18 +169,18 @@ val templateSets = listOf(
 )
 
 // for IDE autocompletion
-//extensions.configure<IdeaModel> {
-//    module {
-//        sourceSets.forEach { sourceSet ->
-//            templateSets.forEach { templateSet ->
-//                val file = projectDir.resolve("src/${sourceSet.name}/templates/${templateSet.name}")
-//                if (file.exists()) {
-//                    sourceDirs.add(file)
-//                }
-//            }
-//        }
-//    }
-//}
+/* extensions.configure<IdeaModel> {
+    module {
+        sourceSets.forEach { sourceSet ->
+            templateSets.forEach { templateSet ->
+                val file = projectDir.resolve("src/${sourceSet.name}/templates/${templateSet.name}")
+                if (file.exists()) {
+                    sourceDirs.add(file)
+                }
+            }
+        }
+    }
+} */
 
 val realFields = listOf("x", "y", "z", "w")
 val proxyFields = listOf(
@@ -228,24 +228,55 @@ fun alternateAccessors(variant: TypeVariant): Map<String, String> {
 
 @OptIn(ExperimentalStdlibApi::class)
 fun swizzles(variant: TypeVariant): Map<String, String> {
-    return (2..4).map { size ->
-        "vecSwizzles$size" to accessorFields.joinToString("\n") { fieldSet ->
-            (0..<size).map { fieldSet[it] }.permutations().joinToString("\n") { swizzle ->
-                val swizzleField = swizzle.joinToString("")
-                val swizzleArgs = swizzle.joinToString(", ")
-                "inline val ${variant.code}Vec${size}.$swizzleField get() = ${variant.code}Vec${size}($swizzleArgs)"
-            } + "\n"
-        }
-    }.associate { it }
-}
-
-fun <T> List<T>.permutations(): List<List<T>> {
-    if (size == 1) return listOf(this)
-    val result = ArrayList<List<T>>()
-    indices.forEach { i ->
-        (this - this[i]).permutations().forEach { item ->
-            result += item + this[i]
-        }
+    fun swizzle(vararg fields: String): String {
+        val size = fields.size
+        val swizzle = listOf(*fields)
+        val swizzleField = swizzle.joinToString("")
+        val swizzleArgs = swizzle.joinToString(", ")
+        return "inline val ${variant.code}Vec${size}.${swizzleField} get() = ${variant.code}Vec${size}(${swizzleArgs})"
     }
-    return result
+
+    /*
+    xx
+    xy
+    yx
+    yy
+
+    ss
+    st
+    ts
+    tt
+     */
+
+    return mapOf(
+        "vecSwizzles2" to accessorFields.joinToString("\n\n") { fields ->
+            (0..<2).flatMap { i ->
+                (0..<2).map { j ->
+                    swizzle(fields[i], fields[j])
+                }
+            }.joinToString("\n")
+        } + "\n",
+
+        "vecSwizzles3" to accessorFields.joinToString("\n\n") { fields ->
+            (0..<3).flatMap { i ->
+                (0..<3).flatMap { j ->
+                    (0..<3).map { k ->
+                        swizzle(fields[i], fields[j], fields[k])
+                    }
+                }
+            }.joinToString("\n")
+        } + "\n",
+
+        "vecSwizzles4" to accessorFields.joinToString("\n\n") { fields ->
+            (0..<4).flatMap { i ->
+                (0..<4).flatMap { j ->
+                    (0..<4).flatMap { k ->
+                        (0..<4).map { l ->
+                            swizzle(fields[i], fields[j], fields[k], fields[l])
+                        }
+                    }
+                }
+            }.joinToString("\n")
+        } + "\n",
+    )
 }
