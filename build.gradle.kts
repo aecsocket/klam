@@ -6,7 +6,6 @@ plugins {
     id("kotlin-conventions")
     id("publishing-conventions")
     id("idea")
-    alias(libs.plugins.jmh)
 }
 
 group = "io.github.aecsocket"
