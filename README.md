@@ -1,12 +1,13 @@
 <div align="center">
 
 # Klam
-[![License](https://img.shields.io/github/license/aecsocket/klam)](LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/aecsocket/klam/build.yml)](https://github.com/aecsocket/klam/actions/workflows/build.yml)
 ![Release](https://img.shields.io/maven-central/v/io.github.aecsocket/klam?label=release)
 ![Snapshot](https://img.shields.io/nexus/s/io.github.aecsocket/klam?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)
 
 Linear algebra library for 2D/3D applications
+
+### [GitHub](https://github.com/aecsocket/klam)
 
 </div>
 
@@ -37,14 +38,15 @@ The various types are defined in a specific format:
 * Element type
   * `B` boolean
   * `I` integer
+  * `L` long
   * `F` float
   * `D` double
 * Structure
-  * `Vec(2|3|4)` vector
-  * `Mat(2|3|4)` NxN matrix
-  * `Quat` quaternion
-  * `Affine` affine transformation (position + rotation)
-  * `Ray` half-infinite line (origin + direction)
+  * `(T)Vec(2|3|4)` vector
+  * `(T)Mat(2|3|4)` NxN matrix
+  * `(T)Quat` quaternion
+  * `(T)Affine` affine transformation (position + rotation)
+  * `(T)Ray` half-infinite line (origin + direction)
 
 All classes are mutable.
 
@@ -122,7 +124,7 @@ vec[0] = quat[3] // vec.x = 2.0f
 
 `Mat` types can be indexed by column (returning a `Vec`) or by column and row (returning a scalar):
 ```kotlin
-val mat = IMat2.identity() // IMat2(1, 0, 0, 1)
+val mat = IMat2.Identity // IMat2(1, 0, 0, 1)
 mat[0] // IVec2(1, 0)
 mat[0, 0] // 1
 

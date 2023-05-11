@@ -7,7 +7,7 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader
 import kotlin.test.Test
 
 class TestConfigurate {
-    val configOptions = ConfigurationOptions.defaults()
+    val configOptions: ConfigurationOptions = ConfigurationOptions.defaults()
         .serializers { serializers ->
             serializers.registerAll(klamSerializers)
         }

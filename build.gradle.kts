@@ -1,101 +1,28 @@
-import org.gradle.plugins.ide.idea.model.IdeaModel
 import templating.*
 
 plugins {
     id("parent-conventions")
-    id("kotlin-conventions")
+    id("template-conventions")
     id("publishing-conventions")
-    id("idea")
 }
 
 group = "io.github.aecsocket"
 version = "0.2.0-SNAPSHOT"
 description = "Linear algebra library for 2D/3D applications"
 
-// needed so `sourcesJar` doesn't fail (it's stupid)
-tasks {
-    sourcesJar {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+templates {
+    extraContextProvider.set { variant ->
+        alternateAccessors(variant) + swizzles(variant)
     }
 }
 
-data class TemplateSet(
-    val name: String,
-    val types: List<TypeVariant>,
-)
-
-val templateSets = listOf(
-    TemplateSet(
-        name = "common",
-        types = listOf(
-            TypeVariants.Boolean,
-            TypeVariants.Int,
-            TypeVariants.Long,
-            TypeVariants.Float,
-            TypeVariants.Double,
-        ),
-    ),
-    TemplateSet(
-        name = "numbers",
-        types = listOf(
-            TypeVariants.Int,
-            TypeVariants.Long,
-            TypeVariants.Float,
-            TypeVariants.Double,
-        ),
-    ),
-    TemplateSet(
-        name = "decimals",
-        types = listOf(
-            TypeVariants.Float,
-            TypeVariants.Double,
-        ),
-    ),
-)
-
-// for IDE autocompletion
-extensions.configure<IdeaModel> {
-    module {
-        sourceSets.forEach { sourceSet ->
-            templateSets.forEach { templateSet ->
-                val file = projectDir.resolve("src/${sourceSet.name}/templates/${templateSet.name}")
-                if (file.exists()) {
-                    sourceDirs.add(file)
-                }
-            }
-        }
-    }
-}
-
+// alternate accessor and swizzles auto-generator
 val realFields = listOf("x", "y", "z", "w")
 val proxyFields = listOf(
     listOf("r", "g", "b", "a"),
     listOf("s", "t", "p", "q"),
 )
 val accessorFields = listOf(realFields) + proxyFields
-
-sourceSets.forEach { sourceSet ->
-    val generateTasks = templateSets.flatMap { templateSet ->
-        val source = projectDir.resolve("src/${sourceSet.name}/templates/${templateSet.name}")
-        if (!source.exists()) return@flatMap emptyList()
-        val output = buildDir.resolve("generated/sources/${sourceSet.name}-templates-${templateSet.name}")
-
-        templateSet.types.map { variant ->
-            val taskName = sourceSet.getTaskName("generate", "${templateSet.name}${variant.name}Templates")
-            val generateTask = tasks.register<GenerateTemplates>(taskName) {
-                sourceDir.set(source)
-                outputDir.set(output)
-                fileNamePrefix.set(variant.code)
-                context.putAll(variant.context() + alternateAccessors(variant) + swizzles(variant))
-            }
-
-            // this line causes task `sourcesJar` to have duplicates
-            // considering there are literally no duplicated files, idk why this happens
-            sourceSet.java.srcDir(generateTask.map { it.outputs })
-            generateTask.get()
-        }
-    }
-}
 
 @OptIn(ExperimentalStdlibApi::class)
 fun alternateAccessors(variant: TypeVariant): Map<String, String> {

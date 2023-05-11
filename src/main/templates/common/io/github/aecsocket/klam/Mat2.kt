@@ -107,8 +107,8 @@ inline fun determinant(m: {{ T }}Mat2) =
 
 {% if isDecimal %}
 inline fun inverse(m: {{ T }}Mat2) = {{ T }}Mat2(
-     m[1, 1], -m[0, 1],
-    -m[1, 0],  m[0, 0],
+      m[1, 1], - m[0, 1],
+    - m[1, 0],   m[0, 0],
 ) * ({{ one }} / determinant(m))
 {% endif %}
 {% endif %}

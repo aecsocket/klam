@@ -64,8 +64,7 @@ abstract class GenerateTemplates : DefaultTask() {
                 val relative = file.relativeTo(sourceDir)
 
                 val outFileName = fileNamePrefix + file.name
-                val outRelative = relative.parent.resolve(outFileName)
-                val output = outputDir.resolve(outRelative)
+                val output = outputDir.resolve(relative).parent.resolve(outFileName)
 
                 Files.createDirectories(output.parent)
                 Files.newBufferedWriter(output).use { writer ->
