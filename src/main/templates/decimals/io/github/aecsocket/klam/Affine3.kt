@@ -7,6 +7,8 @@ data class {{ T }}Affine3(
     @JvmField val rotation: {{ T }}Quat = {{ T }}Quat.Identity,
     @JvmField val scale: {{ T }}Vec3 = {{ T }}Vec3.{{ One }},
 ) {
+    constructor(iso: {{ T }}Isometry3, scale: {{ T }}Vec3 = {{ T }}Vec3.{{ Zero }}) : this(iso.position, iso.rotation, scale)
+
     fun asString(fmt: String) = "[${position.asString(fmt)}, ${rotation.asString(fmt)}, ${scale.asString(fmt)}]"
     override fun toString() = asString("{{ toStringFormat }}")
 
