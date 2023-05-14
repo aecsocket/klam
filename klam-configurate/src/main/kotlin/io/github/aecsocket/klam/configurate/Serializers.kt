@@ -29,4 +29,7 @@ val klamSerializers: TypeSerializerCollection = TypeSerializerCollection.builder
 
     .registerExact(FAffine3Serializer)
     .registerExact(DAffine3Serializer)
+
+    .registerExact(FIso3Serializer)
+    .registerExact(DIso3Serializer)
     .build()

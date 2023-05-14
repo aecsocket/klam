@@ -8,23 +8,20 @@ import java.lang.reflect.Type
 
 private const val TRANSLATION = "translation"
 private const val ROTATION = "rotation"
-private const val SCALE = "scale"
 
-object {{ T }}Affine3Serializer : TypeSerializer<{{ T }}Affine3> {
-    override fun serialize(type: Type, obj: {{ T }}Affine3?, node: ConfigurationNode) {
+object {{ T }}Iso3Serializer : TypeSerializer<{{ T }}Iso3> {
+    override fun serialize(type: Type, obj: {{ T }}Iso3?, node: ConfigurationNode) {
         if (obj == null) node.set(null)
         else {
             node.node(TRANSLATION).set(obj.translation)
             node.node(ROTATION).set(obj.rotation)
-            node.node(SCALE).set(obj.scale)
         }
     }
 
-    override fun deserialize(type: Type, node: ConfigurationNode): {{ T }}Affine3 {
-        return {{ T }}Affine3(
+    override fun deserialize(type: Type, node: ConfigurationNode): {{ T }}Iso3 {
+        return {{ T }}Iso3(
             node.node(TRANSLATION).get { {{ T }}Vec3.Zero },
             node.node(ROTATION).get { {{ T }}Quat.Identity },
-            node.node(SCALE).get { {{ T }}Vec3.One },
         )
     }
 }
