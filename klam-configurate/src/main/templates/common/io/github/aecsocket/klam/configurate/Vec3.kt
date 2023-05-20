@@ -17,18 +17,13 @@ object {{ T }}Vec3Serializer : TypeSerializer<{{ T }}Vec3> {
     }
 
     override fun deserialize(type: Type, node: ConfigurationNode): {{ T }}Vec3 {
-        return if (node.isList) {
-            val list = node.childrenList()
-            if (list.size != 3)
-                throw SerializationException(node, type, "$EXPECTED_LIST_OF [x, y, z]")
-            {{ T }}Vec3(
-                list[0].force<{{ Type }}>(),
-                list[1].force<{{ Type }}>(),
-                list[2].force<{{ Type }}>(),
-            )
-        } else {
-            val num = node.raw() as? {{ Type }} ?: throw SerializationException(node, type, EXPECTED_SCALAR)
-            {{ T }}Vec3(num)
-        }
+        if (!node.isList)
+            throw SerializationException(node, type, "Expected list of [x, y, z]")
+        val list = node.childrenList()
+        return {{ T }}Vec3(
+            list[0].force<{{ Type }}>(),
+            list[1].force<{{ Type }}>(),
+            list[2].force<{{ Type }}>(),
+        )
     }
 }

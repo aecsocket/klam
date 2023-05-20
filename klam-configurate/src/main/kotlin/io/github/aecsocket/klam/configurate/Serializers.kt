@@ -24,12 +24,39 @@ val klamSerializers: TypeSerializerCollection = TypeSerializerCollection.builder
     .registerExact(FVec4Serializer)
     .registerExact(DVec4Serializer)
 
+    .registerExact(BMat2Serializer)
+    .registerExact(IMat2Serializer)
+    .registerExact(LMat2Serializer)
+    .registerExact(FMat2Serializer)
+    .registerExact(DMat2Serializer)
+
+    .registerExact(BMat3Serializer)
+    .registerExact(IMat3Serializer)
+    .registerExact(LMat3Serializer)
+    .registerExact(FMat3Serializer)
+    .registerExact(DMat3Serializer)
+
+    .registerExact(BMat4Serializer)
+    .registerExact(IMat4Serializer)
+    .registerExact(LMat4Serializer)
+    .registerExact(FMat4Serializer)
+    .registerExact(DMat4Serializer)
+
     .registerExact(FQuatSerializer)
     .registerExact(DQuatSerializer)
 
-    .registerExact(FAffine3Serializer)
-    .registerExact(DAffine3Serializer)
+    .registerExact(FAabb2Serializer)
+    .registerExact(DAabb2Serializer)
+
+    .registerExact(FAabb3Serializer)
+    .registerExact(DAabb3Serializer)
+
+    .registerExact(FAabb4Serializer)
+    .registerExact(DAabb4Serializer)
 
     .registerExact(FIso3Serializer)
     .registerExact(DIso3Serializer)
+
+    .registerExact(FAffine3Serializer)
+    .registerExact(DAffine3Serializer)
     .build()

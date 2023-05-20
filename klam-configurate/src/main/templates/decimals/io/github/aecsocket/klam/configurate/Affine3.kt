@@ -22,9 +22,9 @@ object {{ T }}Affine3Serializer : TypeSerializer<{{ T }}Affine3> {
 
     override fun deserialize(type: Type, node: ConfigurationNode): {{ T }}Affine3 {
         return {{ T }}Affine3(
-            node.node(TRANSLATION).get { {{ T }}Vec3.Zero },
-            node.node(ROTATION).get { {{ T }}Quat.Identity },
-            node.node(SCALE).get { {{ T }}Vec3.One },
+            translation = node.node(TRANSLATION).get { {{ T }}Vec3.Zero },
+            rotation = node.node(ROTATION).get { {{ T }}Quat.Identity },
+            scale = node.node(SCALE).get { {{ T }}Vec3.One },
         )
     }
 }

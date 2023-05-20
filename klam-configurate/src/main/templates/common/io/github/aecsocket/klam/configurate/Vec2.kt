@@ -16,17 +16,12 @@ object {{ T }}Vec2Serializer : TypeSerializer<{{ T }}Vec2> {
     }
 
     override fun deserialize(type: Type, node: ConfigurationNode): {{ T }}Vec2 {
-        return if (node.isList) {
-            val list = node.childrenList()
-            if (list.size != 2)
-                throw SerializationException(node, type, "$EXPECTED_LIST_OF [x, y]")
-            {{ T }}Vec2(
-                list[0].force<{{ Type }}>(),
-                list[1].force<{{ Type }}>(),
-            )
-        } else {
-            val num = node.raw() as? {{ Type }} ?: throw SerializationException(node, type, EXPECTED_SCALAR)
-            {{ T }}Vec2(num)
-        }
+        if (!node.isList)
+            throw SerializationException(node, type, "Expected list of [x, y]")
+        val list = node.childrenList()
+        return {{ T }}Vec2(
+            list[0].force<{{ Type }}>(),
+            list[1].force<{{ Type }}>(),
+        )
     }
 }
