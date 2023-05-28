@@ -24,11 +24,12 @@ library through `klam-configurate`.
 ```kotlin
 repositories {
     mavenCentral()
+    // maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // for snapshot builds
 }
 
 dependencies {
     implementation("io.github.aecsocket", "klam", "VERSION")
-    implementation("io.github.aecsocket", "klam-configurate", "VERSION")
+    // implementation("io.github.aecsocket", "klam-configurate", "VERSION")
 }
 ```
 
