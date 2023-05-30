@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.aecsocket"
-version = "0.2.0"
+version = "0.2.1-SNAPSHOT"
 description = "Linear algebra library for 2D/3D applications"
 
 templates {
@@ -39,19 +39,19 @@ fun alternateAccessors(variant: TypeVariant): Map<String, String> {
 
 @OptIn(ExperimentalStdlibApi::class)
 fun swizzles(variant: TypeVariant): Map<String, String> {
-    fun swizzle(vararg fields: String): String {
-        val size = fields.size
-        val swizzle = listOf(*fields)
+    fun swizzle(origSize: Int, fields: List<String>, vararg indices: Int): String {
+        val size = indices.size
+        val swizzle = indices.map { fields[it] }
         val swizzleField = swizzle.joinToString("")
         val swizzleArgs = swizzle.joinToString(", ")
-        return "inline val ${variant.code}Vec${size}.${swizzleField} get() = ${variant.code}Vec${size}(${swizzleArgs})"
+        return "inline val ${variant.code}Vec${origSize}.${swizzleField} get() = ${variant.code}Vec${size}(${swizzleArgs})"
     }
 
     return mapOf(
         "vecSwizzles2" to accessorFields.joinToString("\n\n") { fields ->
             (0..<2).flatMap { i ->
                 (0..<2).map { j ->
-                    swizzle(fields[i], fields[j])
+                    swizzle(2, fields, i, j)
                 }
             }.joinToString("\n")
         } + "\n",
@@ -59,8 +59,10 @@ fun swizzles(variant: TypeVariant): Map<String, String> {
         "vecSwizzles3" to accessorFields.joinToString("\n\n") { fields ->
             (0..<3).flatMap { i ->
                 (0..<3).flatMap { j ->
-                    (0..<3).map { k ->
-                        swizzle(fields[i], fields[j], fields[k])
+                    listOf(
+                        swizzle(3, fields, i, j),
+                    ) + (0..<3).map { k ->
+                        swizzle(3, fields, i, j, k)
                     }
                 }
             }.joinToString("\n")
@@ -69,9 +71,13 @@ fun swizzles(variant: TypeVariant): Map<String, String> {
         "vecSwizzles4" to accessorFields.joinToString("\n\n") { fields ->
             (0..<4).flatMap { i ->
                 (0..<4).flatMap { j ->
-                    (0..<4).flatMap { k ->
-                        (0..<4).map { l ->
-                            swizzle(fields[i], fields[j], fields[k], fields[l])
+                    listOf(
+                        swizzle(4, fields, i, j),
+                    ) + (0..<4).flatMap { k ->
+                        listOf(
+                            swizzle(4, fields, i, j, k),
+                        ) + (0..<4).map { l ->
+                            swizzle(4, fields, i, j, k, l)
                         }
                     }
                 }
