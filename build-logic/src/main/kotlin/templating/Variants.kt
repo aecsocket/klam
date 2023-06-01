@@ -45,6 +45,14 @@ sealed interface TypeVariant {
         override val zeroField get() = "Zero"
         override val oneField get() = "One"
         override val isNumber get() = true
+
+        val sCode: String
+        val sToT: String
+
+        override fun context() = super.context() + mapOf(
+            "S" to sCode,
+            "sToT" to sToT,
+        )
     }
 
     data class Integer(
@@ -54,6 +62,8 @@ sealed interface TypeVariant {
         override val one: String,
         override val arrayOf: String,
         override val nextRandom: String,
+        override val sCode: String,
+        override val sToT: String,
     ) : Number {
         override val toStringFormat get() = "%d"
         override val isDecimal get() = false
@@ -73,6 +83,8 @@ sealed interface TypeVariant {
         val oneEighty: String,
         val epsilon: String,
         val oneEpsilon: String,
+        override val sCode: String,
+        override val sToT: String,
     ) : Number {
         override val toStringFormat get() = "%f"
         override val isDecimal get() = true
@@ -96,12 +108,14 @@ object TypeVariants {
         name = "Int", code = "I",
         zero = "0", one = "1",
         arrayOf = "intArrayOf", nextRandom = "nextInt",
+        sCode = "L", sToT = "toInt()",
     )
 
     val Long = TypeVariant.Integer(
         name = "Long", code = "L",
         zero = "0L", one = "1L",
         arrayOf = "longArrayOf", nextRandom = "nextLong",
+        sCode = "I", sToT = "toLong()",
     )
 
     val Float = TypeVariant.Decimal(
@@ -110,6 +124,7 @@ object TypeVariants {
         arrayOf = "floatArrayOf", nextRandom = "nextFloat",
         pi = "kotlin.math.PI.toFloat()", oneEighty = "180.0f",
         epsilon = "0.000001f", oneEpsilon = "0.999999f",
+        sCode = "D", sToT = "toFloat()",
     )
 
     val Double = TypeVariant.Decimal(
@@ -118,5 +133,6 @@ object TypeVariants {
         arrayOf = "doubleArrayOf", nextRandom = "nextDouble",
         pi = "kotlin.math.PI", oneEighty = "180.0",
         epsilon = "0.000001", oneEpsilon = "0.999999",
+        sCode = "F", sToT = "toDouble()",
     )
 }

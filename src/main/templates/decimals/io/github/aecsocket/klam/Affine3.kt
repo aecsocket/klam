@@ -9,6 +9,8 @@ data class {{ T }}Affine3(
 ) {
     constructor(iso: {{ T }}Iso3, scale: {{ T }}Vec3 = {{ T }}Vec3.{{ Zero }}) : this(iso.translation, iso.rotation, scale)
 
+    constructor(t: {{ S }}Affine3) : this({{ T }}Vec3(t.translation), {{ T }}Quat(t.rotation), {{ T }}Vec3(t.scale))
+
     fun asString(fmt: String) = "[${translation.asString(fmt)}, ${rotation.asString(fmt)}, ${scale.asString(fmt)}]"
     override fun toString() = asString("{{ toStringFormat }}")
 

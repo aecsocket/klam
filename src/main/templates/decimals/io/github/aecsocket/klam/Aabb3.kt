@@ -6,6 +6,8 @@ data class {{ T }}Aabb3(
     @JvmField val min: {{ T }}Vec3,
     @JvmField val max: {{ T }}Vec3,
 ) {
+    constructor(b: {{ S }}Aabb3) : this({{ T }}Vec3(b.min), {{ T }}Vec3(b.max))
+
     fun asString(fmt: String) = "[${min.asString(fmt)} .. ${max.asString(fmt)}]"
     override fun toString() = asString("{{ toStringFormat }}")
 

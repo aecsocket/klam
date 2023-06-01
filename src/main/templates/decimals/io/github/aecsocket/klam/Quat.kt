@@ -24,6 +24,8 @@ data class {{ T }}Quat(
 
     constructor(v: {{ T }}Vec4) : this(v.x, v.y, v.z, v.w)
 
+    constructor(q: {{ S }}Quat) : this(q.x.{{ sToT }}, q.y.{{ sToT }}, q.z.{{ sToT }}, q.w.{{ sToT }})
+
     operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y

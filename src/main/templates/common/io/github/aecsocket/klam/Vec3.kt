@@ -19,6 +19,10 @@ data class {{ T }}Vec3(
     constructor(v: {{ T }}Vec2, z: {{ Type }}) : this(v.x, v.y, z)
     constructor(s: {{ Type }}) : this(s, s, s)
 
+{% if isNumber %}
+    constructor(v: {{ S }}Vec3) : this(v.x.{{ sToT }}, v.y.{{ sToT }}, v.z.{{ sToT }})
+{% endif %}
+
     operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
