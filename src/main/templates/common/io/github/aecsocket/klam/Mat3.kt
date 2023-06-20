@@ -74,6 +74,12 @@ data class {{ T }}Mat3(
     inline fun mapVector(block: ({{ T }}Vec3) -> {{ T }}Vec3) = {{ T }}Mat3(block(x), block(y), block(z))
     inline fun mapScalar(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Mat3(x.map(block), y.map(block), z.map(block))
 
+{% for cast in numberCasts %}
+    inline fun mapVector(block: ({{ T }}Vec3) -> {{ cast.T }}Vec3) = {{ cast.T }}Mat3(block(x), block(y), block(z))
+    inline fun mapScalar(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Mat3(x.map(block), y.map(block), z.map(block))
+    fun {{ cast.fn }} = {{ cast.T }}Mat3(x.{{ cast.fn }}, y.{{ cast.fn }}, z.{{ cast.fn }})
+
+{% endfor %}
 {% if isNumber %}
     inline operator fun unaryMinus() = {{ T }}Mat3(-x, -y, -z)
 

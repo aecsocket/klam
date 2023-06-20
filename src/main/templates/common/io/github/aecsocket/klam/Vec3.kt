@@ -19,10 +19,6 @@ data class {{ T }}Vec3(
     constructor(v: {{ T }}Vec2, z: {{ Type }}) : this(v.x, v.y, z)
     constructor(s: {{ Type }}) : this(s, s, s)
 
-{% if isNumber %}
-    constructor(v: {{ S }}Vec3) : this(v.x.{{ sToT }}, v.y.{{ sToT }}, v.z.{{ sToT }})
-{% endif %}
-
     operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
@@ -41,6 +37,11 @@ data class {{ T }}Vec3(
 
     inline fun map(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Vec3(block(x), block(y), block(z))
 
+{% for cast in numberCasts %}
+    inline fun map(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Vec3(block(x), block(y), block(z))
+    fun {{ cast.fn }} = {{ cast.T }}Vec3(x.{{ cast.fn }}, y.{{ cast.fn }}, z.{{ cast.fn }})
+
+{% endfor %}
 {% if isNumber %}
     inline operator fun unaryMinus() = {{ T }}Vec3(-x, -y, -z)
     inline operator fun inc() = {{ T }}Vec3(x + {{ one }}, y + {{ one }}, z + {{ one }})

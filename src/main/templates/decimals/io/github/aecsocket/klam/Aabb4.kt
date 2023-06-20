@@ -6,14 +6,18 @@ data class {{ T }}Aabb4(
     @JvmField val min: {{ T }}Vec4,
     @JvmField val max: {{ T }}Vec4,
 ) {
-    constructor(b: {{ S }}Aabb4) : this({{ T }}Vec4(b.min), {{ T }}Vec4(b.max))
-
     fun asString(fmt: String) = "[${min.asString(fmt)} .. ${max.asString(fmt)}]"
     override fun toString() = asString("{{ toStringFormat }}")
 
     inline fun mapVector(block: ({{ T }}Vec4) -> {{ T }}Vec4) = {{ T }}Aabb4(block(min), block(max))
     inline fun mapScalar(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Aabb4(min.map(block), max.map(block))
 
+{% for cast in decimalCasts %}
+    inline fun mapVector(block: ({{ T }}Vec4) -> {{ cast.T }}Vec4) = {{ cast.T }}Aabb4(block(min), block(max))
+    inline fun mapScalar(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Aabb4(min.map(block), max.map(block))
+    fun {{ cast.fn }} = {{ cast.T }}Aabb4(min.{{ cast.fn }}, max.{{ cast.fn }})
+
+{% endfor %}
     inline operator fun unaryMinus() = {{ T }}Aabb4(-min, -max)
 
     @JvmName("add")

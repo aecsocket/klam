@@ -24,8 +24,6 @@ data class {{ T }}Quat(
 
     constructor(v: {{ T }}Vec4) : this(v.x, v.y, v.z, v.w)
 
-    constructor(q: {{ S }}Quat) : this(q.x.{{ sToT }}, q.y.{{ sToT }}, q.z.{{ sToT }}, q.w.{{ sToT }})
-
     operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
@@ -46,6 +44,11 @@ data class {{ T }}Quat(
 
     inline fun map(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Quat(block(x), block(y), block(z), block(w))
 
+{% for cast in decimalCasts %}
+    inline fun map(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Quat(block(x), block(y), block(z), block(w))
+    fun {{ cast.fn }} = {{ cast.T }}Quat(x.{{ cast.fn }}, y.{{ cast.fn }}, z.{{ cast.fn }}, w.{{ cast.fn }})
+
+{% endfor %}
     @JvmName("add")
     inline operator fun plus (s: {{ Type }}) = {{ T }}Quat(x + s, y + s, z + s, w + s)
     @JvmName("sub")

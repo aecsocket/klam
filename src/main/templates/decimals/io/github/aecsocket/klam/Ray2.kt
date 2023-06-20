@@ -8,6 +8,10 @@ data class {{ T }}Ray2(
 ) {
     fun at(t: {{ Type }}) = origin + direction * t
 
+{% for cast in decimalCasts %}
+    fun {{ cast.fn }} = {{ cast.T }}Ray2(origin.{{ cast.fn }}, direction.{{ cast.fn }})
+
+{% endfor %}
     fun asString(fmt: String) = "[${origin.asString(fmt)} -> ${direction.asString(fmt)}]"
     override fun toString() = asString("{{ toStringFormat }}")
 }

@@ -6,8 +6,10 @@ data class {{ T }}Iso3(
     @JvmField val translation: {{ T }}Vec3 = {{ T }}Vec3.{{ Zero }},
     @JvmField val rotation: {{ T }}Quat = {{ T }}Quat.Identity,
 ) {
-    constructor(t: {{ S }}Iso3) : this({{ T }}Vec3(t.translation), {{ T }}Quat(t.rotation))
+{% for cast in decimalCasts %}
+    fun {{ cast.fn }} = {{ cast.T }}Iso3(translation.{{ cast.fn }}, rotation.{{ cast.fn }})
 
+{% endfor %}
     fun asString(fmt: String) = "[${translation.asString(fmt)}, ${rotation.asString(fmt)}]"
     override fun toString() = asString("{{ toStringFormat }}")
 

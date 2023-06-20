@@ -1,5 +1,17 @@
 package templating
 
+data class TypeCast(
+    val name: String,
+    val code: String,
+    val fn: String,
+) {
+    fun context(): Map<String, Any> = mapOf(
+        "Type" to name,
+        "T" to code,
+        "fn" to fn,
+    )
+}
+
 sealed interface TypeVariant {
     val name: String
     val code: String
@@ -12,6 +24,7 @@ sealed interface TypeVariant {
     val toStringFormat: String
     val isNumber: Boolean
     val isDecimal: Boolean
+    val numberCasts: List<TypeCast>
 
     fun context(): Map<String, Any> = mapOf(
         "Type" to name,
@@ -25,34 +38,28 @@ sealed interface TypeVariant {
         "toStringFormat" to toStringFormat,
         "isNumber" to isNumber,
         "isDecimal" to isDecimal,
+        "numberCasts" to numberCasts.map { it.context() },
     )
 
     object Bool : TypeVariant {
-        override val name get() = "Boolean"
-        override val code get() = "B"
-        override val zero get() = "false"
-        override val one get() = "true"
-        override val zeroField get() = "False"
-        override val oneField get() = "True"
-        override val arrayOf get() = "booleanArrayOf"
-        override val nextRandom get() = "nextBoolean"
-        override val toStringFormat get() = "%s"
-        override val isNumber get() = false
-        override val isDecimal get() = false
+        override val name = "Boolean"
+        override val code = "B"
+        override val zero = "false"
+        override val one = "true"
+        override val zeroField = "False"
+        override val oneField = "True"
+        override val arrayOf = "booleanArrayOf"
+        override val nextRandom = "nextBoolean"
+        override val toStringFormat = "%s"
+        override val isNumber = false
+        override val isDecimal = false
+        override val numberCasts = emptyList<TypeCast>()
     }
 
     sealed interface Number : TypeVariant {
         override val zeroField get() = "Zero"
         override val oneField get() = "One"
         override val isNumber get() = true
-
-        val sCode: String
-        val sToT: String
-
-        override fun context() = super.context() + mapOf(
-            "S" to sCode,
-            "sToT" to sToT,
-        )
     }
 
     data class Integer(
@@ -62,8 +69,7 @@ sealed interface TypeVariant {
         override val one: String,
         override val arrayOf: String,
         override val nextRandom: String,
-        override val sCode: String,
-        override val sToT: String,
+        override val numberCasts: List<TypeCast>,
     ) : Number {
         override val toStringFormat get() = "%d"
         override val isDecimal get() = false
@@ -83,8 +89,8 @@ sealed interface TypeVariant {
         val oneEighty: String,
         val epsilon: String,
         val oneEpsilon: String,
-        override val sCode: String,
-        override val sToT: String,
+        override val numberCasts: List<TypeCast>,
+        val decimalCasts: List<TypeCast>,
     ) : Number {
         override val toStringFormat get() = "%f"
         override val isDecimal get() = true
@@ -97,8 +103,19 @@ sealed interface TypeVariant {
             "oneEighty" to oneEighty,
             "epsilon" to epsilon,
             "oneEpsilon" to oneEpsilon,
+            "decimalCasts" to decimalCasts.map { it.context() },
         )
     }
+}
+
+object TypeCasts {
+    val Int = TypeCast("Int", "I", "toInt()")
+
+    val Long = TypeCast("Long", "L", "toLong()")
+
+    val Float = TypeCast("Float", "F", "toFloat()")
+
+    val Double = TypeCast("Double", "D", "toDouble()")
 }
 
 object TypeVariants {
@@ -108,14 +125,14 @@ object TypeVariants {
         name = "Int", code = "I",
         zero = "0", one = "1",
         arrayOf = "intArrayOf", nextRandom = "nextInt",
-        sCode = "L", sToT = "toInt()",
+        numberCasts = listOf(TypeCasts.Long, TypeCasts.Float, TypeCasts.Double),
     )
 
     val Long = TypeVariant.Integer(
         name = "Long", code = "L",
         zero = "0L", one = "1L",
         arrayOf = "longArrayOf", nextRandom = "nextLong",
-        sCode = "I", sToT = "toLong()",
+        numberCasts = listOf(TypeCasts.Int, TypeCasts.Float, TypeCasts.Double),
     )
 
     val Float = TypeVariant.Decimal(
@@ -124,7 +141,8 @@ object TypeVariants {
         arrayOf = "floatArrayOf", nextRandom = "nextFloat",
         pi = "kotlin.math.PI.toFloat()", oneEighty = "180.0f",
         epsilon = "0.000001f", oneEpsilon = "0.999999f",
-        sCode = "D", sToT = "toFloat()",
+        numberCasts = listOf(TypeCasts.Int, TypeCasts.Long, TypeCasts.Double),
+        decimalCasts = listOf(TypeCasts.Double),
     )
 
     val Double = TypeVariant.Decimal(
@@ -133,6 +151,7 @@ object TypeVariants {
         arrayOf = "doubleArrayOf", nextRandom = "nextDouble",
         pi = "kotlin.math.PI", oneEighty = "180.0",
         epsilon = "0.000001", oneEpsilon = "0.999999",
-        sCode = "F", sToT = "toDouble()",
+        numberCasts = listOf(TypeCasts.Int, TypeCasts.Long, TypeCasts.Float),
+        decimalCasts = listOf(TypeCasts.Float),
     )
 }
