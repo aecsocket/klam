@@ -114,6 +114,8 @@ inline fun distanceSq(a: {{ T }}Vec2, b: {{ T }}Vec2) = lengthSq(b - a)
 
 inline fun distance(a: {{ T }}Vec2, b: {{ T }}Vec2) = length(b - a)
 
+inline fun midpoint(a: {{ T }}Vec2, b: {{ T }}Vec2) = (a + b) * {{ half }}
+
 inline fun mix(a: {{ T }}Vec2, b: {{ T }}Vec2, f: {{ Type }}) = {{ T }}Vec2(mix(a.x, b.x, f), mix(a.y, b.y, f))
 
 inline fun dot(a: {{ T }}Vec2, b: {{ T }}Vec2) = a.x * b.x + a.y * b.y

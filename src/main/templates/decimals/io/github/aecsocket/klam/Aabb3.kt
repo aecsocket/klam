@@ -48,6 +48,12 @@ inline operator fun {{ Type }}.times(b: {{ T }}Aabb3) = {{ T }}Aabb3(this * b.mi
 @JvmName("div")
 inline operator fun {{ Type }}.div  (b: {{ T }}Aabb3) = {{ T }}Aabb3(this / b.min, this / b.max)
 
+inline fun extent(b: {{ T }}Aabb3) = b.max - b.min
+
+inline fun halfExtent(b: {{ T }}Aabb3) = (b.max - b.min) * {{ half }}
+
+inline fun midpoint(b: {{ T }}Aabb3) = (b.max + b.min) * {{ half }}
+
 inline fun intersects(b: {{ T }}Aabb3, v: {{ T }}Vec3) = all(v ge b.min) && all(v le b.max)
 
 inline fun expand(b: {{ T }}Aabb3, v: {{ T }}Vec3) = {{ T }}Aabb3(b.min - v, b.max + v)
