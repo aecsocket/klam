@@ -33,7 +33,7 @@ data class {{ T }}Vec2(
     inline fun map(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Vec2(block(x), block(y))
 
 {% for cast in numberCasts %}
-    inline fun map(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Vec2(block(x), block(y))
+    inline fun map{{ cast.Type }}(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Vec2(block(x), block(y))
     fun {{ cast.fn }} = {{ cast.T }}Vec2(x.{{ cast.fn }}, y.{{ cast.fn }})
 
 {% endfor %}

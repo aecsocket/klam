@@ -85,8 +85,8 @@ data class {{ T }}Mat4(
     inline fun mapScalar(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Mat4(x.map(block), y.map(block), z.map(block), w.map(block))
 
 {% for cast in numberCasts %}
-    inline fun mapVector(block: ({{ T }}Vec4) -> {{ cast.T }}Vec4) = {{ cast.T }}Mat4(block(x), block(y), block(z), block(w))
-    inline fun mapScalar(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Mat4(x.map(block), y.map(block), z.map(block), w.map(block))
+    inline fun mapVector{{ cast.Type }}(block: ({{ T }}Vec4) -> {{ cast.T }}Vec4) = {{ cast.T }}Mat4(block(x), block(y), block(z), block(w))
+    inline fun mapScalar{{ cast.Type }}(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Mat4(x.map{{ cast.Type }}(block), y.map{{ cast.Type }}(block), z.map{{ cast.Type }}(block), w.map{{ cast.Type }}(block))
     fun {{ cast.fn }} = {{ cast.T }}Mat4(x.{{ cast.fn }}, y.{{ cast.fn }}, z.{{ cast.fn }}, w.{{ cast.fn }})
 
 {% endfor %}

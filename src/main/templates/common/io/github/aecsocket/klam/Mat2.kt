@@ -64,8 +64,8 @@ data class {{ T }}Mat2(
     inline fun mapScalar(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Mat2(x.map(block), y.map(block))
 
 {% for cast in numberCasts %}
-    inline fun mapVector(block: ({{ T }}Vec2) -> {{ cast.T }}Vec2) = {{ cast.T }}Mat2(block(x), block(y))
-    inline fun mapScalar(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Mat2(x.map(block), y.map(block))
+    inline fun mapVector{{ cast.Type }}(block: ({{ T }}Vec2) -> {{ cast.T }}Vec2) = {{ cast.T }}Mat2(block(x), block(y))
+    inline fun mapScalar{{ cast.Type }}(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Mat2(x.map{{ cast.Type }}(block), y.map{{ cast.Type }}(block))
     fun {{ cast.fn }} = {{ cast.T }}Mat2(x.{{ cast.fn }}, y.{{ cast.fn }})
 
 {% endfor %}

@@ -13,8 +13,8 @@ data class {{ T }}Aabb3(
     inline fun mapScalar(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Aabb3(min.map(block), max.map(block))
 
 {% for cast in decimalCasts %}
-    inline fun mapVector(block: ({{ T }}Vec3) -> {{ cast.T }}Vec3) = {{ cast.T }}Aabb3(block(min), block(max))
-    inline fun mapScalar(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Aabb3(min.map(block), max.map(block))
+    inline fun mapVector{{ cast.Type }}(block: ({{ T }}Vec3) -> {{ cast.T }}Vec3) = {{ cast.T }}Aabb3(block(min), block(max))
+    inline fun mapScalar{{ cast.Type }}(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Aabb3(min.map{{ cast.Type }}(block), max.map{{ cast.Type }}(block))
     fun {{ cast.fn }} = {{ cast.T }}Aabb3(min.{{ cast.fn }}, max.{{ cast.fn }})
 
 {% endfor %}

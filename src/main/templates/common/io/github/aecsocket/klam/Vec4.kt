@@ -43,7 +43,7 @@ data class {{ T }}Vec4(
     inline fun map(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Vec4(block(x), block(y), block(z), block(w))
 
 {% for cast in numberCasts %}
-    inline fun map(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Vec4(block(x), block(y), block(z), block(w))
+    inline fun map{{ cast.Type }}(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Vec4(block(x), block(y), block(z), block(w))
     fun {{ cast.fn }} = {{ cast.T }}Vec4(x.{{ cast.fn }}, y.{{ cast.fn }}, z.{{ cast.fn }}, w.{{ cast.fn }})
 
 {% endfor %}

@@ -20,6 +20,25 @@ data class {{ T }}Quat(
             val xyz = axis * sin(angle * {{ half }})
             return {{ T }}Quat(xyz.x, xyz.y, xyz.z, cos(angle * {{ half }}))
         }
+
+        fun fromTo(from: {{ T }}Vec3, to: {{ T }}Vec3): {{ T }}Quat {
+            val r = dot(from, to) + ({{ one }})
+            if (r < EPSILON_{{ T }}) {
+                // `from` and `to` point in opposite directions
+                return if (kotlin.math.abs(from.x) > kotlin.math.abs(from.z)) {
+                    {{ T }}Quat(-from.y, from.x, {{ zero }}, {{ zero }})
+                } else {
+                    {{ T }}Quat({{ zero }}, -from.z, from.y, {{ zero }})
+                }
+            } else {
+                return normalize({{ T }}Quat(
+                    from.y * to.z - from.z * to.y,
+                    from.z * to.x - from.x * to.z,
+                    from.x * to.y - from.y * to.x,
+                    r,
+                ))
+            }
+        }
     }
 
     constructor(v: {{ T }}Vec4) : this(v.x, v.y, v.z, v.w)
@@ -45,7 +64,7 @@ data class {{ T }}Quat(
     inline fun map(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Quat(block(x), block(y), block(z), block(w))
 
 {% for cast in decimalCasts %}
-    inline fun map(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Quat(block(x), block(y), block(z), block(w))
+    inline fun map{{ cast.Type }}(block: ({{ Type }}) -> {{ cast.Type }}) = {{ cast.T }}Quat(block(x), block(y), block(z), block(w))
     fun {{ cast.fn }} = {{ cast.T }}Quat(x.{{ cast.fn }}, y.{{ cast.fn }}, z.{{ cast.fn }}, w.{{ cast.fn }})
 
 {% endfor %}
