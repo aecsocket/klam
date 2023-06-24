@@ -46,8 +46,8 @@ The various types are defined in a specific format:
   - `(T)Vec(2|3|4)` vector
   - `(T)Mat(2|3|4)` NxN matrix
   - `(T)Quat` quaternion
-  - `(T)Iso` isometric transformation (position + rotation)
-  - `(T)Affine` affine transformation (position + rotation + scale)
+  - `(T)Iso3` isometric transformation (position + rotation)
+  - `(T)Affine3` affine transformation (position + rotation + scale)
   - `(T)Ray` half-infinite line (origin + direction)
 
 All classes are immutable.
