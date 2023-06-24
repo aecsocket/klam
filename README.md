@@ -36,20 +36,21 @@ dependencies {
 ### Types
 
 The various types are defined in a specific format:
-* Element type
-  * `B` boolean
-  * `I` integer
-  * `L` long
-  * `F` float
-  * `D` double
-* Structure
-  * `(T)Vec(2|3|4)` vector
-  * `(T)Mat(2|3|4)` NxN matrix
-  * `(T)Quat` quaternion
-  * `(T)Affine` affine transformation (position + rotation)
-  * `(T)Ray` half-infinite line (origin + direction)
+- Element type
+  - `B` boolean
+  - `I` integer
+  - `L` long
+  - `F` float
+  - `D` double
+- Structure
+  - `(T)Vec(2|3|4)` vector
+  - `(T)Mat(2|3|4)` NxN matrix
+  - `(T)Quat` quaternion
+  - `(T)Iso` isometric transformation (position + rotation)
+  - `(T)Affine` affine transformation (position + rotation + scale)
+  - `(T)Ray` half-infinite line (origin + direction)
 
-All classes are mutable.
+All classes are immutable.
 
 ### Methods
 
@@ -128,10 +129,18 @@ vec[0] = quat[3] // vec.x = 2.0f
 val mat = IMat2.Identity // IMat2(1, 0, 0, 1)
 mat[0] // IVec2(1, 0)
 mat[0, 0] // 1
-
-mat[1] = IVec2(2, 3)
-mat[1, 1] = 2
+mat[0, 1] // 0
 ```
+
+### Operators
+
+All types have algebraic operator functions:
+```kotlin
+val v1 = IVec2(1, 2) + IVec2(4, 5) // (5, 7)
+val v2 = FQuat(0.0f, 0.0f, 0.0f, 1.0f) * FVec3(1.0f, 1.0f, 1.0f) // (1.0, 1.0, 1.0)
+```
+
+Transformations, such as `Mat * Mat` or `Quat * Vec`, are done through the `*` (times) operator.
 
 ### Functions
 
