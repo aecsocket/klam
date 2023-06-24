@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.aecsocket"
-version = "0.2.6-SNAPSHOT"
+version = "0.2.6"
 description = "Linear algebra library for 2D/3D applications"
 
 templates {
