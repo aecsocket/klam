@@ -21,5 +21,5 @@ internal fun <V : Any> ConfigurationNode.force(type: TypeToken<V>) = get(type)
 
 internal inline fun <reified V : Any> ConfigurationNode.force() = force(typeToken<V>())
 
-inline fun <reified T> TypeSerializerCollection.Builder.registerExact(serializer: TypeSerializer<T>): TypeSerializerCollection.Builder =
+internal inline fun <reified T> TypeSerializerCollection.Builder.registerExact(serializer: TypeSerializer<T>): TypeSerializerCollection.Builder =
     registerExact(T::class.java, serializer)
