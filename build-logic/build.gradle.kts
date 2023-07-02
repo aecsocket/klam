@@ -11,4 +11,5 @@ dependencies {
     implementation(libs.indra.publishing.sonatype)
     implementation(libs.kotlin)
     implementation(libs.pebble)
+    implementation(libs.dokka)
 }

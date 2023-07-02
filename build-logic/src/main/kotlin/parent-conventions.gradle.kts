@@ -1,9 +1,14 @@
 plugins {
     id("net.kyori.indra.publishing.sonatype")
+    id("org.jetbrains.dokka")
 }
 
 indraSonatype {
     useAlternateSonatypeOSSHost("s01")
+}
+
+repositories {
+    mavenCentral()
 }
 
 afterEvaluate {

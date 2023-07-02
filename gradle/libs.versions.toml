@@ -1,6 +1,7 @@
 [versions]
 indra = "3.1.1"
-kotlin = "1.8.20"
+kotlin = "1.8.22"
+dokka = "1.8.20"
 pebble = "3.1.6"
 configurate = "4.1.2"
 
@@ -8,6 +9,7 @@ configurate = "4.1.2"
 indra-common = { group = "net.kyori", name = "indra-common", version.ref = "indra" }
 indra-publishing-sonatype = { group = "net.kyori", name = "indra-publishing-sonatype", version.ref = "indra" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+dokka = { group = "org.jetbrains.dokka", name = "dokka-gradle-plugin", version.ref = "dokka" }
 pebble = { group = "io.pebbletemplates", name = "pebble", version.ref = "pebble" }
 configurate-core = { group = "org.spongepowered", name = "configurate-core", version.ref = "configurate" }
 configurate-extra-kotlin = { group = "org.spongepowered", name = "configurate-extra-kotlin", version.ref = "configurate" }
