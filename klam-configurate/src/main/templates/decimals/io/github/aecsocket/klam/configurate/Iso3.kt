@@ -20,8 +20,8 @@ object {{ T }}Iso3Serializer : TypeSerializer<{{ T }}Iso3> {
 
     override fun deserialize(type: Type, node: ConfigurationNode): {{ T }}Iso3 {
         return {{ T }}Iso3(
-            translation = node.node(TRANSLATION).get { {{ T }}Vec3.Zero },
-            rotation = node.node(ROTATION).get { {{ T }}Quat.Identity },
+            translation = node.node(TRANSLATION).get { {{ T }}Vec3.zero },
+            rotation = node.node(ROTATION).get { {{ T }}Quat.identity },
         )
     }
 }

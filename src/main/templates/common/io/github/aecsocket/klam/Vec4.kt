@@ -9,13 +9,13 @@ data class {{ T }}Vec4(
     @JvmField val w: {{ Type }},
 ) {
     companion object {
-        val {{ Zero }} get() = {{ T }}Vec4({{ zero }}, {{ zero }}, {{ zero }}, {{ zero }})
-        val {{ One }} get() = {{ T }}Vec4({{ one }}, {{ one }}, {{ one }}, {{ one }})
+        val {{ zeroField }} = {{ T }}Vec4({{ zero }}, {{ zero }}, {{ zero }}, {{ zero }})
+        val {{ oneField }} = {{ T }}Vec4({{ one }}, {{ one }}, {{ one }}, {{ one }})
 
-        val X get() = {{ T }}Vec4({{ one }}, {{ zero }}, {{ zero }}, {{ zero }})
-        val Y get() = {{ T }}Vec4({{ zero }}, {{ one }}, {{ zero }}, {{ zero }})
-        val Z get() = {{ T }}Vec4({{ zero }}, {{ zero }}, {{ one }}, {{ zero }})
-        val W get() = {{ T }}Vec4({{ zero }}, {{ zero }}, {{ zero }}, {{ one }})
+        val x = {{ T }}Vec4({{ one }}, {{ zero }}, {{ zero }}, {{ zero }})
+        val y = {{ T }}Vec4({{ zero }}, {{ one }}, {{ zero }}, {{ zero }})
+        val z = {{ T }}Vec4({{ zero }}, {{ zero }}, {{ one }}, {{ zero }})
+        val w = {{ T }}Vec4({{ zero }}, {{ zero }}, {{ zero }}, {{ one }})
     }
 
     constructor(v: {{ T }}Vec2, z: {{ Type }}, w: {{ Type }}) : this(v.x, v.y, z, w)

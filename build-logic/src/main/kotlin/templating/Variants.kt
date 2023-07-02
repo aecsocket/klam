@@ -31,8 +31,8 @@ sealed interface TypeVariant {
         "T" to code,
         "zero" to zero,
         "one" to one,
-        "Zero" to zeroField,
-        "One" to oneField,
+        "zeroField" to zeroField,
+        "oneField" to oneField,
         "arrayOf" to arrayOf,
         "nextRandom" to nextRandom,
         "toStringFormat" to toStringFormat,
@@ -46,8 +46,8 @@ sealed interface TypeVariant {
         override val code = "B"
         override val zero = "false"
         override val one = "true"
-        override val zeroField = "False"
-        override val oneField = "True"
+        override val zeroField = "none"
+        override val oneField = "all"
         override val arrayOf = "booleanArrayOf"
         override val nextRandom = "nextBoolean"
         override val toStringFormat = "%s"
@@ -57,8 +57,8 @@ sealed interface TypeVariant {
     }
 
     sealed interface Number : TypeVariant {
-        override val zeroField get() = "Zero"
-        override val oneField get() = "One"
+        override val zeroField get() = "zero"
+        override val oneField get() = "one"
         override val isNumber get() = true
     }
 
@@ -109,13 +109,13 @@ sealed interface TypeVariant {
 }
 
 object TypeCasts {
-    val Int = TypeCast("Int", "I", "toInt()")
+    val int = TypeCast("Int", "I", "toInt()")
 
-    val Long = TypeCast("Long", "L", "toLong()")
+    val long = TypeCast("Long", "L", "toLong()")
 
-    val Float = TypeCast("Float", "F", "toFloat()")
+    val float = TypeCast("Float", "F", "toFloat()")
 
-    val Double = TypeCast("Double", "D", "toDouble()")
+    val double = TypeCast("Double", "D", "toDouble()")
 }
 
 object TypeVariants {
@@ -125,14 +125,14 @@ object TypeVariants {
         name = "Int", code = "I",
         zero = "0", one = "1",
         arrayOf = "intArrayOf", nextRandom = "nextInt",
-        numberCasts = listOf(TypeCasts.Long, TypeCasts.Float, TypeCasts.Double),
+        numberCasts = listOf(TypeCasts.long, TypeCasts.float, TypeCasts.double),
     )
 
     val Long = TypeVariant.Integer(
         name = "Long", code = "L",
         zero = "0L", one = "1L",
         arrayOf = "longArrayOf", nextRandom = "nextLong",
-        numberCasts = listOf(TypeCasts.Int, TypeCasts.Float, TypeCasts.Double),
+        numberCasts = listOf(TypeCasts.int, TypeCasts.float, TypeCasts.double),
     )
 
     val Float = TypeVariant.Decimal(
@@ -141,8 +141,8 @@ object TypeVariants {
         arrayOf = "floatArrayOf", nextRandom = "nextFloat",
         pi = "kotlin.math.PI.toFloat()", oneEighty = "180.0f",
         epsilon = "0.000001f", oneEpsilon = "0.999999f",
-        numberCasts = listOf(TypeCasts.Int, TypeCasts.Long, TypeCasts.Double),
-        decimalCasts = listOf(TypeCasts.Double),
+        numberCasts = listOf(TypeCasts.int, TypeCasts.long, TypeCasts.double),
+        decimalCasts = listOf(TypeCasts.double),
     )
 
     val Double = TypeVariant.Decimal(
@@ -151,7 +151,7 @@ object TypeVariants {
         arrayOf = "doubleArrayOf", nextRandom = "nextDouble",
         pi = "kotlin.math.PI", oneEighty = "180.0",
         epsilon = "0.000001", oneEpsilon = "0.999999",
-        numberCasts = listOf(TypeCasts.Int, TypeCasts.Long, TypeCasts.Float),
-        decimalCasts = listOf(TypeCasts.Float),
+        numberCasts = listOf(TypeCasts.int, TypeCasts.long, TypeCasts.float),
+        decimalCasts = listOf(TypeCasts.float),
     )
 }

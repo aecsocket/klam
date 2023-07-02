@@ -8,12 +8,12 @@ data class {{ T }}Vec3(
     @JvmField val z: {{ Type }},
 ) {
     companion object {
-        val {{ Zero }} get() = {{ T }}Vec3({{ zero }}, {{ zero }}, {{ zero }})
-        val {{ One }} get() = {{ T }}Vec3({{ one }}, {{ one }}, {{ one }})
+        val {{ zeroField }} = {{ T }}Vec3({{ zero }}, {{ zero }}, {{ zero }})
+        val {{ oneField }} = {{ T }}Vec3({{ one }}, {{ one }}, {{ one }})
 
-        val X get() = {{ T }}Vec3({{ one }}, {{ zero }}, {{ zero }})
-        val Y get() = {{ T }}Vec3({{ zero }}, {{ one }}, {{ zero }})
-        val Z get() = {{ T }}Vec3({{ zero }}, {{ zero }}, {{ one }})
+        val x = {{ T }}Vec3({{ one }}, {{ zero }}, {{ zero }})
+        val y = {{ T }}Vec3({{ zero }}, {{ one }}, {{ zero }})
+        val z = {{ T }}Vec3({{ zero }}, {{ zero }}, {{ one }})
     }
 
     constructor(v: {{ T }}Vec2, z: {{ Type }}) : this(v.x, v.y, z)

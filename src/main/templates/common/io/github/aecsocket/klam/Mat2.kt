@@ -7,17 +7,17 @@ data class {{ T }}Mat2(
     @JvmField val y: {{ T }}Vec2,
 ) {
     companion object {
-        val {{ Zero }} get() = {{ T }}Mat2(
-            {{ T }}Vec2.{{ Zero }},
-            {{ T }}Vec2.{{ Zero }},
+        val {{ zeroField }} = {{ T }}Mat2(
+            {{ T }}Vec2.{{ zeroField }},
+            {{ T }}Vec2.{{ zeroField }},
         )
 
-        val {{ One }} get() = {{ T }}Mat2(
-            {{ T }}Vec2.{{ One }},
-            {{ T }}Vec2.{{ One }},
+        val {{ oneField }} = {{ T }}Mat2(
+            {{ T }}Vec2.{{ oneField }},
+            {{ T }}Vec2.{{ oneField }},
         )
 
-        val Identity get() = {{ T }}Mat2(
+        val identity = {{ T }}Mat2(
             {{ one }}, {{ zero }},
             {{ zero }}, {{ one }},
         )

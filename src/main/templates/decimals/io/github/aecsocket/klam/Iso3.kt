@@ -3,9 +3,16 @@
 package io.github.aecsocket.klam
 
 data class {{ T }}Iso3(
-    @JvmField val translation: {{ T }}Vec3 = {{ T }}Vec3.{{ Zero }},
-    @JvmField val rotation: {{ T }}Quat = {{ T }}Quat.Identity,
+    @JvmField val translation: {{ T }}Vec3,
+    @JvmField val rotation: {{ T }}Quat,
 ) {
+    companion object {
+        val identity = {{ T }}Iso3(
+            translation = {{ T }}Vec3.zero,
+            rotation = {{ T }}Quat.identity,
+        )
+    }
+
 {% for cast in decimalCasts %}
     fun {{ cast.fn }} = {{ cast.T }}Iso3(translation.{{ cast.fn }}, rotation.{{ cast.fn }})
 

@@ -9,21 +9,21 @@ data class {{ T }}Mat4(
     @JvmField val w: {{ T }}Vec4,
 ) {
     companion object {
-        val {{ Zero }} get() = {{ T }}Mat4(
-            {{ T }}Vec4.{{ Zero }},
-            {{ T }}Vec4.{{ Zero }},
-            {{ T }}Vec4.{{ Zero }},
-            {{ T }}Vec4.{{ Zero }},
+        val {{ zeroField }} = {{ T }}Mat4(
+            {{ T }}Vec4.{{ zeroField }},
+            {{ T }}Vec4.{{ zeroField }},
+            {{ T }}Vec4.{{ zeroField }},
+            {{ T }}Vec4.{{ zeroField }},
         )
 
-        val {{ One }} get() = {{ T }}Mat4(
-            {{ T }}Vec4.{{ One }},
-            {{ T }}Vec4.{{ One }},
-            {{ T }}Vec4.{{ One }},
-            {{ T }}Vec4.{{ One }},
+        val {{ oneField }} = {{ T }}Mat4(
+            {{ T }}Vec4.{{ oneField }},
+            {{ T }}Vec4.{{ oneField }},
+            {{ T }}Vec4.{{ oneField }},
+            {{ T }}Vec4.{{ oneField }},
         )
 
-        val Identity get() = {{ T }}Mat4(
+        val identity = {{ T }}Mat4(
             {{ one }}, {{ zero }}, {{ zero }}, {{ zero }},
             {{ zero }}, {{ one }}, {{ zero }}, {{ zero }},
             {{ zero }}, {{ zero }}, {{ one }}, {{ zero }},

@@ -7,11 +7,11 @@ data class {{ T }}Vec2(
     @JvmField val y: {{ Type }},
 ) {
     companion object {
-        val {{ Zero }} get() = {{ T }}Vec2({{ zero }}, {{ zero }})
-        val {{ One }} get() = {{ T }}Vec2({{ one }}, {{ one }})
+        val {{ zeroField }} = {{ T }}Vec2({{ zero }}, {{ zero }})
+        val {{ oneField }} = {{ T }}Vec2({{ one }}, {{ one }})
 
-        val X get() = {{ T }}Vec2({{ one }}, {{ zero }})
-        val Y get() = {{ T }}Vec2({{ zero }}, {{ one }})
+        val x = {{ T }}Vec2({{ one }}, {{ zero }})
+        val y = {{ T }}Vec2({{ zero }}, {{ one }})
     }
 
     constructor(s: {{ Type }}) : this(s, s)

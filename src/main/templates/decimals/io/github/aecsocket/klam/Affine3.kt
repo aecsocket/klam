@@ -3,11 +3,19 @@
 package io.github.aecsocket.klam
 
 data class {{ T }}Affine3(
-    @JvmField val translation: {{ T }}Vec3 = {{ T }}Vec3.{{ Zero }},
-    @JvmField val rotation: {{ T }}Quat = {{ T }}Quat.Identity,
-    @JvmField val scale: {{ T }}Vec3 = {{ T }}Vec3.{{ One }},
+    @JvmField val translation: {{ T }}Vec3,
+    @JvmField val rotation: {{ T }}Quat,
+    @JvmField val scale: {{ T }}Vec3,
 ) {
-    constructor(iso: {{ T }}Iso3, scale: {{ T }}Vec3 = {{ T }}Vec3.{{ Zero }}) : this(iso.translation, iso.rotation, scale)
+    companion object {
+        val identity = {{ T }}Affine3(
+            translation = {{ T }}Vec3.zero,
+            rotation = {{ T }}Quat.identity,
+            scale = {{ T }}Vec3.{{ oneField }},
+        )
+    }
+
+    constructor(iso: {{ T }}Iso3, scale: {{ T }}Vec3 = {{ T }}Vec3.zero) : this(iso.translation, iso.rotation, scale)
 
 {% for cast in decimalCasts %}
     fun {{ cast.fn }} = {{ cast.T }}Affine3(translation.{{ cast.fn }}, rotation.{{ cast.fn }}, scale.{{ cast.fn }})

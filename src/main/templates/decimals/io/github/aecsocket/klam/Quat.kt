@@ -13,8 +13,9 @@ data class {{ T }}Quat(
     @JvmField val w: {{ Type }},
 ) {
     companion object {
-        val Zero get() = {{ T }}Quat({{ zero }}, {{ zero }}, {{ zero }}, {{ zero }})
-        val Identity get() = {{ T }}Quat({{ zero }}, {{ zero }}, {{ zero }}, {{ one }})
+        val zero = {{ T }}Quat({{ zero }}, {{ zero }}, {{ zero }}, {{ zero }})
+
+        val identity = {{ T }}Quat({{ zero }}, {{ zero }}, {{ zero }}, {{ one }})
 
         fun ofAxisAngle(axis: {{ T }}Vec3, angle: {{ Type }}): {{ T }}Quat {
             val xyz = axis * sin(angle * {{ half }})

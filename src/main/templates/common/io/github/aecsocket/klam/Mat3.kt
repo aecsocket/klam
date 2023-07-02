@@ -8,19 +8,19 @@ data class {{ T }}Mat3(
     @JvmField val z: {{ T }}Vec3,
 ) {
     companion object {
-        val {{ Zero }} get() = {{ T }}Mat3(
-            {{ T }}Vec3.{{ Zero }},
-            {{ T }}Vec3.{{ Zero }},
-            {{ T }}Vec3.{{ Zero }},
+        val {{ zeroField }} = {{ T }}Mat3(
+            {{ T }}Vec3.{{ zeroField }},
+            {{ T }}Vec3.{{ zeroField }},
+            {{ T }}Vec3.{{ zeroField }},
         )
 
-        val {{ One }} get() = {{ T }}Mat3(
-            {{ T }}Vec3.{{ One }},
-            {{ T }}Vec3.{{ One }},
-            {{ T }}Vec3.{{ One }},
+        val {{ oneField }} = {{ T }}Mat3(
+            {{ T }}Vec3.{{ oneField }},
+            {{ T }}Vec3.{{ oneField }},
+            {{ T }}Vec3.{{ oneField }},
         )
 
-        val Identity get() = {{ T }}Mat3(
+        val identity = {{ T }}Mat3(
             {{ one }}, {{ zero }}, {{ zero }},
             {{ zero }}, {{ one }}, {{ zero }},
             {{ zero }}, {{ zero }}, {{ one }},

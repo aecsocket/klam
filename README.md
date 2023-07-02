@@ -126,7 +126,7 @@ vec[0] = quat[3] // vec.x = 2.0f
 
 `Mat` types can be indexed by column (returning a `Vec`) or by column and row (returning a scalar):
 ```kotlin
-val mat = IMat2.Identity // IMat2(1, 0, 0, 1)
+val mat = IMat2.identity // IMat2(1, 0, 0, 1)
 mat[0] // IVec2(1, 0)
 mat[0, 0] // 1
 mat[0, 1] // 0
