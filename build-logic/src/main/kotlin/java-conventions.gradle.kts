@@ -1,26 +1,22 @@
 plugins {
-    id("base-conventions")
-    id("java-library")
-    id("net.kyori.indra")
-    id("com.diffplug.spotless")
+  id("base-conventions")
+  id("java-library")
+  id("net.kyori.indra")
+  id("com.diffplug.spotless")
 }
 
 indra {
-    javaVersions {
-        target(11)
-    }
+  javaVersions {
+    target(11)
+  }
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 spotless {
-    kotlin {
-        ktfmt()
-    }
-
-    kotlinGradle {
-        ktfmt()
-    }
+  java {
+    googleJavaFormat()
+  }
 }
