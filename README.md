@@ -17,8 +17,8 @@ Inspired by the [glam Rust crate](https://crates.io/crates/glam/),
 performant linear algebra API and classes. The classes and methods are mostly modelled after GLSL
 symbols - notably, many functions are defined as top-level functions instead of methods.
 
-This library also offers support for the [Configurate](https://github.com/spongepowered/configurate) serialization
-library through `klam-configurate`.
+This library also offers support for the [Configurate](https://github.com/spongepowered/configurate)
+serialization library through `klam-configurate`.
 
 ## Usage
 
@@ -166,8 +166,8 @@ val qInv = inverse(q)
 
 ### Rotations
 
-`Vec`, `Mat` and `Quat` types are all capable of representing rotations as Euler angles, rotation matrices and
-quaternions respectively. They can be converted between using the top-level functions:
+`Vec`, `Mat` and `Quat` types are all capable of representing rotations as Euler angles, rotation
+matrices and quaternions respectively. They can be converted between using the top-level functions:
 * `asQuat(...)` : `*Quat`
 * `asMatrix(...)` : `*Mat3`
 * `asEuler(...)` : `*Vec3`
