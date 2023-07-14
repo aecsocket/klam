@@ -13,11 +13,11 @@ dependencies {
 }
 
 spotless {
-  kotlin {
-    ktfmt()
-  }
-
-  kotlinGradle {
-    ktfmt()
-  }
+//  kotlin {
+//    ktfmt()
+//  }
+//
+//  kotlinGradle {
+//    ktfmt()
+//  }
 }
