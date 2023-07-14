@@ -10,6 +10,7 @@ dependencies {
     implementation(libs.indra.common)
     implementation(libs.indra.publishing.sonatype)
     implementation(libs.kotlin)
+    implementation(libs.spotless)
     implementation(libs.pebble)
     implementation(libs.dokka)
 }

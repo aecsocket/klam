@@ -2,6 +2,7 @@ plugins {
     id("base-conventions")
     id("java-library")
     id("net.kyori.indra")
+    id("com.diffplug.spotless")
 }
 
 indra {
@@ -12,4 +13,14 @@ indra {
 
 repositories {
     mavenCentral()
+}
+
+spotless {
+    kotlin {
+        ktfmt()
+    }
+
+    kotlinGradle {
+        ktfmt()
+    }
 }

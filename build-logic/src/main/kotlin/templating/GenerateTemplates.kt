@@ -24,55 +24,55 @@ import kotlin.io.path.name
 import kotlin.io.path.relativeTo
 
 abstract class GenerateTemplates : DefaultTask() {
-    @get:InputDirectory
-    abstract val sourceDir: DirectoryProperty
+  @get:InputDirectory
+  abstract val sourceDir: DirectoryProperty
 
-    @get:Input
-    @get:Optional
-    abstract val fileNamePrefix: Property<String>
+  @get:Input
+  @get:Optional
+  abstract val fileNamePrefix: Property<String>
 
-    @get:Input
-    abstract val context: MapProperty<String, Any>
+  @get:Input
+  abstract val context: MapProperty<String, Any>
 
-    @get:OutputDirectory
-    abstract val outputDir: DirectoryProperty
+  @get:OutputDirectory
+  abstract val outputDir: DirectoryProperty
 
-    @TaskAction
-    fun generate() {
-        val sourceDir = sourceDir.get().asFile.toPath()
-        val fileNamePrefix: String = fileNamePrefix.getOrElse("")
-        val outputDir = outputDir.get().asFile.toPath()
-        val context = context.get()
+  @TaskAction
+  fun generate() {
+    val sourceDir = sourceDir.get().asFile.toPath()
+    val fileNamePrefix: String = fileNamePrefix.getOrElse("")
+    val outputDir = outputDir.get().asFile.toPath()
+    val context = context.get()
 
-        val loader = FileLoader()
-        val engine: PebbleEngine = PebbleEngine.Builder()
-            .loader(loader)
-            .strictVariables(true)
-            .defaultLocale(Locale.ROOT)
-            .autoEscaping(false)
-            .build()
+    val loader = FileLoader()
+    val engine: PebbleEngine = PebbleEngine.Builder()
+      .loader(loader)
+      .strictVariables(true)
+      .defaultLocale(Locale.ROOT)
+      .autoEscaping(false)
+      .build()
 
-        Files.walkFileTree(sourceDir, object : FileVisitor<Path> {
-            override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes) = FileVisitResult.CONTINUE
+    Files.walkFileTree(sourceDir, object : FileVisitor<Path> {
+      override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes) = FileVisitResult.CONTINUE
 
-            override fun visitFileFailed(file: Path, exc: IOException) = FileVisitResult.CONTINUE
+      override fun visitFileFailed(file: Path, exc: IOException) = FileVisitResult.CONTINUE
 
-            override fun postVisitDirectory(dir: Path, exc: IOException?) = FileVisitResult.CONTINUE
+      override fun postVisitDirectory(dir: Path, exc: IOException?) = FileVisitResult.CONTINUE
 
-            override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
-                val template = engine.getTemplate(file.absolutePathString())
-                val relative = file.relativeTo(sourceDir)
+      override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+        val template = engine.getTemplate(file.absolutePathString())
+        val relative = file.relativeTo(sourceDir)
 
-                val outFileName = fileNamePrefix + file.name
-                val output = outputDir.resolve(relative).parent.resolve(outFileName)
+        val outFileName = fileNamePrefix + file.name
+        val output = outputDir.resolve(relative).parent.resolve(outFileName)
 
-                Files.createDirectories(output.parent)
-                Files.newBufferedWriter(output).use { writer ->
-                    template.evaluate(writer, context)
-                }
+        Files.createDirectories(output.parent)
+        Files.newBufferedWriter(output).use { writer ->
+          template.evaluate(writer, context)
+        }
 
-                return FileVisitResult.CONTINUE
-            }
-        })
-    }
+        return FileVisitResult.CONTINUE
+      }
+    })
+  }
 }

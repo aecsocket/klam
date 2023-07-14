@@ -2,34 +2,42 @@
 
 # Klam
 [![CI](https://img.shields.io/github/actions/workflow/status/aecsocket/klam/build.yml)](https://github.com/aecsocket/klam/actions/workflows/build.yml)
-![Release](https://img.shields.io/maven-central/v/io.github.aecsocket/klam?label=release)
-![Snapshot](https://img.shields.io/nexus/s/io.github.aecsocket/klam?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)
+[![Release](https://img.shields.io/maven-central/v/io.github.aecsocket/klam?label=release)](https://central.sonatype.com/artifact/io.github.aecsocket/klam)
+[![Snapshot](https://img.shields.io/nexus/s/io.github.aecsocket/klam?label=snapshot&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://central.sonatype.com/artifact/io.github.aecsocket/klam)
 
 Linear algebra library for 2D/3D applications
 
-### [GitHub](https://github.com/aecsocket/glossa) · [Docs](https://aecsocket.github.io/klam) · [Dokka](https://aecsocket.github.io/klam/dokka)
+### [GitHub](https://github.com/aecsocket/glossa) · [Dokka](https://aecsocket.github.io/klam/dokka)
 
 </div>
 
-Inspired by [glam Rust crate](https://crates.io/crates/glam/), [glm C++ library](https://github.com/g-truc/glm),
-[kotlin-math library](https://github.com/romainguy/kotlin-math/), `klam` offers a simple and performant linear algebra
-API and classes. The classes and methods are mostly modelled after GLSL symbols - notably, many functions are defined as
-top-level functions instead of methods.
+Inspired by the [glam Rust crate](https://crates.io/crates/glam/),
+[glm C++ library](https://github.com/g-truc/glm),
+[kotlin-math library](https://github.com/romainguy/kotlin-math/), `klam` offers a simple and
+performant linear algebra API and classes. The classes and methods are mostly modelled after GLSL
+symbols - notably, many functions are defined as top-level functions instead of methods.
 
 This library also offers support for the [Configurate](https://github.com/spongepowered/configurate) serialization
 library through `klam-configurate`.
 
 ## Usage
 
+See the version badges for the latest release and snapshot builds.
+
+Modules:
+- `klam` - core API
+- `klam-configurate` - tools for the [Configurate](https://github.com/spongepowered/configurate)
+  library
+
 ```kotlin
 repositories {
-    mavenCentral()
-    // maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") // for snapshot builds
+  mavenCentral()
+  // for snapshot builds
+  // maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
-    implementation("io.github.aecsocket", "klam", "VERSION")
-    // implementation("io.github.aecsocket", "klam-configurate", "VERSION")
+  implementation("io.github.aecsocket", "klam", "VERSION")
 }
 ```
 
