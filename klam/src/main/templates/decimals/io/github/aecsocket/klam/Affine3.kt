@@ -17,6 +17,10 @@ data class {{ T }}Affine3(
 
     constructor(iso: {{ T }}Iso3, scale: {{ T }}Vec3 = {{ T }}Vec3.zero) : this(iso.translation, iso.rotation, scale)
 
+    fun translation(translation: {{ T }}Vec3) = {{ T }}Affine3(translation, rotation, scale)
+    fun rotation(rotation: {{ T }}Quat) = {{ T }}Affine3(translation, rotation, scale)
+    fun scale(scale: {{ T }}Vec3) = {{ T }}Affine3(translation, rotation, scale)
+
 {% for cast in decimalCasts %}
     fun {{ cast.fn }} = {{ cast.T }}Affine3(translation.{{ cast.fn }}, rotation.{{ cast.fn }}, scale.{{ cast.fn }})
 

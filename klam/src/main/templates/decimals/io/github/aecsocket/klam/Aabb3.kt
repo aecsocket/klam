@@ -9,6 +9,9 @@ data class {{ T }}Aabb3(
     fun asString(fmt: String) = "[${min.asString(fmt)} .. ${max.asString(fmt)}]"
     override fun toString() = asString("{{ toStringFormat }}")
 
+    fun min(min: {{ T }}Vec3) = {{ T }}Aabb3(min, max)
+    fun max(max: {{ T }}Vec3) = {{ T }}Aabb3(min, max)
+
     inline fun mapVector(block: ({{ T }}Vec3) -> {{ T }}Vec3) = {{ T }}Aabb3(block(min), block(max))
     inline fun mapScalar(block: ({{ Type }}) -> {{ Type }}) = {{ T }}Aabb3(min.map(block), max.map(block))
 

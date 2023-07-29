@@ -8,6 +8,9 @@ data class {{ T }}Ray2(
 ) {
     fun at(t: {{ Type }}) = origin + direction * t
 
+    fun origin(origin: {{ T }}Vec2) = {{ T }}Ray2(origin, direction)
+    fun direction(direction: {{ T }}Vec2) = {{ T }}Ray2(origin, direction)
+
 {% for cast in decimalCasts %}
     fun {{ cast.fn }} = {{ cast.T }}Ray2(origin.{{ cast.fn }}, direction.{{ cast.fn }})
 

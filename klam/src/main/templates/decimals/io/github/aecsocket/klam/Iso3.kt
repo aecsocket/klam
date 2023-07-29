@@ -13,6 +13,9 @@ data class {{ T }}Iso3(
         )
     }
 
+    fun translation(translation: {{ T }}Vec3) = {{ T }}Iso3(translation, rotation)
+    fun rotation(rotation: {{ T }}Quat) = {{ T }}Iso3(translation, rotation)
+
 {% for cast in decimalCasts %}
     fun {{ cast.fn }} = {{ cast.T }}Iso3(translation.{{ cast.fn }}, rotation.{{ cast.fn }})
 
